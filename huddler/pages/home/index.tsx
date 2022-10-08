@@ -1,9 +1,10 @@
 import Huddles from "../../src/components/Home-components/Huddles";
-
+import Map from "../../src/components/Home-components/Map";
 function index() {
   return (
-    <div>
+    <div className="flex">
       <Huddles />
+      <Map />
     </div>
   );
 }
