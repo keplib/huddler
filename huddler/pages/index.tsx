@@ -1,9 +1,6 @@
 import type { NextPage } from "next";
 
 const LandingPage: NextPage = () => {
-  const env = process.env.TEST;
-  console.log(env);
-
   return (
     <div>
       <h1 className="bg-blue-300">HELLO</h1>
