@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 
-const Home: NextPage = () => {
+const LandingPage: NextPage = () => {
   const env = process.env.TEST;
   console.log(env);
 
@@ -11,4 +11,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default LandingPage;
