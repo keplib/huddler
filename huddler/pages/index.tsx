@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 
 const LandingPage: NextPage = () => {
-
   return (
     // <div className="h-screen w-full bg-red-200">
     //   {/* <NavBar /> */}
