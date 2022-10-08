@@ -18,7 +18,7 @@ const fetcher = async (url: string, data: any = undefined) => {
     if (!data) return <div>loading...</div>
 
     return (
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-4 w-3/4 border border-black m-16'>
         {data.map((post: any) => (
           <HuddleCard item={post.title} />
         ))}

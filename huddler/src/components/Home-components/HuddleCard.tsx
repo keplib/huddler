@@ -9,7 +9,7 @@ const HuddleCard = ({ item }: any) => {
 
 
   return (
-    <div className="grid grid-cols-3 bg-yellow-200 border">
+    <div className="grid grid-cols-3 bg-yellow-200 border p-4">
       <div>
         <Image src={placeholder} height={200} width={200} />
       </div>
