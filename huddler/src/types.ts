@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface User {
   name: string;
   email: string;
@@ -6,7 +8,7 @@ export interface User {
   password?: string;
   firstName?: string;
   lastName?: string;
-  avatar?: string;
+  avatar?: StaticImageData |string;
   dateOfBirth?: Date;
 }
 

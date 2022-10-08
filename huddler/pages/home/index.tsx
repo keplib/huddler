@@ -1,13 +1,12 @@
-import React from "react";
-import Huddles from "../../src/components/Home-components/Huddles";
+import Huddles from '../../src/components/Home-components/Huddles';
 
 function index() {
-
   return (
     <div>
-      <Huddles />
+      <Huddles/>
     </div>
   );
 }
 
 export default index;
+
