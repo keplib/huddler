@@ -15,18 +15,27 @@ function Profile() {
   const [ownedHuddles, setOwnedHuddles] = useState(null);
 
   return (
+
     <main className='flex h-full'>
+      {/* // Avatar  */}
       <div className='flex flex-col items-center border-x-[0.2px] border-gray-400 w-1/4'>
-        <h1 className='text-[2rem]'>Welcome back, {user.name}</h1>
-        <br />
-        <Image
-          src={user.avatar!}
-          className='rounded-[50%]'
-          alt='avatar'
-          width={150}
-        ></Image>
-        <section className='justify-self-end'>
-          My huddles
+        
+        <h1 className='text-[2rem] py-8'>Welcome back, {user.name}</h1>
+
+        <div className='relative w-full h-full'>
+          <Image
+            src={user.avatar!}
+            className='rounded-full p-12'
+            alt='avatar'
+            fill
+          />
+        </div>
+
+        <section className='h-full w-full bg-red-300 flex flex-col items-center'>
+          <h1>
+            My huddles
+          </h1>
+
           <div>
             {/* {ownedHuddles && render list of owned huddles} */}
             {!ownedHuddles && (
@@ -39,7 +48,9 @@ function Profile() {
             )}
           </div>
         </section>
+
       </div>
+      <div className='h-full w-full bg-yellow-200'> </div>
     </main>
   );
 }
