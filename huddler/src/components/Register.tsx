@@ -2,6 +2,7 @@ import { setDefaultResultOrder } from 'dns';
 import Link from 'next/link';
 import {useRouter} from 'next/router'
 import React, { useState, useRef } from 'react';
+import { User } from '../types';
 
 function Register() {
   const router = useRouter()
@@ -23,10 +24,11 @@ function Register() {
     try {
       setError('');
       setLoading(true)
-      const newUser = {
+      const newUser: User = {
         name: nameRef.current!.value,
         email: emailRef.current!.value,
-        password: passwordRef.current!.value
+        password: passwordRef.current!.value,
+        createdOn: Date.now(),
       }
       console.log(newUser);
       
