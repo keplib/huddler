@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       {/* Globally binds navbar for every page */}      
       <Navbar />
       {/* Container for responsiveness applied to every page */}
-      <div className='self-center bg-slate-200 h-full w-full mt-16'>
+      <div className='self-center bg-slate-200 h-full w-full mt-24'>
       <Component {...pageProps}/>
       </div>
     </div>
