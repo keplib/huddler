@@ -1,13 +1,12 @@
 import type { NextPage } from "next";
 
 const LandingPage: NextPage = () => {
-  const env = process.env.TEST;
-  console.log(env);
 
   return (
-    <div>
+    // <div className="h-screen w-full bg-red-200">
+    //   {/* <NavBar /> */}
       <h1 className="bg-blue-300">HELLO</h1>
-    </div>
+    // </div>
   );
 };
 
