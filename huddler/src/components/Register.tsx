@@ -41,7 +41,8 @@ function Register() {
     setLoading(false)
   };
   return (
-    <main className='flex flex-col items-center border-solid border-2 border-indigo-600 p-10 bg-white'>
+    
+    <main className='h-auto w-auto flex flex-col items-center border-solid border-2 rounded border-indigo-600 bg-white absolute my-24 px-24 py-12 ml-[50%]'>
       <h1>Share your Passions</h1>
       <br />
       {error && <div className='bg-red-600'>{error}</div>}
@@ -87,7 +88,6 @@ function Register() {
           minLength={6}
           required
         />
-        <br />
         <div className='flex justify-center'>
           <button
             className='border-solid border-2 border-black-600 w-48'
