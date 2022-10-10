@@ -14,11 +14,11 @@ export interface User {
 
 export interface Huddle {
   name: string;
-  createdOn: Date;
-  when: number;
+  createdOn: number;
+  when: string;
   description: string;
   authorId: number;
-  longitue: number;
+  longitude: number;
   latitude: number;
   id?: number;
   images?: string[];
