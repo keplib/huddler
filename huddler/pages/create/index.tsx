@@ -1,14 +1,24 @@
-import React from "react";
-import Huddles from "../../src/components/Home-components/Huddles";
-import Welcome from "../../src/components/Welcome";
+import NewHuddleForm from '../../src/components/NewHuddleForm';
+import Huddles from '../../src/components/Home-components/Huddles';
+import Welcome from '../../src/components/Welcome';
+import {useRouter} from 'next/router'
 
 function index() {
-  return (
-    <div>
-      {/* <Welcome /> */}
-      <Huddles></Huddles>
-    </div>
-  );
+  return <NewHuddleForm/>
 }
 
 export default index;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

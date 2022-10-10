@@ -1,0 +1,1 @@
+export const categoryTags = ['Fishing', 'Kebab', 'Snooker', 'JavaScript', 'something'];
