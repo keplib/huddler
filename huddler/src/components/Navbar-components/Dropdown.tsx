@@ -7,11 +7,9 @@ const serviceDropdown = [
   { name: 'Log Out', path: '/' },
 ];
 
-type Props = {
-  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
-};
 
-const Dropdown = ({ setShowDropDown }: Props) => {
+
+const Dropdown = () => {
   const router = useRouter();
 
   const handleLogoutClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -23,7 +21,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   return (
     <div
       className='mt-24 w-full'
-      onMouseLeave={() => setShowDropDown(false)}
+      // onMouseLeave={() => setShowDropDown(false)}
     >
       <ul className='grid grid-cols-3 gap-4 border-b w-48 absolute bg-black -right-[50%] place-content-center pt-2 text-lg'>
         {serviceDropdown.map((menuItem, i) => {
