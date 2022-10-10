@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { Huddle } from '../types';
-import { nowFormatted } from '../../utils/helperFunctions';
+import { nowFormatted } from '../utils/helperFunctions';
 import Image from 'next/future/image';
 import { useRouter } from 'next/router';
+import { categoryTags } from '../categoryTags';
 
 const NewHuddleForm = () => {
   const router = useRouter();
@@ -25,9 +26,9 @@ const NewHuddleForm = () => {
         name: titleRef.current!.value,
         createdOn: Date.now(),
         when: whenRef.current!.value,
-        categories: categoriesRef.current!.value,
-        longitude: whereRef.current!.value, //do sth
-        latitude: whereRef.current!.value, //do sth
+        categories: [string], //categoriesRef.current!.value,
+        longitude: 0, //whereRef.current!.value, //do sth
+        latitude: 0,//whereRef.current!.value, //do sth
         // for images we'll probably have to split what comes from the input field
         images: [imagesRef.current!.value],
       };
@@ -62,15 +63,14 @@ const NewHuddleForm = () => {
           autoComplete='on'
           required
         />
-        <label htmlFor='categories'>Categories</label>
-        <input
-          className='border-solid border-2 border-black-600'
-          ref={categoriesRef}
-          type='text'
-          id='categories'
-          autoComplete='on'
-          required
-        />
+        <label htmlFor='categories'>Pick the categories of your huddle</label>
+        <div>
+        {categoryTags.map((category) => (
+          <h1 className='text-xl bg-blue-600 py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'>
+            {category}
+          </h1>
+        ))}
+        </div>
         <label htmlFor='where'>Where?</label>
         <input
           className='border-solid border-2 border-black-600'
@@ -124,4 +124,6 @@ const NewHuddleForm = () => {
 };
 
 export default NewHuddleForm;
+
+
 

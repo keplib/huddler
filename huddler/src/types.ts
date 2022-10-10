@@ -22,4 +22,5 @@ export interface Huddle {
   latitude: number;
   id?: number;
   images?: string[];
+  categories:
 }
