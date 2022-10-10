@@ -6,6 +6,8 @@ import {
   useJsApiLoader,
   Marker,
   InfoWindowF,
+  Autocomplete,
+  LoadScript,
 } from "@react-google-maps/api";
 export default function Map() {
   const MOCKDATA = [
@@ -56,42 +58,56 @@ export default function Map() {
     height: "47vw",
   });
   // later change center to user location
-  const center = {
+  const [center, setCenter] = useState({
     lat: 41.39,
     lng: 2.154,
-  };
+  });
   const apiKey = process.env.GOOGLE_API_KEY;
   const [map, setMap] = useState({});
+  const [autocomplete, setAutocomplete] = useState(null);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyAJpYEv9x1Nh8h89d6pysqGfpgfs1C6eGE",
     version: "weekly",
+    libraries: ["places"],
   });
+  const onPlaceChanged = async () => {
+    if (autocomplete !== null) {
+      const place = await autocomplete.getPlace();
+      console.log(place.geometry.viewport.Va);
+      setCenter({ lat: place.geometry.viewport.Va.lo, lng: 2.154 });
+    } else {
+      console.log("Autocomplete is not loaded yet!");
+    }
+  };
 
   return isLoaded ? (
-    <div className="mt-16 mr-6 ">
-      <button
-        className="ml-2 float-right"
-        onClick={() =>
-          setContainerSize({
-            width: "40vw",
-            height: "20vw",
-          })
-        }
-      >
-        -
-      </button>
-      <button
-        className=" float-right"
-        onClick={() =>
-          setContainerSize({
-            width: "80vw",
-            height: "47vw",
-          })
-        }
-      >
-        +
-      </button>
+    <div className="mt-16 mr-6 relative">
+      {containerSize.width == "80vw" ? (
+        <button
+          className="absolute p-2 z-20 bg-white mt-24 ml-3 shadow-md"
+          onClick={() =>
+            setContainerSize({
+              width: "40vw",
+              height: "47vw",
+            })
+          }
+        >
+          &#x2771;
+        </button>
+      ) : (
+        <button
+          className="absolute p-3 z-20 bg-white mt-24 ml-3 shadow-md"
+          onClick={() =>
+            setContainerSize({
+              width: "80vw",
+              height: "47vw",
+            })
+          }
+        >
+          &#x2770;
+        </button>
+      )}
       <div className="shadow-xl">
         <GoogleMap
           zoom={12}
@@ -100,6 +116,19 @@ export default function Map() {
           onLoad={(map) => setMap(map)}
           onUnmount={() => setMap({})}
         >
+          {" "}
+          <Autocomplete
+            onPlaceChanged={() => onPlaceChanged()}
+            onLoad={(auto) => {
+              setAutocomplete(auto);
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Customized your placeholder"
+              className="w-[13.5%] h-4 py-4 pl-2 absolute shadow-lg float-right mt-24 ml-[86%] outline-none"
+            />
+          </Autocomplete>
           {/* Child components, such as markers, info windows, etc. */}
           {MOCKDATA ? (
             MOCKDATA.map((huddle) => {
