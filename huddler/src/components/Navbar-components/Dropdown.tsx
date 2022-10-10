@@ -1,3 +1,5 @@
+import React, { useState, useRef, useEffect, EventHandler } from 'react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 const serviceDropdown = [
@@ -7,19 +9,31 @@ const serviceDropdown = [
   { name: 'Log Out', path: '/' },
 ];
 
-
-
-const Dropdown = () => {
+type Props = {
+  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>; 
+}
+const Dropdown = ({setShowDropDown}: Props) => {
   const router = useRouter();
-
-  const handleLogoutClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const insideDropDownRef = useRef<HTMLInputElement>(null);
+  const handleLogoutClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     // some function from authentication logout
     console.log('hit hereeee');
     router.replace('/');
   };
 
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutsideDropdown, true);
+  }, []);
+  function handleClickOutsideDropdown (this: HTMLElement) {
+    if (insideDropDownRef.current === null) return;
+    if (!insideDropDownRef.current!.contains(this)) setShowDropDown(false);
+  };
+
   return (
     <div
+      ref={insideDropDownRef}
       className='mt-24 w-full'
       // onMouseLeave={() => setShowDropDown(false)}
     >
@@ -46,6 +60,7 @@ const Dropdown = () => {
 };
 
 export default Dropdown;
+
 
 
 
