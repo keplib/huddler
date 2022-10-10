@@ -7,7 +7,6 @@ import {
   Marker,
   InfoWindowF,
   Autocomplete,
-  LoadScript,
 } from "@react-google-maps/api";
 export default function Map() {
   const MOCKDATA = [
@@ -70,14 +69,17 @@ export default function Map() {
     version: "weekly",
     libraries: ["places"],
   });
+  const [place, setPlace] = useState(false);
   const onPlaceChanged = async () => {
     if (autocomplete !== null) {
-      const place = await autocomplete.getPlace();
-      console.log(place.geometry.viewport.Va);
-      setCenter({
-        lat: place.geometry.viewport.Va.lo,
-        lng: place.geometry.viewport.Va.hi,
-      });
+      const places = autocomplete.getPlace();
+      if (places) {
+        setPlace(places);
+        setCenter({
+          lat: place.geometry.viewport.Cb.hi,
+          lng: place.geometry.viewport.Va.lo,
+        });
+      }
     } else {
       console.log("Autocomplete is not loaded yet!");
     }
@@ -120,6 +122,7 @@ export default function Map() {
         >
           {" "}
           <Autocomplete
+            fields={["geometry"]}
             onPlaceChanged={() => onPlaceChanged()}
             onLoad={(auto) => {
               setAutocomplete(auto);
@@ -132,6 +135,7 @@ export default function Map() {
             />
           </Autocomplete>
           {/* Child components, such as markers, info windows, etc. */}
+          <Marker position={center} />
           {MOCKDATA ? (
             MOCKDATA.map((huddle) => {
               return (
