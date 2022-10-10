@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import Image from 'next/future/image';
-import placeholder from '../../../public/placeholder.jpg';
-import Dropdown from './Dropdown';
+import React, { useState } from "react";
+import Image from "next/future/image";
+import placeholder from "../../../public/placeholder.jpg";
+import Dropdown from "./Dropdown";
+import Search from "../Home-components/Search";
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const handleClick = () => {
-    setShowDropDown(!showDropDown)
-  }
+    setShowDropDown(!showDropDown);
+  };
 
   return (
-    <div className='h-24 w-full bg-black text-white flex items-center justify-between fixed top-0 px-12 z-10'>
+    <div className="h-24 w-full bg-black text-white flex items-center justify-between fixed top-0 px-12 z-10">
       <h1>Logo here</h1>
-      <div className='w-24 h-24 relative'>
+      <Search />
+      <div className="w-24 h-24 relative">
         <Image
           src={placeholder}
-          alt='placeholder'
+          alt="placeholder"
           fill
-          className=' rounded-full p-1 cursor-pointer'
+          className=" rounded-full p-1 cursor-pointer"
           onClick={() => handleClick()}
         />
         {showDropDown && <Dropdown />}
