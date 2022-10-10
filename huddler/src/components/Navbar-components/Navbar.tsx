@@ -7,6 +7,10 @@ import Search from "../Home-components/Search";
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
 
+  const handleClick = () => {
+    setShowDropDown(!showDropDown);
+  };
+
   return (
     <div className="h-24 w-full bg-black text-white flex items-center justify-between fixed top-0 px-12 z-10">
       <h1>Logo here</h1>
@@ -16,10 +20,10 @@ function Navbar() {
           src={placeholder}
           alt="placeholder"
           fill
-          className=" rounded-full p-1  cursor-pointer"
-          onMouseEnter={() => setShowDropDown(true)}
+          className=" rounded-full p-1 cursor-pointer"
+          onClick={() => handleClick()}
         />
-        {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}
+        {showDropDown && <Dropdown />}
       </div>
     </div>
   );

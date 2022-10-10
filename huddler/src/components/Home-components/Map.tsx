@@ -62,12 +62,11 @@ export default function Map() {
     lat: 41.39,
     lng: 2.154,
   });
-  const apiKey = process.env.GOOGLE_API_KEY;
   const [map, setMap] = useState({});
   const [autocomplete, setAutocomplete] = useState(null);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyAJpYEv9x1Nh8h89d6pysqGfpgfs1C6eGE",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
     version: "weekly",
     libraries: ["places"],
   });
@@ -75,7 +74,10 @@ export default function Map() {
     if (autocomplete !== null) {
       const place = await autocomplete.getPlace();
       console.log(place.geometry.viewport.Va);
-      setCenter({ lat: place.geometry.viewport.Va.lo, lng: 2.154 });
+      setCenter({
+        lat: place.geometry.viewport.Va.lo,
+        lng: place.geometry.viewport.Va.hi,
+      });
     } else {
       console.log("Autocomplete is not loaded yet!");
     }
