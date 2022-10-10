@@ -3,13 +3,52 @@ import {
   GoogleMap,
   useJsApiLoader,
   Marker,
-  InfoWindow,
+  InfoWindowF,
 } from "@react-google-maps/api";
+import HuddleCard from "./HuddleCard";
 export default function Map() {
+  const MOCKDATA = [
+    {
+      huddle1: {
+        name: "somename",
+        details: "somedetails",
+        attendants: 532,
+        lat: 41.33,
+        lng: 2.164,
+      },
+    },
+    {
+      huddle2: {
+        name: "somename",
+        details: "somedetails",
+        attendants: 532,
+        lat: 41.38,
+        lng: 2.174,
+      },
+    },
+    {
+      huddle3: {
+        name: "somename",
+        details: "somedetails",
+        attendants: 532,
+        lat: 41.35,
+        lng: 2.124,
+      },
+    },
+    {
+      huddle4: {
+        name: "somename",
+        details: "somedetails",
+        attendants: 532,
+        lat: 41.3,
+        lng: 2.154,
+      },
+    },
+  ];
   const [showHuddle, setShowHuddle] = useState(true);
   const containerStyle = {
     width: "80vw",
-    height: "80vw",
+    height: "47vw",
   };
   const center = {
     lat: 41.39,
@@ -33,7 +72,7 @@ export default function Map() {
         onUnmount={(map) => setMap({})}
       >
         {/* Child components, such as markers, info windows, etc. */}
-        {showHuddle ? (
+        {/* {showHuddle ? (
           <Marker
             title="coolio"
             position={{ lat: 41.39, lng: 2.154 }}
@@ -41,26 +80,28 @@ export default function Map() {
             animation={google.maps.Animation.DROP}
           />
         ) : (
-          <InfoWindow
+          <InfoWindowF
             onCloseClick={() => setShowHuddle(true)}
             position={{
               lat: 41.39,
               lng: 2.154,
             }}
           >
-            <div className="bg-orange-300 ">
-              <h1>InfoWindow</h1>
-            </div>
-          </InfoWindow>
+            <h1>InfoWindow</h1>
+          </InfoWindowF>
+        )} */}
+        {MOCKDATA ? (
+          MOCKDATA.map((huddle) => {
+            return (
+              <Marker
+                position={{ lat: huddle.lat }}
+                animation={google.maps.Animation.DROP}
+              />
+            );
+          })
+        ) : (
+          <></>
         )}
-        {/* {markers ? (
-        <Marker
-          position={markers.position}
-          animation={google.maps.Animation.DROP}
-        />
-      ) : (
-        <></>
-      )} */}
 
         <></>
       </GoogleMap>
