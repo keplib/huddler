@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import placeholder from '../../../public/placeholder.jpg';
-import Image from 'next/future/image';
+import React, { useState } from "react";
+import placeholder from "../../../public/placeholder.jpg";
+import Image from "next/future/image";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindowF,
-} from '@react-google-maps/api';
+} from "@react-google-maps/api";
 export default function Map() {
+
   const MOCKDATA = [
     {
       name: 'Huddle1',
@@ -59,12 +60,11 @@ export default function Map() {
     lat: 41.39,
     lng: 2.154,
   };
-  const apiKey = process.env.GOOGLE_API_KEY;
   const [map, setMap] = useState({});
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyAJpYEv9x1Nh8h89d6pysqGfpgfs1C6eGE',
-    version: 'weekly',
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyCkRgRrP2nqEQXJxUqBqN9V071kPOn7HoQ",
+    version: "weekly",
   });
 
   return isLoaded ? (

@@ -18,7 +18,7 @@ function Navbar() {
           src={placeholder}
           alt='placeholder'
           fill
-          className=' rounded-full p-1  cursor-pointer'
+          className=' rounded-full p-1 cursor-pointer'
           onClick={() => handleClick()}
         />
         {showDropDown && <Dropdown />}

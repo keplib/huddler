@@ -35,20 +35,20 @@ function Profile() {
           />
           <h1 className='text-[2rem] justify-self-center'>Welcome back, {user.name}</h1>
 
-          <div className='grid grid-cols-3 px-24 p-4'>
-            <div className=' border border-black flex flex-col justify-center items-center p-4'>
+          <div className='flex px-4 pt-4'>
+            <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
               <h1>Huddles</h1>
-              <p>5</p>
+              <p className='font-bold'>5</p>
             </div>
 
-            <div className=' border border-black flex flex-col justify-center items-center p-4'>
+            <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
               <h1>Something</h1>
-              <p>6</p>
+              <p className='font-bold'>6</p>
             </div>
 
-            <div className=' border border-black flex flex-col justify-center items-center p-4'>
-              <h1>Something else</h1>
-              <p>234</p>
+            <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
+              <h1>Something</h1>
+              <p className='font-bold'>234</p>
             </div>
           </div>
         
@@ -77,6 +77,7 @@ function Profile() {
       </div>
 
       <div className='h-full w-full bg-yellow-200 col-span-3'>
+        
 
         <h1 className='py-8 p-4 text-3xl'>Interests:</h1>
         <div className='flex flex-wrap bg-white gap-4 p-4 border'>
