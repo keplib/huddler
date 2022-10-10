@@ -35,7 +35,8 @@ export default function Map() {
     },
     {
       name: "Huddle4",
-      details: "somedetails",
+      details:
+        "somedetails very log description to test how is it going to display i dont know what to type anymore aaaaaa lucas licas lucas",
       attendants: 532,
       lat: 41.3,
       lng: 2.154,
@@ -50,10 +51,10 @@ export default function Map() {
     lng: 2.154,
     checkedIn: true,
   });
-  const containerStyle = {
+  const [containerSize, setContainerSize] = useState({
     width: "80vw",
     height: "47vw",
-  };
+  });
   const center = {
     lat: 41.39,
     lng: 2.154,
@@ -67,13 +68,34 @@ export default function Map() {
   });
 
   return isLoaded ? (
-    <div className="mt-16 mr-6 z-0">
+    <div className="mt-16 mr-6 ">
+      <button
+        onClick={() =>
+          setContainerSize({
+            width: "80vw",
+            height: "47vw",
+          })
+        }
+      >
+        +
+      </button>
+      <button
+        className="ml-2"
+        onClick={() =>
+          setContainerSize({
+            width: "40vw",
+            height: "20vw",
+          })
+        }
+      >
+        -
+      </button>
       <GoogleMap
         zoom={12}
-        mapContainerStyle={containerStyle}
+        mapContainerStyle={containerSize}
         center={center}
         onLoad={(map) => setMap(map)}
-        onUnmount={(map) => setMap({})}
+        onUnmount={() => setMap({})}
       >
         {/* Child components, such as markers, info windows, etc. */}
         {MOCKDATA ? (
@@ -105,7 +127,9 @@ export default function Map() {
             }
           >
             <div className="animation-fadein">
-              <h1 className="font-bold text-orange-600">{showHuddle.name}</h1>
+              <h1 className="font-bold text-orange-600 mb-1">
+                {showHuddle.name}
+              </h1>
               <Image
                 alt="img"
                 src={placeholder}
@@ -113,27 +137,29 @@ export default function Map() {
                 width={200}
                 className="rounded-lg"
               />
-              <h2>attendants {showHuddle.attendants}</h2>
-              <h3>{showHuddle.details}</h3>
-              <div className="float-right flex">
-                {showHuddle.checkedIn ? (
-                  <button
-                    onClick={() =>
-                      setShowHuddle({ ...showHuddle, checkedIn: false })
-                    }
-                  >
-                    Check out
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      setShowHuddle({ ...showHuddle, checkedIn: true })
-                    }
-                  >
-                    Check in
-                  </button>
-                )}
-              </div>
+              <h2 className="mt-1">attendants: {showHuddle.attendants}</h2>
+              <h3 className="h-12 w-48 overflow-auto mt-3">
+                {showHuddle.details}
+              </h3>
+              {showHuddle.checkedIn ? (
+                <button
+                  className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
+                  onClick={() =>
+                    setShowHuddle({ ...showHuddle, checkedIn: false })
+                  }
+                >
+                  Check out
+                </button>
+              ) : (
+                <button
+                  className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
+                  onClick={() =>
+                    setShowHuddle({ ...showHuddle, checkedIn: true })
+                  }
+                >
+                  Check in
+                </button>
+              )}
             </div>
           </InfoWindowF>
         ) : (
