@@ -1,1 +1,1 @@
-export const categoryTags = ['Fishing', 'Kebab', 'Snooker', 'JavaScript'];
+export const categoryTags = ['Fishing', 'Kebab', 'Snooker', 'JavaScript', 'something'];

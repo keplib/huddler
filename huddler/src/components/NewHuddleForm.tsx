@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Huddle } from '../types';
 import { nowFormatted } from '../utils/helperFunctions';
 import Image from 'next/future/image';
@@ -10,6 +10,8 @@ const NewHuddleForm = () => {
 
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>('');
+  let [addedCategories, setAddedCategories] = useState([]);
+  let [allCategories, setAllCategories] = useState(categoryTags);
   const [error, setError] = useState('');
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -17,6 +19,9 @@ const NewHuddleForm = () => {
   const whereRef = useRef<HTMLInputElement>(null);
   const whenRef = useRef<HTMLInputElement>(null);
   const imagesRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  const huddleCategories: string[] = [];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,11 +31,13 @@ const NewHuddleForm = () => {
         name: titleRef.current!.value,
         createdOn: Date.now(),
         when: whenRef.current!.value,
-        categories: [string], //categoriesRef.current!.value,
+        categories: [], //categoriesRef.current!.value,
         longitude: 0, //whereRef.current!.value, //do sth
-        latitude: 0,//whereRef.current!.value, //do sth
+        latitude: 0, //whereRef.current!.value, //do sth
         // for images we'll probably have to split what comes from the input field
         images: [imagesRef.current!.value],
+        description: '',
+        authorId: 123456, //here we'll require the uid from the authentication
       };
       //Post huddle in DB
 
@@ -46,10 +53,23 @@ const NewHuddleForm = () => {
     setImagePreview(URL.createObjectURL(e.target.files[0]));
   };
 
+  const addCategory = (category: string) => {
+    if (huddleCategories.includes(category)) return;
+    huddleCategories.push(category);
+    console.log('These are the selected categories,', huddleCategories);
+  };
+
   return (
     <main className='flex flex-col items-center border-solid border-2 p-10'>
       <h1>Let's make a new huddle</h1>
       {error && <div className='bg-red-600'>{error}</div>}
+      <>
+        <ul>
+          {huddleCategories.map((category, i) => {
+            return <li key={i}>{category}</li>
+        })}
+        </ul>
+      </>
       <form
         className='flex flex-col'
         onSubmit={handleSubmit}
@@ -64,13 +84,18 @@ const NewHuddleForm = () => {
           required
         />
         <label htmlFor='categories'>Pick the categories of your huddle</label>
-        <div>
-        {categoryTags.map((category) => (
-          <h1 className='text-xl bg-blue-600 py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'>
-            {category}
-          </h1>
-        ))}
-        </div>
+        <ul className='grid grid-flow-col grid-flow-rows gap-1'>
+          {allCategories.map((category, i) => (
+            <li
+              key={i}
+              className='text-xl bg-blue-600 px-3 h-9 rounded-r-[50px] rounded-l-[50px] text-white hover:scale-105  cursor-pointer active:translate-y-[2px] active:translate-x-[1px] focus:ring focus:ring-blue-300'
+              onClick={() => addCategory(category)}
+            >
+              {category}
+            </li>
+          ))}
+        </ul>
+
         <label htmlFor='where'>Where?</label>
         <input
           className='border-solid border-2 border-black-600'
@@ -88,6 +113,15 @@ const NewHuddleForm = () => {
           id='dateTime'
           autoComplete='on'
           min={nowFormatted()}
+          required
+        />
+        <label htmlFor='description'>What is your huddle?</label>
+        <textarea
+          className='border-solid border-2 border-black-600'
+          ref={descriptionRef}
+          id='description'
+          autoComplete='on'
+          placeholder='Add a description'
           required
         />
         <label htmlFor='images'>
@@ -124,6 +158,4 @@ const NewHuddleForm = () => {
 };
 
 export default NewHuddleForm;
-
-
 
