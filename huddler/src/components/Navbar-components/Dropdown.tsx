@@ -12,7 +12,8 @@ const serviceDropdown = [
 type Props = {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>; 
 }
-const Dropdown = ({setShowDropDown}: Props) => {
+const Dropdown = ({ setShowDropDown }: Props) => {
+  
   const router = useRouter();
   const insideDropDownRef = useRef<HTMLInputElement>(null);
   const handleLogoutClick = (
@@ -26,7 +27,7 @@ const Dropdown = ({setShowDropDown}: Props) => {
   useEffect(() => {
     document.addEventListener('click', handleClickOutsideDropdown, true);
   }, []);
-  function handleClickOutsideDropdown (this: HTMLElement) {
+  function handleClickOutsideDropdown(this: HTMLElement) {
     if (insideDropDownRef.current === null) return;
     if (!insideDropDownRef.current!.contains(this)) setShowDropDown(false);
   };
