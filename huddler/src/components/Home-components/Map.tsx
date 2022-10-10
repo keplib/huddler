@@ -12,48 +12,13 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
-export default function Map() {
-  const MOCKDATA = [
-    {
-      name: "Huddle1",
-      details: "somedetails",
-      attendants: 532,
-      lat: 41.33,
-      lng: 2.164,
-      checkedIn: false,
-    },
-    {
-      name: "Huddle2",
-      details: "somedetails",
-      attendants: 532,
-      lat: 41.38,
-      lng: 2.174,
-      checkedIn: false,
-    },
-    {
-      name: "Huddle3",
-      details: "somedetails",
-      attendants: 532,
-      lat: 41.35,
-      lng: 2.124,
-      checkedIn: false,
-    },
-    {
-      name: "Huddle4",
-      details:
-        "somedetails very log description to test how is it going to display i dont know what to type anymore aaaaaa lucas licas lucas",
-      attendants: 532,
-      lat: 41.3,
-      lng: 2.154,
-      checkedIn: false,
-    },
-  ];
+export default function Map({ huddles }) {
   const [showHuddle, setShowHuddle] = useState({
     name: "",
-    details: "somedetails",
+    description: "somedetails",
     attendants: 532,
-    lat: 41.3,
-    lng: 2.154,
+    latitude: 41.3,
+    longitude: 2.154,
     checkedIn: true,
   });
   const [containerSize, setContainerSize] = useState({
@@ -188,14 +153,20 @@ export default function Map() {
           {selected && (
             <Marker position={center} animation={google.maps.Animation.DROP} />
           )}
-          {MOCKDATA ? (
-            MOCKDATA.map((huddle) => {
+          {huddles ? (
+            huddles.map((huddle) => {
               return (
                 <Marker
-                  key={huddle.lat}
-                  position={{ lat: huddle.lat, lng: huddle.lng }}
+                  key={huddle.id}
+                  position={{
+                    lng: Number(huddle.longitude),
+                    lat: Number(huddle.latitude),
+                  }}
                   animation={google.maps.Animation.DROP}
-                  onClick={() => setShowHuddle(huddle)}
+                  onClick={() => {
+                    console.log(huddle);
+                    setShowHuddle(huddle);
+                  }}
                 />
               );
             })
@@ -204,14 +175,17 @@ export default function Map() {
           )}
           {showHuddle.name ? (
             <InfoWindowF
-              position={{ lat: showHuddle.lat, lng: showHuddle.lng }}
+              position={{
+                lat: Number(showHuddle.latitude),
+                lng: Number(showHuddle.longitude),
+              }}
               onCloseClick={() =>
                 setShowHuddle({
                   name: "",
-                  details: "somedetails",
+                  description: "somedetails",
                   attendants: 532,
-                  lat: 41.3,
-                  lng: 2.154,
+                  latitude: 41.3,
+                  longitude: 2.154,
                   checkedIn: false,
                 })
               }
@@ -220,6 +194,7 @@ export default function Map() {
                 <h1 className="font-bold text-orange-600 mb-1">
                   {showHuddle.name}
                 </h1>
+                <h1>{showHuddle.when}</h1>
                 <Image
                   alt="img"
                   src={placeholder}
@@ -227,9 +202,9 @@ export default function Map() {
                   width={200}
                   className="rounded-lg"
                 />
-                <h2 className="mt-1">attendants: {showHuddle.attendants}</h2>
+                <h2 className="mt-1">attendants: 1234</h2>
                 <h3 className="h-12 w-48 overflow-auto mt-3">
-                  {showHuddle.details}
+                  {showHuddle.description}
                 </h3>
                 {showHuddle.checkedIn ? (
                   <button
