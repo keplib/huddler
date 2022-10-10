@@ -19,14 +19,13 @@ export default function Map() {
   const [map, setMap] = useState({});
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCp_tB1ltdO-fu83Ab_xL6Lp_lK-yRunPc",
+    googleMapsApiKey: "AIzaSyCkRgRrP2nqEQXJxUqBqN9V071kPOn7HoQ",
     version: "weekly",
   });
 
   return isLoaded ? (
     <div className="mt-16 mr-6 z-0">
       <GoogleMap
-        // mapTypeId="f0f3505446fe06f1"
         zoom={12}
         mapContainerStyle={containerStyle}
         center={center}
