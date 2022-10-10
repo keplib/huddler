@@ -8,9 +8,12 @@ import { fetcher } from "../../src/utils/fetcher";
 function index() {
   const { data, error } = useSWR('https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted', fetcher)
 
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+
   return (
     <div className="flex">
-      <Huddles />
+      <Huddles huddles={data} />
       <Map huddles={data} />
     </div>
   );
