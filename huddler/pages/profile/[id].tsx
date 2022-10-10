@@ -57,6 +57,7 @@ function Profile() {
       <div className='h-full w-full bg-yellow-200 col-span-3'>
 
         <div className='h-48 w-full '>
+          <h1>{User }</h1>
           
 
        </div>
