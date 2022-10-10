@@ -1,51 +1,55 @@
 import React, { useState } from "react";
+import placeholder from "../../../public/placeholder.jpg";
+import Image from "next/future/image";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindowF,
 } from "@react-google-maps/api";
-import HuddleCard from "./HuddleCard";
 export default function Map() {
   const MOCKDATA = [
     {
-      huddle1: {
-        name: "somename",
-        details: "somedetails",
-        attendants: 532,
-        lat: 41.33,
-        lng: 2.164,
-      },
+      name: "Huddle1",
+      details: "somedetails",
+      attendants: 532,
+      lat: 41.33,
+      lng: 2.164,
+      checkedIn: false,
     },
     {
-      huddle2: {
-        name: "somename",
-        details: "somedetails",
-        attendants: 532,
-        lat: 41.38,
-        lng: 2.174,
-      },
+      name: "Huddle2",
+      details: "somedetails",
+      attendants: 532,
+      lat: 41.38,
+      lng: 2.174,
+      checkedIn: false,
     },
     {
-      huddle3: {
-        name: "somename",
-        details: "somedetails",
-        attendants: 532,
-        lat: 41.35,
-        lng: 2.124,
-      },
+      name: "Huddle3",
+      details: "somedetails",
+      attendants: 532,
+      lat: 41.35,
+      lng: 2.124,
+      checkedIn: false,
     },
     {
-      huddle4: {
-        name: "somename",
-        details: "somedetails",
-        attendants: 532,
-        lat: 41.3,
-        lng: 2.154,
-      },
+      name: "Huddle4",
+      details: "somedetails",
+      attendants: 532,
+      lat: 41.3,
+      lng: 2.154,
+      checkedIn: false,
     },
   ];
-  const [showHuddle, setShowHuddle] = useState(true);
+  const [showHuddle, setShowHuddle] = useState({
+    name: "",
+    details: "somedetails",
+    attendants: 532,
+    lat: 41.3,
+    lng: 2.154,
+    checkedIn: true,
+  });
   const containerStyle = {
     width: "80vw",
     height: "47vw",
@@ -72,37 +76,69 @@ export default function Map() {
         onUnmount={(map) => setMap({})}
       >
         {/* Child components, such as markers, info windows, etc. */}
-        {/* {showHuddle ? (
-          <Marker
-            title="coolio"
-            position={{ lat: 41.39, lng: 2.154 }}
-            onClick={() => setShowHuddle(false)}
-            animation={google.maps.Animation.DROP}
-          />
-        ) : (
-          <InfoWindowF
-            onCloseClick={() => setShowHuddle(true)}
-            position={{
-              lat: 41.39,
-              lng: 2.154,
-            }}
-          >
-            <h1>InfoWindow</h1>
-          </InfoWindowF>
-        )} */}
         {MOCKDATA ? (
           MOCKDATA.map((huddle) => {
             return (
               <Marker
-                position={{ lat: huddle.lat }}
+                key={huddle.lat}
+                position={{ lat: huddle.lat, lng: huddle.lng }}
                 animation={google.maps.Animation.DROP}
+                onClick={() => setShowHuddle(huddle)}
               />
             );
           })
         ) : (
           <></>
         )}
-
+        {showHuddle.name ? (
+          <InfoWindowF
+            position={{ lat: showHuddle.lat, lng: showHuddle.lng }}
+            onCloseClick={() =>
+              setShowHuddle({
+                name: "",
+                details: "somedetails",
+                attendants: 532,
+                lat: 41.3,
+                lng: 2.154,
+                checkedIn: false,
+              })
+            }
+          >
+            <div className="animation-fadein">
+              <h1 className="font-bold text-orange-600">{showHuddle.name}</h1>
+              <Image
+                alt="img"
+                src={placeholder}
+                height={200}
+                width={200}
+                className="rounded-lg"
+              />
+              <h2>attendants {showHuddle.attendants}</h2>
+              <h3>{showHuddle.details}</h3>
+              <div className="float-right flex">
+                {showHuddle.checkedIn ? (
+                  <button
+                    onClick={() =>
+                      setShowHuddle({ ...showHuddle, checkedIn: false })
+                    }
+                  >
+                    Check out
+                  </button>
+                ) : (
+                  <button
+                    onClick={() =>
+                      setShowHuddle({ ...showHuddle, checkedIn: true })
+                    }
+                  >
+                    Check in
+                  </button>
+                )}
+              </div>
+            </div>
+          </InfoWindowF>
+        ) : (
+          <></>
+        )}
         <></>
       </GoogleMap>
     </div>
