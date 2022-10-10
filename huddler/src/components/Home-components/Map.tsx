@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import placeholder from "../../../public/placeholder.jpg";
 import Image from "next/future/image";
 import {
@@ -32,13 +32,13 @@ export default function Map({ huddles }) {
   });
   const [map, setMap] = useState({});
   const [autocomplete, setAutocomplete] = useState(null);
+  const [selected, setSelected] = useState(null);
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
     version: "weekly",
     libraries: ["places"],
   });
-  const [selected, setSelected] = useState(null);
   const PlacesAutocomplete = () => {
     const {
       ready,
@@ -157,14 +157,13 @@ export default function Map({ huddles }) {
             huddles.map((huddle) => {
               return (
                 <Marker
-                  key={huddle.id}
+                  // key={huddle.id + ""}
                   position={{
-                    lng: Number(huddle.longitude),
                     lat: Number(huddle.latitude),
+                    lng: Number(huddle.longitude),
                   }}
                   animation={google.maps.Animation.DROP}
                   onClick={() => {
-                    console.log(huddle);
                     setShowHuddle(huddle);
                   }}
                 />
@@ -197,7 +196,7 @@ export default function Map({ huddles }) {
                 <h1>{showHuddle.when}</h1>
                 <Image
                   alt="img"
-                  src={placeholder}
+                  src={showHuddle.images.stringValues[0]}
                   height={200}
                   width={200}
                   className="rounded-lg"
