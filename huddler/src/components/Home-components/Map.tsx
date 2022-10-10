@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import placeholder from "../../../public/placeholder.jpg";
 import Image from "next/future/image";
 import {
@@ -7,7 +7,9 @@ import {
   Marker,
   InfoWindowF,
 } from "@react-google-maps/api";
+
 export default function Map() {
+
   const MOCKDATA = [
     {
       name: "Huddle1",
@@ -59,11 +61,10 @@ export default function Map() {
     lat: 41.39,
     lng: 2.154,
   };
-  const apiKey = process.env.GOOGLE_API_KEY;
   const [map, setMap] = useState({});
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCkRgRrP2nqEQXJxUqBqN9V071kPOn7HoQ",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
     version: "weekly",
   });
 

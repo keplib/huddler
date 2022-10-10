@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Navbar from '../src/components/Navbar-components/Navbar'
+import Footer from '../src/components/Footer'
 
 function MyApp({ Component, pageProps }: AppProps) {
   
@@ -11,8 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Navbar />
       {/* Container for responsiveness applied to every page */}
       <div className='self-center bg-slate-200 h-full w-full mt-24'>
-      <Component {...pageProps}/>
+        <Component {...pageProps} />
       </div>
+{/* <Footer /> */}
     </div>
 
 

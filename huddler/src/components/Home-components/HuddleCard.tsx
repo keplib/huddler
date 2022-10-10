@@ -4,9 +4,6 @@ import placeholder from "../../../public/placeholder.jpg"
 
 
 const HuddleCard = ({ item }: any) => {
-  console.log(item)
-
-
 
   return (
     <div className="grid grid-cols-3 bg-yellow-200 border p-4">
