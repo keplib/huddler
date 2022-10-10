@@ -4,6 +4,7 @@ import { nowFormatted } from '../utils/helperFunctions';
 import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 import { categoryTags } from '../categoryTags';
+import { fetcher } from '../utils/fetcher';
 
 const NewHuddleForm = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const NewHuddleForm = () => {
     e.preventDefault();
     try {
       setError('');
+
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
         createdOn: Date.now(),
@@ -40,9 +42,16 @@ const NewHuddleForm = () => {
         authorId: 123456, //here we'll require the uid from the authentication
       };
       //Post huddle in DB
-
+      fetcher('https://jsonplaceholder.typicode.com/posts',{
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(newHuddle),
+        headers: {
+          "Content-type": "application/json",
+        }
+      });
       //redirect to user home page
-      // router.replace('/home')
+      router.replace('/home')
     } catch {
       setError('We could not create the huddle');
     }
