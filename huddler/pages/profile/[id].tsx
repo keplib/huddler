@@ -51,7 +51,7 @@ function Profile() {
         </div>
 
         <div>
-          <Huddles />
+          {/* <Huddles /> */}
         </div>
 
 
