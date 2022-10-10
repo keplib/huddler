@@ -1,42 +1,42 @@
-import React, { useState } from "react";
-import placeholder from "../../../public/placeholder.jpg";
-import Image from "next/future/image";
+import React, { useState } from 'react';
+import placeholder from '../../../public/placeholder.jpg';
+import Image from 'next/future/image';
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindowF,
-} from "@react-google-maps/api";
+} from '@react-google-maps/api';
 export default function Map() {
   const MOCKDATA = [
     {
-      name: "Huddle1",
-      details: "somedetails",
+      name: 'Huddle1',
+      details: 'somedetails',
       attendants: 532,
       lat: 41.33,
       lng: 2.164,
       checkedIn: false,
     },
     {
-      name: "Huddle2",
-      details: "somedetails",
+      name: 'Huddle2',
+      details: 'somedetails',
       attendants: 532,
       lat: 41.38,
       lng: 2.174,
       checkedIn: false,
     },
     {
-      name: "Huddle3",
-      details: "somedetails",
+      name: 'Huddle3',
+      details: 'somedetails',
       attendants: 532,
       lat: 41.35,
       lng: 2.124,
       checkedIn: false,
     },
     {
-      name: "Huddle4",
+      name: 'Huddle4',
       details:
-        "somedetails very log description to test how is it going to display i dont know what to type anymore aaaaaa lucas licas lucas",
+        'somedetails very log description to test how is it going to display i dont know what to type anymore aaaaaa lucas licas lucas',
       attendants: 532,
       lat: 41.3,
       lng: 2.154,
@@ -44,16 +44,16 @@ export default function Map() {
     },
   ];
   const [showHuddle, setShowHuddle] = useState({
-    name: "",
-    details: "somedetails",
+    name: '',
+    details: 'somedetails',
     attendants: 532,
     lat: 41.3,
     lng: 2.154,
     checkedIn: true,
   });
   const [containerSize, setContainerSize] = useState({
-    width: "80vw",
-    height: "47vw",
+    width: '80vw',
+    height: '47vw',
   });
   const center = {
     lat: 41.39,
@@ -62,29 +62,29 @@ export default function Map() {
   const apiKey = process.env.GOOGLE_API_KEY;
   const [map, setMap] = useState({});
   const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCkRgRrP2nqEQXJxUqBqN9V071kPOn7HoQ",
-    version: "weekly",
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyAJpYEv9x1Nh8h89d6pysqGfpgfs1C6eGE',
+    version: 'weekly',
   });
 
   return isLoaded ? (
-    <div className="mt-16 mr-6 ">
+    <div className='mt-16 mr-6 '>
       <button
         onClick={() =>
           setContainerSize({
-            width: "80vw",
-            height: "47vw",
+            width: '80vw',
+            height: '47vw',
           })
         }
       >
         +
       </button>
       <button
-        className="ml-2"
+        className='ml-2'
         onClick={() =>
           setContainerSize({
-            width: "40vw",
-            height: "20vw",
+            width: '40vw',
+            height: '20vw',
           })
         }
       >
@@ -117,8 +117,8 @@ export default function Map() {
             position={{ lat: showHuddle.lat, lng: showHuddle.lng }}
             onCloseClick={() =>
               setShowHuddle({
-                name: "",
-                details: "somedetails",
+                name: '',
+                details: 'somedetails',
                 attendants: 532,
                 lat: 41.3,
                 lng: 2.154,
@@ -126,24 +126,24 @@ export default function Map() {
               })
             }
           >
-            <div className="animation-fadein">
-              <h1 className="font-bold text-orange-600 mb-1">
+            <div className='animation-fadein'>
+              <h1 className='font-bold text-orange-600 mb-1'>
                 {showHuddle.name}
               </h1>
               <Image
-                alt="img"
+                alt='img'
                 src={placeholder}
                 height={200}
                 width={200}
-                className="rounded-lg"
+                className='rounded-lg'
               />
-              <h2 className="mt-1">attendants: {showHuddle.attendants}</h2>
-              <h3 className="h-12 w-48 overflow-auto mt-3">
+              <h2 className='mt-1'>attendants: {showHuddle.attendants}</h2>
+              <h3 className='h-12 w-48 overflow-auto mt-3'>
                 {showHuddle.details}
               </h3>
               {showHuddle.checkedIn ? (
                 <button
-                  className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
+                  className='float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]'
                   onClick={() =>
                     setShowHuddle({ ...showHuddle, checkedIn: false })
                   }
@@ -152,7 +152,7 @@ export default function Map() {
                 </button>
               ) : (
                 <button
-                  className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
+                  className='float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]'
                   onClick={() =>
                     setShowHuddle({ ...showHuddle, checkedIn: true })
                   }
@@ -172,3 +172,4 @@ export default function Map() {
     <></>
   );
 }
+
