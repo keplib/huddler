@@ -5,24 +5,25 @@ import { Category } from "../../types";
 
 
 
-function Search() {
-  const { data, error } = useSWR("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories", fetcher);
+function Search({ categories }:Category[] ) {
+  const [tags, setTags] = useState([])
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    if (data) handleSearch();
-  }, [search])
+    setTags(categories);
+  },[])
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  useEffect(() => {
+    if (tags) handleSearch();
+  }, [search])
 
   const handleShow = () => {
     setShow(!show);
   }
 
   const handleSearch = () => {
-    let filtered = data.filter((category:Category) => {
+    let filtered = tags.filter((category:Category) => {
       return category.name.toLowerCase().includes(search.toLocaleLowerCase());      
     });
     return filtered;
@@ -49,7 +50,7 @@ function Search() {
       <button onClick={() => handleShow()}>{show ? "Up" : "Down"}</button>
       {show ? <div className='flex flex-wrap bg-white gap-4 p-4 border'>
         
-        {data && handleSearch().map((category:Category) => (
+        {tags && handleSearch().map((category:Category) => (
           <h1 className='text-xl bg-blue-600 py-2 px-3 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'
             key={category.id}>{category.name}</h1>
         ))}

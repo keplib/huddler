@@ -24,8 +24,8 @@ const HuddleCard = ({ item, handleActive, active }: any) => {
       <p>{item.description}</p>
     </div>
       <div className="inline-block h-full w-full">
-        {item.images.stringValues.map((image:string) => (
-          <Image src={image} height={200} width={200} />
+        {item.images.stringValues.map((image:string,i:number) => (
+          <Image src={image} height={200} width={200} key={i} />
         ))}
     </div>
   </div>;
