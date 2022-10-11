@@ -1,7 +1,10 @@
 import { FC } from 'react'
 import {User} from '../../types'
-const sth
-const SettingsForm = (user: User) => {
+
+type Props = {
+  currentUser: User;
+}
+const SettingsForm = ({currentUser}: Props) => {
   return {user}
 }
 
