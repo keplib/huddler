@@ -42,16 +42,16 @@ const NewHuddleForm = () => {
         authorId: 123456, //here we'll require the uid from the authentication
       };
       //Post huddle in DB
-      fetcher('https://jsonplaceholder.typicode.com/posts',{
+      fetcher('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(newHuddle),
         headers: {
-          "Content-type": "application/json",
-        }
+          'Content-type': 'application/json',
+        },
       });
       //redirect to user home page
-      router.replace('/home')
+      router.replace('/home');
     } catch {
       setError('We could not create the huddle');
     }
@@ -75,8 +75,8 @@ const NewHuddleForm = () => {
       <>
         <ul>
           {huddleCategories.map((category, i) => {
-            return <li key={i}>{category}</li>
-        })}
+            return <li key={i}>{category}</li>;
+          })}
         </ul>
       </>
       <form
@@ -108,7 +108,7 @@ const NewHuddleForm = () => {
         <label htmlFor='where'>Where?</label>
         <input
           className='border-solid border-2 border-black-600'
-          // ref={emailRef}
+          ref={whereRef}
           type='text'
           id='where'
           autoComplete='on'
@@ -133,28 +133,33 @@ const NewHuddleForm = () => {
           placeholder='Add a description'
           required
         />
-        <label htmlFor='images'>
-          Do you want images to show in your huddle?
-        </label>
-        <input
-          className='border-solid border-2 border-black-600'
-          ref={imagesRef}
-          type='file'
-          accept='.jpg, jpeg, .png, .gif'
-          onChange={onSelectFile}
-          id='images'
-        />
-        {imageSelected && (
-          <figure>
-            <Image
-              width={100}
-              height={100}
-              id='image-preview'
-              alt='image-preview'
-              src={imagePreview}
+        <div className='flex'>
+          <div className='flex flex-col'>
+            <label htmlFor='images'>
+              Do you want images to show in your huddle?
+            </label>
+            <input
+              className='border-solid border-2 border-black-600'
+              ref={imagesRef}
+              type='file'
+              accept='.jpg, jpeg, .png, .gif'
+              onChange={onSelectFile}
+              id='images'
             />
-          </figure>
-        )}
+          </div>
+          {imageSelected && (
+            <figure>
+              <Image
+                className='ml-10'
+                width={100}
+                height={100}
+                id='image-preview'
+                alt='image-preview'
+                src={imagePreview}
+              />
+            </figure>
+          )}
+        </div>
         <button
           className='border-solid border-2 border-black-600'
           type='submit'
