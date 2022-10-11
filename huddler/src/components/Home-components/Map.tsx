@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/future/image";
 import {
   GoogleMap,
@@ -7,16 +7,14 @@ import {
   InfoWindowF,
 } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
+import { Huddle } from "../../types";
 
-export default function Map({ huddles }) {
-  const [showHuddle, setShowHuddle] = useState({
-    name: "",
-    description: "somedetails",
-    attendants: 532,
-    latitude: 41.3,
-    longitude: 2.154,
-    checkedIn: true,
-  });
+type Props = { huddles: Huddle[] };
+export default function Map({ huddles }: Props) {
+  const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
+  const [checkedIn, setCheckedIn] = useState(false);
+  const [map, setMap] = useState({});
+  const [selected, setSelected] = useState(false);
   const [containerSize, setContainerSize] = useState({
     width: "80vw",
     height: "47vw",
@@ -26,8 +24,7 @@ export default function Map({ huddles }) {
     lat: 41.39,
     lng: 2.154,
   });
-  const [map, setMap] = useState({});
-  const [selected, setSelected] = useState(null);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
@@ -81,7 +78,7 @@ export default function Map({ huddles }) {
             />
           )}
           {huddles ? (
-            huddles.map((huddle) => {
+            huddles.map((huddle: Huddle) => {
               return (
                 <Marker
                   key={huddle.id + ""}
@@ -99,22 +96,13 @@ export default function Map({ huddles }) {
           ) : (
             <></>
           )}
-          {showHuddle.name ? (
+          {showHuddle ? (
             <InfoWindowF
               position={{
                 lat: Number(showHuddle.latitude),
                 lng: Number(showHuddle.longitude),
               }}
-              onCloseClick={() =>
-                setShowHuddle({
-                  name: "",
-                  description: "somedetails",
-                  attendants: 532,
-                  latitude: 41.3,
-                  longitude: 2.154,
-                  checkedIn: false,
-                })
-              }
+              onCloseClick={() => setShowHuddle(undefined)}
             >
               <div className="animation-fadein">
                 <h1 className="font-bold text-orange-600 mb-1">
@@ -132,21 +120,17 @@ export default function Map({ huddles }) {
                 <h3 className="h-12 w-48 overflow-auto mt-3">
                   {showHuddle.description}
                 </h3>
-                {showHuddle.checkedIn ? (
+                {checkedIn ? (
                   <button
                     className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
-                    onClick={() =>
-                      setShowHuddle({ ...showHuddle, checkedIn: false })
-                    }
+                    onClick={() => setCheckedIn(false)}
                   >
                     Check out
                   </button>
                 ) : (
                   <button
                     className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
-                    onClick={() =>
-                      setShowHuddle({ ...showHuddle, checkedIn: true })
-                    }
+                    onClick={() => setCheckedIn(true)}
                   >
                     Check in
                   </button>

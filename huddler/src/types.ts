@@ -8,19 +8,19 @@ export interface User {
   password?: string;
   firstName?: string;
   lastName?: string;
-  avatar?: StaticImageData |string;
+  avatar?: File;
   dateOfBirth?: Date;
 }
 
 export interface Huddle {
   name: string;
-  createdOn: number;
+  date_of_creation: string;
   when: string;
   description: string;
   authorId: number;
   longitude: number;
   latitude: number;
   id?: number;
-  images?: string[];
+  images: { stringValues: string[] };
   categories: string[];
 }

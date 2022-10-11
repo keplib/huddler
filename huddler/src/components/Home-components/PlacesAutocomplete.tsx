@@ -5,7 +5,19 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-const PlacesAutocomplete = ({ hook, setSelected }) => {
+type Props = {
+  hook: React.Dispatch<
+    React.SetStateAction<{
+      lat: number;
+      lng: number;
+    }>
+  >;
+  setSelected: React.Dispatch<React.SetStateAction<boolean>>;
+};
+type Description = {
+  description: string;
+};
+const PlacesAutocomplete = ({ hook, setSelected }: Props) => {
   const {
     ready,
     value,
@@ -24,14 +36,16 @@ const PlacesAutocomplete = ({ hook, setSelected }) => {
     clearSuggestions();
   });
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     // Update the keyword of the input element
-    setValue(e.target.value);
+    setValue(e.currentTarget.value);
   };
 
   const handleSelect =
-    ({ description }) =>
+    ({ description }: Description) =>
     () => {
+      console.log(description);
+
       // When user selects a place, we can replace the keyword without request data from API
       // by setting the second parameter to "false"
       setValue(description, false);
@@ -43,6 +57,7 @@ const PlacesAutocomplete = ({ hook, setSelected }) => {
         hook({ lat, lng });
         setSelected(true);
       });
+      setValue("");
     };
 
   const renderSuggestions = () =>
