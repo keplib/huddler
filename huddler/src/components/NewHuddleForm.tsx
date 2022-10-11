@@ -3,7 +3,6 @@ import { Huddle } from "../types";
 import { nowFormatted } from "../utils/helperFunctions";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
-import { categoryTags } from "../categoryTags";
 import { fetcher } from "../utils/fetcher";
 import TagList from "./TagList";
 
@@ -16,11 +15,10 @@ type Props = {
 };
 const NewHuddleForm = ({ data }: Props) => {
   const router = useRouter();
-  console.log(data);
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [addedCategories, setAddedCategories] = useState([]);
-  const [allCategories, setAllCategories] = useState(categoryTags);
+  const [addedCategories, setAddedCategories] = useState([""]);
+  const [allCategories, setAllCategories] = useState([""]);
   const [location, setLocation] = useState(data.name || "");
   const [error, setError] = useState("");
 
@@ -30,8 +28,6 @@ const NewHuddleForm = ({ data }: Props) => {
   const whenRef = useRef<HTMLInputElement>(null);
   const imagesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-
-  const huddleCategories: string[] = [];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,10 +66,13 @@ const NewHuddleForm = ({ data }: Props) => {
     setImageSelected(true);
     setImagePreview(URL.createObjectURL(e.target.files[0]));
   };
+  let huddleCategories: string[] = [];
 
   const addCategory = (category: string) => {
-    if (huddleCategories.includes(category)) return;
-    huddleCategories.push(category);
+    if (addedCategories.includes(category)) return;
+    addedCategories[0] == ""
+      ? setAddedCategories([category])
+      : setAddedCategories([...addedCategories, category]);
     console.log("These are the selected categories,", huddleCategories);
   };
 
@@ -81,13 +80,7 @@ const NewHuddleForm = ({ data }: Props) => {
     <main className="w-[100%]">
       <h1 className="text-center">Let's make a new huddle</h1>
       {error && <div className="bg-red-600">{error}</div>}
-      <>
-        <ul>
-          {huddleCategories.map((category, i) => {
-            return <li key={i}>{category}</li>;
-          })}
-        </ul>
-      </>
+
       <form className="flex flex-col" onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input
@@ -98,19 +91,44 @@ const NewHuddleForm = ({ data }: Props) => {
           autoComplete="on"
           required
         />
-        <label htmlFor="categories">Pick the categories of your huddle</label>
-        <ul className="grid grid-flow-col grid-flow-rows gap-1">
-          {allCategories.map((category, i) => (
-            <li
-              key={i}
-              className="text-xl bg-blue-600 px-3 h-9 rounded-r-[50px] rounded-l-[50px] text-white hover:scale-105  cursor-pointer active:translate-y-[2px] active:translate-x-[1px] focus:ring focus:ring-blue-300"
-              onClick={() => addCategory(category)}
-            >
-              {category}
-            </li>
-          ))}
-        </ul>
-        <TagList />
+        <label htmlFor="categories">Pick the tags of your huddle</label>
+        {allCategories[0] ? (
+          <div className="absolute ml-[95%] mt-[22%] w-[22rem] bg-white p-2 rounded-sm shadow-sm">
+            <ul className="grid grid-cols-3 gap-2">
+              {allCategories.map((category, i) => (
+                <li
+                  key={i}
+                  className="text-xl shadow-sm bg-blue-600 px-3 h-9 rounded-sm text-white hover:scale-105  cursor-pointer active:translate-y-[2px] active:translate-x-[1px] focus:ring focus:ring-blue-300"
+                  onClick={() => addCategory(category)}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="my-3">
+          <ul className="grid grid-cols-3 gap-2">
+            {addedCategories.map((category, i) => {
+              return (
+                <li
+                  key={i}
+                  className="cursor-pointer bg-slate-200 pl-1 rounded-sm"
+                  onClick={() =>
+                    setAddedCategories(
+                      addedCategories.filter((word) => word != category)
+                    )
+                  }
+                >
+                  {category}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <TagList setAllCategories={setAllCategories} />
         <label htmlFor="where">Where?</label>
         <input
           className="border-solid border-2 border-black-600"
