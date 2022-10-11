@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   GoogleMap,
   useJsApiLoader,
-  Marker,
+  MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
@@ -119,7 +119,7 @@ export default function Map({ huddles }: Props) {
         >
           {/* Child components, such as markers, info windows, etc. */}
           {selected && (
-            <Marker
+            <MarkerF
               position={center}
               animation={google.maps.Animation.DROP}
               draggable={true}
@@ -134,7 +134,7 @@ export default function Map({ huddles }: Props) {
           {huddles ? (
             huddles.map((huddle: Huddle) => {
               return (
-                <Marker
+                <MarkerF
                   key={huddle.id + ""}
                   position={{
                     lat: Number(huddle.latitude),
