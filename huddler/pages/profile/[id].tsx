@@ -45,8 +45,8 @@ function Profile() {
 
         <h1 className='py-8 p-4 text-3xl'>Interests:</h1>
         <div className='flex flex-wrap bg-white gap-4 p-4 border'>
-          {tags.map((tag) => (
-            <h1 className='text-xl bg-blue-600 py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'>{tag}</h1>
+          {tags.map((tag,i) => (
+            <h1 className='text-xl bg-blue-600 py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer' key={i}>{tag}</h1>
           ))}
         </div>
 

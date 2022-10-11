@@ -1,24 +1,25 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import Navbar from '../src/components/Navbar-components/Navbar'
-import Footer from '../src/components/Footer'
+import Layout from '../src/components/Layout'
+import { ReactElement, ReactNode } from 'react'
+import { NextPage } from 'next'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+
   return (
-    // Container for page
-    <div className='w-full h-screen bg-red-200 flex flex-col justify-center'>
-      {/* Globally binds navbar for every page */}      
-      <Navbar />
-      {/* Container for responsiveness applied to every page */}
-      <div className='self-center bg-slate-200 h-full w-full mt-24'>
-        <Component {...pageProps} />
-      </div>
-{/* <Footer /> */}
-    </div>
-
-
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   )
+
 }
 
 export default MyApp
