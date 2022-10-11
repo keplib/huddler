@@ -3,6 +3,7 @@ import Huddles from "../../src/components/Home-components/Huddles";
 import Map from "../../src/components/Home-components/Map";
 import useSWR from 'swr'
 import { fetcher } from "../../src/utils/fetcher";
+import Search from "../../src/components/Home-components/Search";
 // import { Huddle } from '../../types';
 
 function index() {
@@ -12,10 +13,13 @@ function index() {
   if (!data) return <div>loading...</div>
 
   return (
+    <>
+      <Search />
     <div className="flex">
       <Huddles huddles={data} />
       <Map huddles={data} />
     </div>
+    </>
   );
 }
 
