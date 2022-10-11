@@ -1,7 +1,8 @@
 import useSWR, { Key, Fetcher } from 'swr'
 
-
 export const fetcher = async (...args) => {
+    
+    console.log('new');
     
     // const url = 'https://jsonplaceholder.typicode.com/posts'
     const res = await (fetch(...args))

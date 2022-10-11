@@ -11,6 +11,8 @@ import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle } from "../../types";
 import NewHuddleForm from "../NewHuddleForm";
 
+const libraries:("places" | "drawing" | "geometry" | "localContext" | "visualization")[] = ['places'];
+
 type Props = { huddles: Huddle[] };
 export default function Map({ huddles }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
@@ -29,11 +31,11 @@ export default function Map({ huddles }: Props) {
     lng: 2.154,
   });
 
-  const { isLoaded } = useJsApiLoader({
+  const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
     version: "weekly",
-    libraries: ["places"],
+    libraries,
   });
   const toggleCreate = () => {
     const form = document.getElementById("huddle-form");
