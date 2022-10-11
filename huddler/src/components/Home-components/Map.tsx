@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle } from "../../types";
-import NewHuddleForm from "../NewHuddleForm";
+import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 
 const libraries: (
   | "places"
@@ -23,9 +23,9 @@ export default function Map({ huddles }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [checkedIn, setCheckedIn] = useState(false);
   const [locationName, setLocationName] = useState("");
+  const [selected, setSelected] = useState(false);
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
-  const [selected, setSelected] = useState(false);
   const [containerSize, setContainerSize] = useState({
     width: "100%",
     height: "100%",

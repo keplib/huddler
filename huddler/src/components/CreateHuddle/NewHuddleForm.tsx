@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Huddle } from "../types";
-import { nowFormatted } from "../utils/helperFunctions";
+import { Huddle } from "../../types";
+import { nowFormatted } from "../../utils/helperFunctions";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
-import { fetcher } from "../utils/fetcher";
-import TagList from "./TagList";
+import { fetcher } from "../../utils/fetcher";
+import TagList from "../TagList";
+import PlacesAutocomplete from "../Home-components/PlacesAutocomplete";
+import AutocompleteHuddleForm from "./AutocompleteNewHuddleForm";
 
 type Props = {
   data: {
@@ -19,9 +21,12 @@ const NewHuddleForm = ({ data }: Props) => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [addedCategories, setAddedCategories] = useState([""]);
   const [allCategories, setAllCategories] = useState([""]);
-  const [location, setLocation] = useState(data.name || "");
   const [error, setError] = useState("");
-
+  const [locationData, setLocationData] = useState({
+    name: "",
+    lat: "",
+    lng: "",
+  });
   const titleRef = useRef<HTMLInputElement>(null);
   const categoriesRef = useRef<HTMLInputElement>(null);
   const whereRef = useRef<HTMLInputElement>(null);
@@ -130,14 +135,10 @@ const NewHuddleForm = ({ data }: Props) => {
         </div>
         <TagList setAllCategories={setAllCategories} />
         <label htmlFor="where">Where?</label>
-        <input
-          className="border-solid border-2 border-black-600"
-          ref={whereRef}
-          defaultValue={data.name}
-          type="text"
-          id="where"
-          autoComplete="on"
-          required
+        <AutocompleteHuddleForm
+          stockValue={data.name}
+          locationData={locationData}
+          setLocationData={setLocationData}
         />
         <label htmlFor="when">When?</label>
         <input
