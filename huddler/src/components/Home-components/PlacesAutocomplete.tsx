@@ -71,7 +71,7 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
         <li
           key={place_id}
           onClick={handleSelect(suggestion)}
-          className="bg-white py-1 px-2 border-black border-solid w-[100%] cursor-pointer"
+          className="bg-white py-1 px-2 border-slate-400 border-b-2 cursor-pointer"
         >
           <strong>{main_text}</strong> <small>{secondary_text}</small>
         </li>
@@ -81,14 +81,16 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
   return (
     <div ref={ref}>
       <input
-        className="py-1 outline-none placeholder: pl-[0.5rem] w-[100%]"
+        className="py-1 outline-none border-slate-400 border-b-2 placeholder: pl-2 w-62 shadow-md rounded-sm"
         value={value}
         onChange={handleInput}
         disabled={!ready}
         placeholder="Look for a Place . . ."
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
-      {status === "OK" && <ul>{renderSuggestions()}</ul>}
+      {status === "OK" && (
+        <ul className="absolute shadow-sm rounded-sm">{renderSuggestions()}</ul>
+      )}
     </div>
   );
 };

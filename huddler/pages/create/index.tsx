@@ -4,7 +4,7 @@ import Welcome from "../../src/components/Welcome";
 import { useRouter } from "next/router";
 
 function index() {
-  return <NewHuddleForm data={useRouter().query} />;
+  return <NewHuddleForm />;
 }
 
 export default index;

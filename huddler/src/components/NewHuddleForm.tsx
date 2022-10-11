@@ -77,7 +77,7 @@ const NewHuddleForm = ({ data }: Props) => {
   };
 
   return (
-    <main className="flex flex-col items-center border-solid border-2 p-10">
+    <main className="">
       <h1>Let's make a new huddle</h1>
       {error && <div className="bg-red-600">{error}</div>}
       <>
