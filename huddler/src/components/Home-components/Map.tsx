@@ -10,7 +10,6 @@ import {
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle } from "../../types";
 import NewHuddleForm from "../NewHuddleForm";
-
 const libraries:("places" | "drawing" | "geometry" | "localContext" | "visualization")[] = ['places'];
 
 type Props = { huddles: Huddle[] };

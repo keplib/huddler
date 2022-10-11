@@ -36,7 +36,7 @@ function Register() {
       //Do sth with our DB
 
       // go to the home page
-      // router.replace('/home')
+      router.replace('/newuser')
     } catch {
       setError('Failed to create an account');
     }

@@ -5,11 +5,13 @@ import placeholder from "../../../public/placeholder.jpg"
 
 const HuddleCard = ({ item, handleActive, active }: any) => {
 
+  console.log(item);
+
   return (item !== active) ? (
     // Huddles class
     <div className="grid grid-cols-3 bg-yellow-200 border p-4 hover:scale-110" onClick={() => handleActive(item)}>
       <div>
-        <Image src={item.images.stringValues[0]} height={200} width={200} />
+        <Image src={item.images.stringValues[0] || placeholder} height={200} width={200} />
       </div>
       <div className="col-span-2">
         <h1>{item.name}</h1>
