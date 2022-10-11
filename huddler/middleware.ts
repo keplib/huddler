@@ -5,10 +5,7 @@ import { fetcher } from './src/utils/fetcher'
 import { Session } from 'inspector'
 
 export async function middleware(request: NextRequest) {
-    //auth
-
-    
-    
+    //auth    
     if (request.nextUrl.pathname === '/profile') {
         const url = request.nextUrl.clone();
         url.pathname = 'profile/userNameHere';

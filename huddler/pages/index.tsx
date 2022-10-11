@@ -8,7 +8,6 @@ const LandingPage: NextPage = () => {
     <div className="flex w-full h-full justify-center relative">
       <Image alt={"image"} src={placeholder} sizes="100%" priority={true} />
       <Register />
-      {/* <h1 className='bg-blue-300'>HELLO</h1> */}
     </div>
   );
 };
