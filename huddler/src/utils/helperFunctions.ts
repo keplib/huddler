@@ -7,7 +7,7 @@ export const dateFormatter = (date: number) => {
     month: toFormat.format('MMMM'),
     year: toFormat.format('YYYY'),
     time: toFormat.format('hh:mmA'),
-    wannaGoFormat: toFormat.format('MMMM DD, YYYY'),
+    monthDayYear: toFormat.format('MMMM DD, YYYY'),
   };
   return dateTime;
 };
