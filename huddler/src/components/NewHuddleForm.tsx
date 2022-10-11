@@ -114,6 +114,7 @@ const NewHuddleForm = ({ data }: Props) => {
         <input
           className="border-solid border-2 border-black-600"
           ref={whereRef}
+          defaultValue={data.name}
           type="text"
           id="where"
           autoComplete="on"
