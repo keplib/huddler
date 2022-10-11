@@ -9,7 +9,7 @@ function Layout({ children }:any) {
             <div className='self-center bg-slate-200 h-full w-full mt-24'>
                 <main>{children}</main>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

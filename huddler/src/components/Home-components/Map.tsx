@@ -36,7 +36,7 @@ export default function Map({ huddles }: Props) {
     lng: 2.154,
   });
 
-  const { isLoaded } = useJsApiLoader({
+  const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
     version: "weekly",

@@ -3,9 +3,12 @@ import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher";
 import { Category } from "../../types";
 
+type Props = {
+  categories: Category[]
+}
 
 
-function Search({ categories }:Category[] ) {
+function Search({ categories }:Props ) {
   const [tags, setTags] = useState([])
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState('')
