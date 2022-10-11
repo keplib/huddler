@@ -8,7 +8,7 @@ function Search() {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    handleSearch();
+    if (data) handleSearch();
   }, [search])
 
   if (error) return <div>failed to load</div>
@@ -30,25 +30,26 @@ function Search() {
     <div className="w-full bg-yellow-200 justify-center items-center flex flex-col">
       <div className="pt-12"></div>
 
-      <form className="pt-6">
+      <form className="py-6">
         <input
           value ={search}
           className="h-8 w-[24rem] text-slate-700 p-1 self-center"
           placeholder="Look for Huddles . . ."
           onChange={(e) => setSearch(e.target.value)}
         ></input>
-        <select>
+        {/* <select>
           {data.map((tag) => (
             <option>{tag.name}</option>
           ))}
-        </select>
+        </select> */}
       </form>
 
 
       <button onClick={() => handleShow()}>{show ? "Up" : "Down"}</button>
       {show && <div className='flex flex-wrap bg-white gap-4 p-4 border'>
-        {handleSearch().map((tag) => (
-          <h1 className='text-xl bg-blue-600 py-2 px-3 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'>{tag.name}</h1>
+        {data && handleSearch().map((tag) => (
+          <h1 className='text-xl bg-blue-600 py-2 px-3 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'
+            key={tag.id}>{tag.name}</h1>
         ))}
       </div>}
 
