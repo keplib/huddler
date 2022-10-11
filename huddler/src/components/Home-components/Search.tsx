@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher";
+import { Category } from "../../types";
+
+
 
 function Search() {
   const { data, error } = useSWR("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories", fetcher);
@@ -19,12 +22,11 @@ function Search() {
   }
 
   const handleSearch = () => {
-    let filtered = data.filter(element => {
-      return element.name.toLowerCase().includes(search.toLocaleLowerCase());      
+    let filtered = data.filter((category:Category) => {
+      return category.name.toLowerCase().includes(search.toLocaleLowerCase());      
     });
     return filtered;
   }
-
 
   return (
     <div className="w-full bg-yellow-200 justify-center items-center flex flex-col">
@@ -44,14 +46,14 @@ function Search() {
         </select> */}
       </form>
 
-
       <button onClick={() => handleShow()}>{show ? "Up" : "Down"}</button>
-      {show && <div className='flex flex-wrap bg-white gap-4 p-4 border'>
-        {data && handleSearch().map((tag) => (
+      {show ? <div className='flex flex-wrap bg-white gap-4 p-4 border'>
+        
+        {data && handleSearch().map((category:Category) => (
           <h1 className='text-xl bg-blue-600 py-2 px-3 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer'
-            key={tag.id}>{tag.name}</h1>
+            key={category.id}>{category.name}</h1>
         ))}
-      </div>}
+      </div>:<div className="h-20"></div>}
 
 
     </div>

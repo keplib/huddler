@@ -3,6 +3,7 @@ import Image from "next/future/image";
 import placeholder from "../../../public/placeholder.jpg";
 import Dropdown from "./Dropdown";
 import Search from "../Home-components/Search";
+import Link from "next/link";
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
@@ -14,7 +15,7 @@ function Navbar() {
 
   return (
     <div className="h-24 w-full bg-black text-white flex items-center justify-between fixed top-0 px-12 z-10">
-      <h1>Logo here</h1>
+      <Link href={'/home'}><a>Logo here</a></Link>
       {/* <Search /> */}
       <div className="w-24 h-24 relative">
         <Image
