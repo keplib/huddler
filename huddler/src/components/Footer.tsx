@@ -3,8 +3,8 @@ import React from 'react'
 
 const Footer = () => {
   return (
-      <div className='w-full bg-black h-1/4 bottom-0'>
-          <h1>
+      <div className='absolute w-full bg-black h-1/4 top-[103%]'>
+          <h1 className="text-white">
           Footer
           
           </h1>
