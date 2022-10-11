@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Image from "next/future/image";
-import Link from "next/link";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -11,6 +10,14 @@ import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle } from "../../types";
 import NewHuddleForm from "../NewHuddleForm";
 
+const libraries: (
+  | "places"
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "visualization"
+)[] = ["places"];
+
 type Props = { huddles: Huddle[] };
 export default function Map({ huddles }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
@@ -20,8 +27,8 @@ export default function Map({ huddles }: Props) {
   const [map, setMap] = useState({});
   const [selected, setSelected] = useState(false);
   const [containerSize, setContainerSize] = useState({
-    width: "80vw",
-    height: "47vw",
+    width: "100%",
+    height: "100%",
   });
   // later change center to user location
   const [center, setCenter] = useState({
@@ -33,7 +40,7 @@ export default function Map({ huddles }: Props) {
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
     version: "weekly",
-    libraries: ["places"],
+    libraries,
   });
   const toggleCreate = () => {
     const form = document.getElementById("huddle-form");
@@ -55,15 +62,15 @@ export default function Map({ huddles }: Props) {
   };
   return isLoaded ? (
     <div className="mt-16 mr-6 relative">
-      <div className="absolute pl-3 z-20 mt-24 ml-1">
+      <div className="absolute pl-3 z-10 mt-16">
         <div className="flex">
-          {containerSize.width == "80vw" ? (
+          {containerSize.width == "100%" ? (
             <button
               className="p-2  bg-white shadow-md "
               onClick={() =>
                 setContainerSize({
-                  width: "40vw",
-                  height: "47vw",
+                  width: "75%",
+                  height: "75%",
                 })
               }
             >
@@ -74,8 +81,8 @@ export default function Map({ huddles }: Props) {
               className="p-2 bg-white  shadow-md rounded-sm"
               onClick={() =>
                 setContainerSize({
-                  width: "80vw",
-                  height: "47vw",
+                  width: "100%",
+                  height: "100%",
                 })
               }
             >
@@ -98,7 +105,7 @@ export default function Map({ huddles }: Props) {
         </div>
         <div
           id="huddle-form"
-          className="hidden flex-col items-center border-solid border-2 p-4 mt-12 bg-white"
+          className="hidden flex-col items-center border-solid border-2 p-4 mt-4 bg-white w-[20rem] shadow-sm"
         >
           <NewHuddleForm
             data={{
@@ -109,7 +116,7 @@ export default function Map({ huddles }: Props) {
           />
         </div>
       </div>
-      <div className="shadow-xl">
+      <div className="shadow-xl w-[20rem] h-[25rem] sm:w-[40rem] sm:h-[30rem] md:w-[80rem] md:h-[40rem] lg:w-[100rem] lg:h-[55rem]">
         <GoogleMap
           zoom={12}
           mapContainerStyle={containerSize}

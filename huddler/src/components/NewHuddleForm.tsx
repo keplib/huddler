@@ -5,6 +5,7 @@ import Image from "next/future/image";
 import { useRouter } from "next/router";
 import { categoryTags } from "../categoryTags";
 import { fetcher } from "../utils/fetcher";
+import TagList from "./TagList";
 
 type Props = {
   data: {
@@ -77,8 +78,8 @@ const NewHuddleForm = ({ data }: Props) => {
   };
 
   return (
-    <main className="">
-      <h1>Let's make a new huddle</h1>
+    <main className="w-[100%]">
+      <h1 className="text-center">Let's make a new huddle</h1>
       {error && <div className="bg-red-600">{error}</div>}
       <>
         <ul>
@@ -109,7 +110,7 @@ const NewHuddleForm = ({ data }: Props) => {
             </li>
           ))}
         </ul>
-
+        <TagList />
         <label htmlFor="where">Where?</label>
         <input
           className="border-solid border-2 border-black-600"
