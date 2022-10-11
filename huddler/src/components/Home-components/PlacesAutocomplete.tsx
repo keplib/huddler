@@ -13,11 +13,12 @@ type Props = {
     }>
   >;
   setSelected: React.Dispatch<React.SetStateAction<boolean>>;
+  setLocationName: React.Dispatch<React.SetStateAction<string>>;
 };
 type Description = {
   description: string;
 };
-const PlacesAutocomplete = ({ hook, setSelected }: Props) => {
+const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
   const {
     ready,
     value,
@@ -44,8 +45,7 @@ const PlacesAutocomplete = ({ hook, setSelected }: Props) => {
   const handleSelect =
     ({ description }: Description) =>
     () => {
-      console.log(description);
-
+      setLocationName(description);
       // When user selects a place, we can replace the keyword without request data from API
       // by setting the second parameter to "false"
       setValue(description, false);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/future/image";
+import Link from "next/link";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -13,6 +14,7 @@ type Props = { huddles: Huddle[] };
 export default function Map({ huddles }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [checkedIn, setCheckedIn] = useState(false);
+  const [locationName, setLocationName] = useState("");
   const [map, setMap] = useState({});
   const [selected, setSelected] = useState(false);
   const [containerSize, setContainerSize] = useState({
@@ -33,34 +35,50 @@ export default function Map({ huddles }: Props) {
   });
   return isLoaded ? (
     <div className="mt-16 mr-6 relative">
-      {containerSize.width == "80vw" ? (
-        <button
-          className="absolute p-2 z-20 bg-white mt-24 ml-3 shadow-md"
-          onClick={() =>
-            setContainerSize({
-              width: "40vw",
-              height: "47vw",
-            })
-          }
+      <div className="absolute p-3 z-20 mt-24 ml-1">
+        {containerSize.width == "80vw" ? (
+          <button
+            className="p-2  bg-white shadow-md"
+            onClick={() =>
+              setContainerSize({
+                width: "40vw",
+                height: "47vw",
+              })
+            }
+          >
+            &#x2771;
+          </button>
+        ) : (
+          <button
+            className=" bg-white  shadow-md"
+            onClick={() =>
+              setContainerSize({
+                width: "80vw",
+                height: "47vw",
+              })
+            }
+          >
+            &#x2770;
+          </button>
+        )}
+        <Link
+          href={{
+            pathname: "/create",
+            query: { name: locationName, lat: center.lat, lng: center.lng },
+          }}
         >
-          &#x2771;
-        </button>
-      ) : (
-        <button
-          className="absolute p-3 z-20 bg-white mt-24 ml-3 shadow-md"
-          onClick={() =>
-            setContainerSize({
-              width: "80vw",
-              height: "47vw",
-            })
-          }
-        >
-          &#x2770;
-        </button>
-      )}
+          <a href="" className="ml-12 p-2 bg-white shadow-md font-medium ">
+            Create
+          </a>
+        </Link>
+      </div>
       <div className="shadow-xl">
         <div className="absolute z-10 mt-40 ml-4 shadow-md rounded-md w-50">
-          <PlacesAutocomplete hook={setCenter} setSelected={setSelected} />
+          <PlacesAutocomplete
+            hook={setCenter}
+            setSelected={setSelected}
+            setLocationName={setLocationName}
+          />
         </div>
         <GoogleMap
           zoom={12}
@@ -75,6 +93,12 @@ export default function Map({ huddles }: Props) {
               position={center}
               animation={google.maps.Animation.DROP}
               draggable={true}
+              onDragEnd={(e) =>
+                setCenter({
+                  lat: e.latLng?.lat() || center.lat,
+                  lng: e.latLng?.lng() || center.lng,
+                })
+              }
             />
           )}
           {huddles ? (
