@@ -7,10 +7,14 @@ import Avatar from '../../src/components/Profile components/Avatar';
 import Image from 'next/future/image';
 import avatar from '../../public/placeholder.jpg';
 import UserInfo from '../../src/components/Profile components/UserInfo';
+import useSWR from 'swr';
+import { fetcher } from '../../src/utils/fetcher';
 
 function Profile() {
   //for testing
   const tags = ["fishing", "kebab", "snooker", "JavaScript"]
+  const { data, error } = useSWR("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers",fetcher);
+  console.log(data);
 
   const router = useRouter();
   const [ownedHuddles, setOwnedHuddles] = useState(null);
