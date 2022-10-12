@@ -1,15 +1,22 @@
 import { StaticImageData } from "next/image";
 
+export interface Category {
+  id?: number,
+  name: string,
+}
 export interface User {
   name: string;
   email: string;
-  createdOn: number;
+  createdOn?: number;
   id?: number;
   password?: string;
   firstName?: string;
   lastName?: string;
-  avatar?: File;
-  dateOfBirth?: Date;
+  avatar?: File | File[] | string | string[];
+  dateOfBirth?: string;
+  interests?: Category[]
+  longitude: number;
+  latitude: number;
 }
 
 export interface Huddle {
