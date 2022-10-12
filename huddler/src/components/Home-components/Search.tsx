@@ -29,7 +29,8 @@ function Search({ categories }:Props ) {
     let filtered = tags.filter((category:Category) => {
       return category.name.toLowerCase().includes(search.toLocaleLowerCase());      
     });
-    return filtered;
+
+    return filtered.sort((a , b) => a.name - b.name);
   }
 
   return (
