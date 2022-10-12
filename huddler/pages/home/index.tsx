@@ -1,13 +1,11 @@
-import React from 'react';
-import Huddles from '../../src/components/Home-components/Huddles';
-import Map from '../../src/components/Home-components/Map';
-import Search from '../../src/components/Home-components/Search';
-import {
-  getUserCategories,
-} from '../../src/utils/APIServices/userServices';
-import { getHuddlesInCategory} from '../../src/utils/APIServices/categoryServices';
-import { useState } from 'react';
-import { User } from '../../src/types';
+import React from "react";
+import Huddles from "../../src/components/Home-components/Huddles";
+import Map from "../../src/components/Home-components/Map";
+import Search from "../../src/components/Home-components/Search";
+import { getUserCategories } from "../../src/utils/APIServices/userServices";
+import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
+import { useState } from "react";
+import { User } from "../../src/types";
 
 function index() {
   // get current User from auth
@@ -27,7 +25,7 @@ function index() {
   return (
     <>
       {/* <Search categories={categories} /> */}
-      <div className='flex'>
+      <div className="flex">
         <Huddles huddles={huddles} />
         {/* <Map huddles={huddles} /> */}
       </div>
@@ -36,6 +34,3 @@ function index() {
 }
 
 export default index;
-
-
-
