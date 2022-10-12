@@ -24,8 +24,8 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
   const router = useRouter();
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [addedCategories, setAddedCategories] = useState([""]);
-  const [allCategories, setAllCategories] = useState([""]);
+  const [addedCategories, setAddedCategories] = useState([{ id: 0, name: "" }]);
+  const [allCategories, setAllCategories] = useState([{ id: 0, name: "" }]);
   const [error, setError] = useState("");
   const [locationData, setLocationData] = useState({
     name: "",
@@ -39,35 +39,53 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
   const imagesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setError("");
 
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
-        createdOn: Date.now(),
-        when: locationData.name,
-        categories: [], //categoriesRef.current!.value,
+        day_time: whenRef.current!.value,
         longitude: +locationData.lng,
         latitude: +locationData.lat,
+        address: locationData.name,
         // for images we'll probably have to split what comes from the input field
         //CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
-        images: [imagesRef.current!.value],
-        description: "",
-        authorId: 123456, //here we'll require the uid from the authentication
+        description: descriptionRef.current!.value,
+        image: "https://tall.life/wp-content/uploads/2015/12/6foot9inches.jpg",
+        date_of_creation: Date.now(),
+        link: "",
+        fk_author_id: 2, //here we'll require the uid from the authentication
       };
       //Post huddle in DB
-      fetcher("https://jsonplaceholder.typicode.com/posts", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(newHuddle),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
+      const data = await fetch(
+        "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle",
+        {
+          method: "POST",
+          mode: "no-cors",
+          // credentials: "include",
+          body: JSON.stringify(newHuddle),
+          headers: {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+      const huddleId = await data.json();
+      //posting the categories to new huddle
+      // addedCategories.forEach((el) => {
+      //   fetcher("https://jsonplaceholder.typicode.com/posts", {
+      //     method: "POST",
+      //     credentials: "include",
+      //     body: JSON.stringify({ huddleId, categoryId: el.id }),
+      //     headers: {
+      //       "Content-type": "application/json",
+      //     },
+      //   });
+      // });
       //redirect to user home page
-      router.replace("/home");
+      // router.replace("/home");
     } catch {
       setError("We could not create the huddle");
     }
@@ -79,9 +97,9 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
   };
   let huddleCategories: string[] = [];
 
-  const addCategory = (category: string) => {
+  const addCategory = (category: { id: number; name: string }) => {
     if (addedCategories.includes(category)) return;
-    addedCategories[0] == ""
+    addedCategories[0].name == ""
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
     console.log("These are the selected categories,", huddleCategories);
@@ -117,7 +135,7 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
                   className="text-xl shadow-sm bg-blue-600 px-3 h-9 rounded-sm text-white hover:scale-105  cursor-pointer active:translate-y-[2px] active:translate-x-[1px] focus:ring focus:ring-blue-300"
                   onClick={() => addCategory(category)}
                 >
-                  {category}
+                  {category.name}
                 </li>
               ))}
             </ul>
@@ -138,7 +156,7 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
                     )
                   }
                 >
-                  {category}
+                  {category.name}
                 </li>
               );
             })}
@@ -198,7 +216,7 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
           )}
         </div>
         <button
-          className="border-solid border-2 border-black-600"
+          className="border-solid border-2 border-black-600 hover:bg-slate-100"
           type="submit"
         >
           Submit

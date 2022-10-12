@@ -24,10 +24,10 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
             <h1 className="font-bold text-orange-600 mb-1">
               {showHuddle.name}
             </h1>
-            <h1>{showHuddle.when}</h1>
+            <h1>{showHuddle.day_time}</h1>
             <Image
               alt="img"
-              src={showHuddle.images.stringValues[0]}
+              src={showHuddle.image}
               height={200}
               width={200}
               className="rounded-lg"

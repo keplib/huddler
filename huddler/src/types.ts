@@ -14,18 +14,19 @@ export interface User {
 
 export interface Huddle {
   name: string;
-  date_of_creation: string;
-  when: string;
+  date_of_creation: number;
+  day_time: string;
+  address: string;
   description: string;
-  authorId: number;
+  fk_author_id: number;
   longitude: number;
   latitude: number;
   id?: number;
-  images: { stringValues: string[] };
-  categories: string[];
+  image: string;
+  link: string;
 }
 
 export interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }

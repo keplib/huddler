@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import { fetcher } from "../../src/utils/fetcher";
 type Props = {
-  setAllCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  setAllCategories: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: number;
+        name: string;
+      }[]
+    >
+  >;
 };
 const TagList = ({ setAllCategories }: Props) => {
   //should compare string in input to categories and display ones that match
@@ -13,13 +20,13 @@ const TagList = ({ setAllCategories }: Props) => {
   const [comparator, setComparator] = useState("");
   //matches input with categories to display
   useEffect(() => {
-    setAllCategories([""]);
-    let arr = [""];
+    setAllCategories([{ id: 0, name: "" }]);
+    let arr = [{}];
     categories.forEach((el: { id: number; name: string }) => {
       const name = el.name.toLowerCase();
       if (comparator.length < 1) return;
       if (name.includes(comparator.toLowerCase()) && !arr.includes(el.name)) {
-        arr = [...arr, el.name.replace(/\s/g, "")];
+        arr = [...arr, { id: el.id, name: el.name.replace(/\s/g, "") }];
       }
     });
     arr.shift();
