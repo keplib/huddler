@@ -3,11 +3,6 @@ import Huddles from "../../src/components/Home-components/Huddles";
 import Map from "../../src/components/Home-components/Map";
 import Search from "../../src/components/Home-components/Search";
 import { getUserCategories } from "../../src/utils/APIServices/userServices";
-<<<<<<< HEAD
-import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
-import { useState } from "react";
-import { User } from "../../src/types";
-=======
 import {
   getHuddlesInCategory,
   getAllCategories,
@@ -15,7 +10,6 @@ import {
 import { useState } from "react";
 import { User } from "../../src/types";
 import { getAllHuddles } from "../../src/utils/APIServices/huddleServices";
->>>>>>> dev
 
 function index() {
   // get current User from auth
@@ -29,7 +23,7 @@ function index() {
 
   // const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
 
-  if (userCategoriesError || error) return <div>failed to load</div>;
+  // if (userCategoriesError || error) return <div>failed to load</div>;
   if (!huddles || !categories) return <div>loading...</div>;
 
   return (
@@ -37,7 +31,7 @@ function index() {
       {/* <Search categories={categories} /> */}
       <div className="flex">
         <Huddles huddles={huddles} />
-        {/* <Map huddles={huddles} /> */}
+        <Map huddles={huddles} />
       </div>
     </>
   );

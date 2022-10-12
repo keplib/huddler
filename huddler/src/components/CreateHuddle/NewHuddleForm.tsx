@@ -6,6 +6,12 @@ import { useRouter } from "next/router";
 import { fetcher } from "../../utils/APIServices/fetcher";
 import TagList from "../TagList";
 import AutocompleteHuddleForm from "./AutocompleteNewHuddleForm";
+import {
+  getHuddleCategories,
+  getIdOfHuddleByDateOfCreation,
+  postHuddle,
+  postHuddleCategory,
+} from "../../utils/APIServices/huddleServices";
 
 type Props = {
   data: {
@@ -43,47 +49,33 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
     e.preventDefault();
     try {
       setError("");
-
+      const date = Date.now();
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
         day_time: whenRef.current!.value,
         longitude: +locationData.lng,
         latitude: +locationData.lat,
         address: locationData.name,
+        description: descriptionRef.current!.value,
         // for images we'll probably have to split what comes from the input field
         //CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
-        description: descriptionRef.current!.value,
         image: "https://tall.life/wp-content/uploads/2015/12/6foot9inches.jpg",
-        date_of_creation: Date.now(),
+        date_of_creation: date,
         link: "",
         fk_author_id: 2, //here we'll require the uid from the authentication
       };
+      // postHuddle2(newHuddle);
       //Post huddle in DB
-      const data = await fetch(
-        "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle",
-        {
-          method: "POST",
-          mode: "no-cors",
-          // credentials: "include",
-          body: JSON.stringify(newHuddle),
-          headers: {
-            "Content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
-      const huddleId = await data.json();
+      const huddleDateOfCreation = await postHuddle(newHuddle);
+
+      //getting id of huddle
+      const huddleId = await getIdOfHuddleByDateOfCreation(date);
+      console.log(huddleId);
+
       //posting the categories to new huddle
-      // addedCategories.forEach((el) => {
-      //   fetcher("https://jsonplaceholder.typicode.com/posts", {
-      //     method: "POST",
-      //     credentials: "include",
-      //     body: JSON.stringify({ huddleId, categoryId: el.id }),
-      //     headers: {
-      //       "Content-type": "application/json",
-      //     },
-      //   });
-      // });
+      addedCategories.forEach((el) => {
+        postHuddleCategory(huddleId[0].id, el.id);
+      });
       //redirect to user home page
       // router.replace("/home");
     } catch {
@@ -102,7 +94,7 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
     addedCategories[0].name == ""
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
-    console.log("These are the selected categories,", huddleCategories);
+    console.log("These are the selected categories,", addedCategories);
   };
   useEffect(() => {
     setCenter({
