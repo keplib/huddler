@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import Image from "next/future/image";
-import Link from "next/link";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  MarkerF,
-  InfoWindowF,
-} from "@react-google-maps/api";
+import React, { useEffect, useState } from "react";
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle } from "../../types";
-import NewHuddleForm from "../NewHuddleForm";
-const libraries:("places" | "drawing" | "geometry" | "localContext" | "visualization")[] = ['places'];
+import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
+import { MapInfoWindow } from "./MapInfoWindow";
+
+const libraries: (
+  | "places"
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "visualization"
+)[] = ["places"];
 
 type Props = { huddles: Huddle[] };
 export default function Map({ huddles }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
-  const [checkedIn, setCheckedIn] = useState(false);
   const [locationName, setLocationName] = useState("");
+  const [selected, setSelected] = useState(false);
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
-  const [selected, setSelected] = useState(false);
   const [containerSize, setContainerSize] = useState({
-    width: "80vw",
-    height: "47vw",
+    width: "100%",
+    height: "100%",
   });
   // later change center to user location
   const [center, setCenter] = useState({
@@ -54,17 +54,20 @@ export default function Map({ huddles }: Props) {
     form?.classList.add("animate-fade-in");
     setCreateBox(true);
   };
+  useEffect(() => {
+    setSelected(true);
+  }, [center]);
   return isLoaded ? (
     <div className="mt-16 mr-6 relative">
-      <div className="absolute pl-3 z-20 mt-24 ml-1">
+      <div className="absolute pl-3 z-10 mt-16">
         <div className="flex">
-          {containerSize.width == "80vw" ? (
+          {containerSize.width == "100%" ? (
             <button
               className="p-2  bg-white shadow-md "
               onClick={() =>
                 setContainerSize({
-                  width: "40vw",
-                  height: "47vw",
+                  width: "75%",
+                  height: "75%",
                 })
               }
             >
@@ -75,8 +78,8 @@ export default function Map({ huddles }: Props) {
               className="p-2 bg-white  shadow-md rounded-sm"
               onClick={() =>
                 setContainerSize({
-                  width: "80vw",
-                  height: "47vw",
+                  width: "100%",
+                  height: "100%",
                 })
               }
             >
@@ -99,9 +102,10 @@ export default function Map({ huddles }: Props) {
         </div>
         <div
           id="huddle-form"
-          className="hidden flex-col items-center border-solid border-2 p-4 mt-12 bg-white"
+          className="hidden flex-col items-center border-solid border-2 p-4 mt-4 bg-white w-[20rem] shadow-sm"
         >
           <NewHuddleForm
+            setCenter={setCenter}
             data={{
               name: locationName,
               lat: "" + center.lat,
@@ -110,7 +114,7 @@ export default function Map({ huddles }: Props) {
           />
         </div>
       </div>
-      <div className="shadow-xl">
+      <div className="shadow-xl w-[20rem] h-[25rem] sm:w-[40rem] sm:h-[30rem] md:w-[80rem] md:h-[40rem] lg:w-[100rem] lg:h-[55rem]">
         <GoogleMap
           zoom={12}
           mapContainerStyle={containerSize}
@@ -151,51 +155,10 @@ export default function Map({ huddles }: Props) {
           ) : (
             <></>
           )}
-          {showHuddle ? (
-            <InfoWindowF
-              position={{
-                lat: Number(showHuddle.latitude),
-                lng: Number(showHuddle.longitude),
-              }}
-              onCloseClick={() => setShowHuddle(undefined)}
-            >
-              <div className="animation-fadein">
-                <h1 className="font-bold text-orange-600 mb-1">
-                  {showHuddle.name}
-                </h1>
-                <h1>{showHuddle.when}</h1>
-                <Image
-                  alt="img"
-                  src={showHuddle.images.stringValues[0]}
-                  height={200}
-                  width={200}
-                  className="rounded-lg"
-                />
-                <h2 className="mt-1">attendants: 1234</h2>
-                <h3 className="h-12 w-48 overflow-auto mt-3">
-                  {showHuddle.description}
-                </h3>
-                {checkedIn ? (
-                  <button
-                    className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
-                    onClick={() => setCheckedIn(false)}
-                  >
-                    Check out
-                  </button>
-                ) : (
-                  <button
-                    className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
-                    onClick={() => setCheckedIn(true)}
-                  >
-                    Check in
-                  </button>
-                )}
-              </div>
-            </InfoWindowF>
-          ) : (
-            <></>
-          )}
-          <></>
+          <MapInfoWindow
+            showHuddle={showHuddle}
+            setShowHuddle={setShowHuddle}
+          />
         </GoogleMap>
       </div>
     </div>

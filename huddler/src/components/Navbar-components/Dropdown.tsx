@@ -3,9 +3,9 @@ import React, { useState, useRef, useEffect, EventHandler } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 const serviceDropdown = [
+  { name: 'Explore', path: '/home' },
   { name: 'Profile', path: '/profile' },
   { name: 'Settings', path: '/settings' },
-  { name: 'New Huddle', path: '/create' },
   { name: 'Log Out', path: '/' },
 ];
 

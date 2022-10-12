@@ -9,6 +9,9 @@ const user: User = {
     email: '',
     createdOn: 0,
 };
+type Props = {
+    avatar: File;
+}
 
 function Avatar() {
   return (
