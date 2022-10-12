@@ -15,7 +15,7 @@ function Register() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmedPasswordRef = useRef<HTMLInputElement>(null);
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (passwordRef.current!.value !== confirmedPasswordRef.current!.value) {
       setError('Passwords do not match');
@@ -24,19 +24,33 @@ function Register() {
     try {
       setError('');
       setLoading(true)
-      const newUser: User = {
-        name: nameRef.current!.value,
+      const newUser: any = {
+        username: nameRef.current!.value,
         email: emailRef.current!.value,
-        password: passwordRef.current!.value,
-        createdOn: Date.now(),
+        aws_id: "abc123",
+        // password: passwordRef.current!.value,
+        // createdOn: Date.now(),
       }
       console.log(newUser);
-      
+
+      const res = await fetch("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser", {
+        method: 'POST',
+        credentials: 'include',
+        mode: "no-cors",
+        body: JSON.stringify(newUser),
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        }
+      })
+      // console.log(await res);
+      const data = await res.json();
+      console.log(data);
       //Do sth with AWS authentication
       //Do sth with our DB
 
       // go to the home page
-      router.replace('/newuser')
+      // router.replace('/newuser')
     } catch {
       setError('Failed to create an account');
     }
