@@ -39,6 +39,15 @@ export const getIdOfHuddleByDateOfCreation = (created_on: number) =>
     fetcher
   );
 // Returns: Array of One Object with HuddleID & UserID (author)
+export const recommendedForUser = async (userId: number) => {
+  const data = await fetcher(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${userId}`)
+  const categories = await Promise.all(data);
+  const ids = categories.map((cat) => cat.id);
+  const promises = ids.map((id) => fetcher(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/gethuddles_bycategory?category-id=${id}`));
+  const results = await Promise.all(promises);
+  const final = results.reduce((previousValue, currentValue) => [...previousValue, ...currentValue], []);
+  return final;
+};
 
 // POST Functions
 

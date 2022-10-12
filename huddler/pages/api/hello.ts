@@ -5,9 +5,27 @@ type Data = {
   name: string
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+
+  const ress = await fetch("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser", {
+    method: 'POST',
+    credentials: 'include',
+    mode: "no-cors",
+    body: req.body.newUser,
+    headers: {
+      "Content-type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    }
+  });
+
+  const data = await ress.json()
+
+  console.log('hi',data);
+
+
+
+
 }

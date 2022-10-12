@@ -27,11 +27,11 @@ function Register() {
       const newUser: any = {
         username: nameRef.current!.value,
         email: emailRef.current!.value,
-        aws_id: "abc123",
+        aws_id: "abc1234",
         // password: passwordRef.current!.value,
         // createdOn: Date.now(),
       }
-      console.log(newUser);
+      // console.log(newUser);
 
       const res = await fetch("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser", {
         method: 'POST',
@@ -39,20 +39,23 @@ function Register() {
         mode: "no-cors",
         body: JSON.stringify(newUser),
         headers: {
+          'Accept': 'application/json',
           "Content-type": "application/json",
           "Access-Control-Allow-Origin": "*",
         }
-      })
+      });
       // console.log(await res);
+      console.log("Success asd", await res);
       const data = await res.json();
-      console.log(data);
+      console.log("Success",data);
       //Do sth with AWS authentication
       //Do sth with our DB
 
       // go to the home page
       // router.replace('/newuser')
-    } catch {
+    } catch (err) {
       setError('Failed to create an account');
+      console.log(err)
     }
     setLoading(false)
   };
