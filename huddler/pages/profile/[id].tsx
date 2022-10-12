@@ -8,7 +8,7 @@ import Image from 'next/future/image';
 import avatar from '../../public/placeholder.jpg';
 import UserInfo from '../../src/components/Profile components/UserInfo';
 import useSWR from 'swr';
-import { fetcher } from '../../src/utils/fetcher';
+import { fetcher } from '../../src/utils/APIServices/fetcher';
 
 function Profile() {
   //for testing
