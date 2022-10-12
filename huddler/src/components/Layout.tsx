@@ -6,7 +6,6 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-  console.log(children);
   return (
     <div className='w-full h-screen bg-red-200 flex flex-col justify-center'>
       <Navbar />

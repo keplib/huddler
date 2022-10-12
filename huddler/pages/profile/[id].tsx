@@ -9,12 +9,12 @@ import avatar from '../../public/placeholder.jpg';
 import UserInfo from '../../src/components/Profile components/UserInfo';
 import useSWR from 'swr';
 import { fetcher } from '../../src/utils/APIServices/fetcher';
+import { getAllHuddles } from '../../src/utils/APIServices/huddleServices';
 
 function Profile() {
   //for testing
-  const tags = ["fishing", "kebab", "snooker", "JavaScript"]
-  const { data, error } = useSWR("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers",fetcher);
-  console.log(data);
+  const tags = ["fishing", "kebab", "snooker", "JavaScript"];
+  // const { data, error } = useSWR("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers",fetcher);
 
   const router = useRouter();
   const [ownedHuddles, setOwnedHuddles] = useState(null);
@@ -27,7 +27,6 @@ function Profile() {
   };
 
   return (
-
     <main className='grid grid-cols-4 h-full py-8'>
       <div className='flex flex-col h-screen items-center border-x-[0.2px] border-gray-400'>
 

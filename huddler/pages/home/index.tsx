@@ -17,9 +17,9 @@ function index() {
   // const { data: huddles, error: huddleError } = getAllHuddles();
   // const { data: categories, error: catError } = getAllCategories()
 
-  const { data: userCategories, error: error } = getUserCategories();
+  // const { data: userCategories, error: error } = getUserCategories();
   
-  const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
+  // const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
 
   if (userCategoriesError || error) return <div>failed to load</div>;
   if (!huddles || !categories) return <div>loading...</div>;
