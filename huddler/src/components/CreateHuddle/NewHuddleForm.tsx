@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Huddle } from "../types";
-import { nowFormatted } from "../utils/helperFunctions";
+import { Huddle } from "../../types";
+import { nowFormatted } from "../../utils/helperFunctions";
 import Image from "next/future/image";
 import { useRouter } from "next/router";
-import { fetcher } from "../utils/fetcher";
-import TagList from "./TagList";
+import { fetcher } from "../../utils/fetcher";
+import TagList from "../TagList";
+import AutocompleteHuddleForm from "./AutocompleteNewHuddleForm";
 
 type Props = {
   data: {
@@ -12,16 +13,25 @@ type Props = {
     lat: string;
     lng: string;
   };
+  setCenter: React.Dispatch<
+    React.SetStateAction<{
+      lat: number;
+      lng: number;
+    }>
+  >;
 };
-const NewHuddleForm = ({ data }: Props) => {
+const NewHuddleForm = ({ data, setCenter }: Props) => {
   const router = useRouter();
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [addedCategories, setAddedCategories] = useState([""]);
   const [allCategories, setAllCategories] = useState([""]);
-  const [location, setLocation] = useState(data.name || "");
   const [error, setError] = useState("");
-
+  const [locationData, setLocationData] = useState({
+    name: "",
+    lat: "41.39",
+    lng: "2.154",
+  });
   const titleRef = useRef<HTMLInputElement>(null);
   const categoriesRef = useRef<HTMLInputElement>(null);
   const whereRef = useRef<HTMLInputElement>(null);
@@ -37,11 +47,12 @@ const NewHuddleForm = ({ data }: Props) => {
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
         createdOn: Date.now(),
-        when: whenRef.current!.value,
+        when: locationData.name,
         categories: [], //categoriesRef.current!.value,
-        longitude: 0, //whereRef.current!.value, //do sth
-        latitude: 0, //whereRef.current!.value, //do sth
+        longitude: +locationData.lng,
+        latitude: +locationData.lat,
         // for images we'll probably have to split what comes from the input field
+        //CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
         images: [imagesRef.current!.value],
         description: "",
         authorId: 123456, //here we'll require the uid from the authentication
@@ -75,7 +86,12 @@ const NewHuddleForm = ({ data }: Props) => {
       : setAddedCategories([...addedCategories, category]);
     console.log("These are the selected categories,", huddleCategories);
   };
-
+  useEffect(() => {
+    setCenter({
+      lat: Number(locationData.lat),
+      lng: Number(locationData.lng),
+    });
+  }, [locationData]);
   return (
     <main className="w-[100%]">
       <h1 className="text-center">Let's make a new huddle</h1>
@@ -130,14 +146,10 @@ const NewHuddleForm = ({ data }: Props) => {
         </div>
         <TagList setAllCategories={setAllCategories} />
         <label htmlFor="where">Where?</label>
-        <input
-          className="border-solid border-2 border-black-600"
-          ref={whereRef}
-          defaultValue={data.name}
-          type="text"
-          id="where"
-          autoComplete="on"
-          required
+        <AutocompleteHuddleForm
+          stockValue={data.name}
+          locationData={locationData}
+          setLocationData={setLocationData}
         />
         <label htmlFor="when">When?</label>
         <input
