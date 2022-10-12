@@ -1,5 +1,5 @@
 import React from 'react'
-import MainForm from '../../src/components/multistep-form/MainForm'
+import MainForm from '../../src/components/NewUserForm/MainForm'
 
 function index() {
   return (
