@@ -24,7 +24,7 @@ function Profile() {
   console.log(huddles);
 
   const router = useRouter();
-  const [ownedHuddles, setOwnedHuddles] = useState(null);
+  // const [ownedHuddles, setOwnedHuddles] = useState(null);
 
   const user: User = {
     name: 'Florio',
