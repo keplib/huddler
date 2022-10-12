@@ -15,13 +15,15 @@ type Props = {
 
 function Avatar() {
   return (
-      <div className='w-full h-full relative grid'>
-          <Image
+      <div className='w-full h-full relative grid bg-blue'>
+          {/* <Image
               src={user.avatar!}
               className='rounded-full p-12'
               alt='avatar'
-
-          />
+              sizes='auto'
+              priority
+              fill
+          /> */}
           <h1 className='text-[2rem] justify-self-center'>Welcome back, {user.name}</h1>
 
           <div className='flex px-4 pt-4'>
