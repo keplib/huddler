@@ -47,7 +47,7 @@ function Profile({ recommended, huddles }: Props) {
   return (
     <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light bg-red-200'>
       <div>
-        <div className='fixed min-w-[400px] w-[20%] h-full'>
+        <div className='fixed lg:min-w-[400px] w-[20%] h-full'>
           <div
             className='flex flex-col h-full items-center
           border-x-[0.2px] shadow-md w-full'
