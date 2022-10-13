@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, EventHandler } from 'react';
-
+import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
 const serviceDropdown = [
   { name: 'Explore', path: '/home' },
   { name: 'Profile', path: '/profile' },
@@ -10,10 +10,10 @@ const serviceDropdown = [
 ];
 
 type Props = {
-  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>; 
-}
+  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const Dropdown = ({ setShowDropDown }: Props) => {
-  
   const router = useRouter();
   const insideDropDownRef = useRef<HTMLInputElement>(null);
   const handleLogoutClick = (
@@ -27,10 +27,11 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   useEffect(() => {
     document.addEventListener('click', handleClickOutsideDropdown, true);
   }, []);
+
   function handleClickOutsideDropdown(this: HTMLElement) {
     if (insideDropDownRef.current === null) return;
     if (!insideDropDownRef.current!.contains(this)) setShowDropDown(false);
-  };
+  }
 
   return (
     <div
@@ -61,8 +62,4 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
-
-
-
-
 

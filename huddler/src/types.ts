@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/image";
+import { StaticImageData } from 'next/image';
 
 export interface Category {
   id?: number;
@@ -12,11 +12,13 @@ export interface User {
   password?: string;
   firstName?: string;
   lastName?: string;
-  avatar?: File | File[] | string | string[];
+  image?: File | File[] | string | string[] | StaticImageData;
   dateOfBirth?: string;
   interests?: Category[];
-  longitude: number;
-  latitude: number;
+  longitude?: number;
+  latitude?: number;
+  description?: string;
+  categories?: Category[];
 }
 
 export interface Huddle {
@@ -33,7 +35,3 @@ export interface Huddle {
   link: string;
 }
 
-export interface Category {
-  id: number;
-  name: string;
-}

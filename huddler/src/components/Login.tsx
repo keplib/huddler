@@ -9,13 +9,12 @@ function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setError('');
       setLoading(true);
-      console.log(emailRef.current!.value, passwordRef.current!.value)
+      console.log(emailRef.current!.value, passwordRef.current!.value);
       // some login API call that will change the current user to authenticated
 
       // go to the home page

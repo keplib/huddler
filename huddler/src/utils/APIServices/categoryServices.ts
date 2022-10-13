@@ -1,40 +1,19 @@
-import useSWRImmutable from "swr/immutable";
-import { fetcher } from "./fetcher";
+import { fetcher } from '../helperFunctions';
 
 // GET Functions
 
-export const getAllCategories = async () => {
-  // const { data: allCategories, error: error } = seSWRImmutable(
-  //   'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories',
-  //   fetcher
-  // );
-  // return allCategories ? allCategories : error;
-  const data = await fetch(
-    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories"
+export const getAllCategories = async () =>
+  await fetcher(
+    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories'
   );
-  const res = await data.json();
-  return res;
-};
+
 // Returns: Array of Huddle Objects
 
-export const getUsersInCategory = (category_id: number) => {
-  const { data: usersInCategory, error: error } = useSWRImmutable(
-    ` https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers_bycategory?category-id=${category_id}`,
-    fetcher
+export const getUsersInCategory = async (category_id: number) =>
+  await await fetcher(
+    ` https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers_bycategory?category-id=${category_id}`
   );
-  return usersInCategory ? usersInCategory : error;
-};
 //Returns: Array of User Objects
-
-// export const getCategoryById = () => useSWRImmutable(, fetcher);
-
-// export const getHuddlesInCategory = (category_id: number) => {
-//   const { data: huddlesInCategory, error: error } = useSWRImmutable(
-//     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/gethuddles_bycategory?category-id=${category_id}`,
-//     fetcher
-//   );
-//   return huddlesInCategory ? huddlesInCategory : error;
-// };
 
 export const getHuddlesInCategory = async (category_id: number) => {
   return await fetcher(
@@ -44,4 +23,7 @@ export const getHuddlesInCategory = async (category_id: number) => {
 
 //Returns: Array of Huddle Objects
 
+// export const getCategoryById = () => useSWRImmutable(, fetcher);
+
 // POST Functions
+

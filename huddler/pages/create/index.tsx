@@ -1,11 +1,8 @@
-import NewHuddleForm from "../../src/components/CreateHuddle/NewHuddleForm";
-import Huddles from "../../src/components/Home-components/Huddles";
-import Welcome from "../../src/components/NewUserForm/Welcome";
-import { useRouter } from "next/router";
-import Main from "../../src/components/NewUserForm/MainForm";
+import Main from '../../src/components/NewUserForm/MainForm';
 
-function index() {  
+function index() {
   return <Main />;
 }
 
 export default index;
+

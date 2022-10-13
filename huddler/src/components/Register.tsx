@@ -1,11 +1,11 @@
 import { setDefaultResultOrder } from 'dns';
 import Link from 'next/link';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router';
 import React, { useState, useRef } from 'react';
 import { User } from '../types';
 
 function Register() {
-  const router = useRouter()
+  const router = useRouter();
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,31 +23,34 @@ function Register() {
     }
     try {
       setError('');
-      setLoading(true)
+      setLoading(true);
       const newUser: any = {
         username: nameRef.current!.value,
         email: emailRef.current!.value,
-        aws_id: "abc1234",
+        aws_id: 'abc1234',
         // password: passwordRef.current!.value,
         // createdOn: Date.now(),
-      }
+      };
       // console.log(newUser);
 
-      const res = await fetch("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser", {
-        method: 'POST',
-        credentials: 'include',
-        mode: "no-cors",
-        body: JSON.stringify(newUser),
-        headers: {
-          'Accept': 'application/json',
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+      const res = await fetch(
+        'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser',
+        {
+          method: 'POST',
+          credentials: 'include',
+          mode: 'no-cors',
+          body: JSON.stringify(newUser),
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
         }
-      });
+      );
       // console.log(await res);
-      console.log("Success asd", await res);
+      console.log('Success asd', await res);
       const data = await res.json();
-      console.log("Success",data);
+      console.log('Success', data);
       //Do sth with AWS authentication
       //Do sth with our DB
 
@@ -55,12 +58,11 @@ function Register() {
       // router.replace('/newuser')
     } catch (err) {
       setError('Failed to create an account');
-      console.log(err)
+      console.log(err);
     }
-    setLoading(false)
+    setLoading(false);
   };
   return (
-    
     <main className='h-auto w-auto flex flex-col items-center border-solid border-2 rounded border-indigo-600 bg-white absolute my-24 px-24 py-12 ml-[50%]'>
       <h1>Share your Passions</h1>
       <br />
@@ -126,11 +128,4 @@ function Register() {
 }
 
 export default Register;
-
-
-
-
-
-
-
 

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from "use-places-autocomplete";
-import useOnclickOutside from "react-cool-onclickoutside";
+} from 'use-places-autocomplete';
+import useOnclickOutside from 'react-cool-onclickoutside';
 
 type Description = {
   description: string;
@@ -65,7 +65,7 @@ const AutocompleteHuddleForm = ({
       // Get latitude and longitude via utility functions
       getGeocode({ address: description }).then((results) => {
         const { lat, lng } = getLatLng(results[0]);
-        setLocationData({ name: description, lat: "" + lat, lng: "" + lng });
+        setLocationData({ name: description, lat: '' + lat, lng: '' + lng });
       });
     };
 
@@ -80,7 +80,7 @@ const AutocompleteHuddleForm = ({
         <li
           key={place_id}
           onClick={handleSelect(suggestion)}
-          className="bg-white py-1 px-2 border-slate-400 border-b-2 cursor-pointer"
+          className='bg-white py-1 px-2 border-slate-400 border-b-2 cursor-pointer'
         >
           <strong>{main_text}</strong> <small>{secondary_text}</small>
         </li>
@@ -90,19 +90,20 @@ const AutocompleteHuddleForm = ({
   return (
     <div ref={ref}>
       <input
-        className="border-solid border-2 border-black-600 w-[100%]"
+        className='border-solid border-2 border-black-600 w-[100%]'
         defaultValue={value}
         value={value}
         onChange={handleInput}
         disabled={!ready}
-        placeholder="Look for a Place . . ."
+        placeholder='Look for a Place . . .'
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
-      {status === "OK" && (
-        <ul className="absolute shadow-sm rounded-sm">{renderSuggestions()}</ul>
+      {status === 'OK' && (
+        <ul className='absolute shadow-sm rounded-sm'>{renderSuggestions()}</ul>
       )}
     </div>
   );
 };
 
 export default AutocompleteHuddleForm;
+

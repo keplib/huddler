@@ -7,7 +7,7 @@ type Props = {
   setError: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const UpdateAvatar = ({setDisabledButton, setError}: Props) => {
+const UpdateAvatar = ({ setDisabledButton, setError }: Props) => {
   const [avatar, setAvatar] = useState<StaticImageData | string>(
     DefaultUserImage
   );
@@ -46,9 +46,4 @@ const UpdateAvatar = ({setDisabledButton, setError}: Props) => {
 };
 
 export default UpdateAvatar;
-
-
-
-
-
 
