@@ -11,16 +11,18 @@ import { fetcher, recommendedForUser } from '../../src/utils/helperFunctions';
 import { Category, Huddle, User } from '../../src/types';
 
 export const getServerSideProps = async () => {
-  const recommended:Huddle[] = await recommendedForUser(67);
-  const huddles:Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted")
-    
+  const recommended: Huddle[] = await recommendedForUser(67);
+  const huddles: Huddle[] = await fetcher(
+    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted'
+  );
+
   return {
     props: {
       recommended,
       huddles,
-    }
-  }
-}
+    },
+  };
+};
 
 type Props = {
   recommended: Huddle[];
@@ -29,18 +31,24 @@ type Props = {
 
 function Profile({ recommended, huddles }: Props) {
   //Get user id from auth for the tag hook
-  const { data: tags, error: tagsError } = useSWR(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`, fetcher);
-  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`, fetcher);
+  const { data: tags, error: tagsError } = useSWR(
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
+    fetcher
+  );
+  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
+    fetcher
+  );
 
   if (tagsError || userHuddleError) return <div>failed to load</div>;
-  if (!huddles || !tags || !userCreatedHuddles || !recommended) return <div>loading...</div>;
+  if (!huddles || !tags || !userCreatedHuddles || !recommended)
+    return <div>loading...</div>;
 
   return (
-
     <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light bg-red-200'>
       <div className='flex flex-col h-full items-center border-x-[0.2px] border-gray-400'>
         <Avatar />
-        <UserInfo created={userCreatedHuddles.length} />
+        <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
         <div className='h-1/9 w-full flex justify-center mt-8 border'>
           <button
             className='border-[0.2px] bg-palette-dark text-white rounded-[5px] h-16 p-4'
