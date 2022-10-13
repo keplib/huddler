@@ -55,7 +55,7 @@ export default function Map({ huddles }: Props) {
     setCreateBox(true);
   };
   useEffect(() => {
-    setSelected(true);
+    if (center.lat !== 41.39) setSelected(true);
   }, [center]);
   return isLoaded ? (
     <div className="mt-0 mr-0">
@@ -129,7 +129,7 @@ export default function Map({ huddles }: Props) {
               position={center}
               animation={google.maps.Animation.DROP}
               draggable={true}
-              icon={{ path: image }}
+              icon={image}
               onDragEnd={(e) =>
                 setCenter({
                   lat: e.latLng?.lat() || center.lat,
