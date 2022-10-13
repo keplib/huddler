@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
     body {
@@ -6,5 +8,6 @@
     }  
 }
 
-@tailwind components;
-@tailwind utilities;
+#carousel::-webkit-scrollbar {
+    display: none;
+}

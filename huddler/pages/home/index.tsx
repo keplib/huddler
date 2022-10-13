@@ -20,7 +20,7 @@ function index({ recommended }) {
   return (
     <>
       {/* <Search categories={categories} /> */}
-      <div className="flex space-x-0">
+      <div className="flex space-x-0 ">
         <Huddles huddles={filter} />
         <Map huddles={filter} />
       </div>
