@@ -17,7 +17,7 @@ type Props = {
 
   //Css classes
   const defaultClass =
-    'flex justify-between h-full border-b-[0.2px border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-gray-300 focus:bg-gray-300';
+    'flex justify-between h-full border-b-[0.2px border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
   const defaultClassTop = defaultClass + '  rounded-t-[15px]';
   const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
   
@@ -46,7 +46,7 @@ const OptionsMenu = ({setOption}: Props) => {
       <li
         className={
           selected.information
-            ? defaultClassTop + ' bg-gray-300'
+            ? defaultClassTop + ' bg-palette-orange'
             : defaultClassTop
         }
         onClick={handleOption}
@@ -57,7 +57,7 @@ const OptionsMenu = ({setOption}: Props) => {
       </li>
       <li
         className={
-          selected.password ? defaultClass + ' bg-gray-300' : defaultClass
+          selected.password ? defaultClass + ' bg-palette-orange' : defaultClass
         }
         onClick={handleOption}
         id='password'
@@ -67,7 +67,7 @@ const OptionsMenu = ({setOption}: Props) => {
       </li>
       <li
         className={
-          selected.location ? defaultClass + ' bg-gray-300' : defaultClass
+          selected.location ? defaultClass + ' bg-palette-orange' : defaultClass
         }
         onClick={handleOption}
         id='location'
@@ -77,7 +77,9 @@ const OptionsMenu = ({setOption}: Props) => {
       </li>
       <li
         className={
-          selected.interests ? defaultClass + ' bg-gray-300' : defaultClass
+          selected.interests
+            ? defaultClass + ' bg-palette-orange'
+            : defaultClass
         }
         onClick={handleOption}
         id='interests'
@@ -88,7 +90,7 @@ const OptionsMenu = ({setOption}: Props) => {
       <li
         className={
           selected.delete
-            ? defaultClassBottom + ' bg-gray-300'
+            ? defaultClassBottom + ' bg-palette-orange'
             : defaultClassBottom
         }
         onClick={handleOption}
@@ -100,6 +102,9 @@ const OptionsMenu = ({setOption}: Props) => {
     </ul>
   );
 }
+
+
+
 
 
 
