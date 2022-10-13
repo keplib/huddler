@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 
-import Huddles from '../../src/components/Home-components/Huddles';
-import Map from '../../src/components/Home-components/Map';
+import Huddles from "../../src/components/Home-components/Huddles";
+import Map from "../../src/components/Home-components/Map";
 
-import { recommendedForUser } from '../../src/utils/helperFunctions';
-import { Huddle } from '../../src/types';
+import { recommendedForUser } from "../../src/utils/helperFunctions";
+import { Huddle } from "../../src/types";
 
 // we'll need the current user authenticated info
 export const getServerSideProps = async () => {
@@ -26,7 +26,7 @@ function Home({ recommended }: Props) {
   return (
     <>
       {/* <Search categories={categories} /> */}
-      <div className='flex space-x-0'>
+      <div className="sm:block md:flex  space-x-0">
         <Huddles huddles={filterChoice} />
         <Map huddles={filterChoice} />
       </div>
@@ -35,4 +35,3 @@ function Home({ recommended }: Props) {
 }
 
 export default Home;
-

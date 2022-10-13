@@ -18,7 +18,7 @@ function Huddles({ huddles }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-3/4 border border-black m-16">
+    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3   w-3/4  overflow-auto mx-10 mt-20 ">
       {huddles.map((huddle: any) => (
         <HuddleCard
           item={huddle}
