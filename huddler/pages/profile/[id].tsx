@@ -9,7 +9,8 @@ import avatar from '../../public/placeholder.jpg';
 import UserInfo from '../../src/components/Profile components/UserInfo';
 import useSWR from 'swr';
 import { fetcher } from '../../src/utils/APIServices/fetcher';
-import { getAllHuddles, recommendedForUser } from '../../src/utils/APIServices/huddleServices';
+import { getAllHuddles } from '../../src/utils/APIServices/huddleServices';
+import { recommendedForUser } from '../../src/utils/helperFunctions';
 import HuddleCarouselItem from '../../src/components/Profile components/HuddleCarouselItem';
 import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
 
