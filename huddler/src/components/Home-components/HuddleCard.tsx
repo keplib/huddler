@@ -28,13 +28,6 @@ const HuddleCard = ({ item, handleActive, active }: Props) => {
           src={item.image}
           className="rounded-md h-44 min-w-[12rem] shadow-md"
         ></img>
-        {/* <Image
-          className="rounded-lg"
-          alt="event-image"
-          src={item.image}
-          height={175}
-          width={175}
-        /> */}
       </div>
       <div className="col-span-1 self-center">
         <br />
