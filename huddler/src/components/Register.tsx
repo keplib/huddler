@@ -3,9 +3,26 @@ import Link from 'next/link';
 import {useRouter} from 'next/router'
 import React, { useState, useRef } from 'react';
 import { User } from '../types';
-import { Auth } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
-function Register() {
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from '../aws-exports';
+Amplify.configure(awsconfig);
+
+import awsExports from '../aws-exports';
+Amplify.configure(awsExports);
+
+function Register({ signOut, user }: any) {
+
+  const getUser = async () => {
+    const res = await Auth.currentSession();
+    console.log('res: ', res.idToken.payload.email);
+    return res;
+  }
+
+  getUser();
+
   const router = useRouter()
 
   const [error, setError] = useState('');
@@ -16,20 +33,6 @@ function Register() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmedPasswordRef = useRef<HTMLInputElement>(null);
 
-  // async function signUp() {
-  //   try {
-  //       const { user } = await Auth.signUp({
-  //           email,
-  //           password,
-  //           autoSignIn: { // optional - enables auto sign in after user is confirmed
-  //               enabled: true,
-  //           }
-  //       });
-  //       console.log(user);
-  //   } catch (error) {
-  //       console.log('error signing up:', error);
-  //   }
-  // }
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,9 +79,16 @@ function Register() {
     setLoading(false)
   };
   return (
+
+    
     
     <main className='h-auto w-auto flex flex-col items-center border-solid border-2 rounded border-indigo-600 bg-white absolute my-24 px-24 py-12 ml-[50%]'>
-      <h1>Share your Passions</h1>
+      <>
+        <h1>Hello</h1>
+        <button onClick={signOut}>Sign out</button>
+      </>
+      
+      {/* <h1>Share your Passions</h1>
       <br />
       {error && <div className='bg-red-600'>{error}</div>}
       <form
@@ -136,12 +146,12 @@ function Register() {
       <div className=''>------------------------</div>
       <div className=''>Sign Up with Google</div>
       <div>Already have an account?</div>
-      <Link href='/Login'>Log in</Link>
+      <Link href='/Login'>Log in</Link> */}
     </main>
   );
 }
-
-export default Register;
+export default withAuthenticator(Register);
+// export default Register;
 
 
 
