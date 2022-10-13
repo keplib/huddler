@@ -12,7 +12,18 @@ import { fetcher } from '../../src/utils/APIServices/fetcher';
 import { getAllHuddles, recommendedForUser } from '../../src/utils/APIServices/huddleServices';
 import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
 
-function Profile() {
+export const getServerSideProps = async () => {
+  const data = await recommendedForUser(67);
+
+  return {
+    props: {
+      recommended: data,
+    }
+  }
+
+}
+
+function Profile({recommended}) {
 
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`, fetcher);
@@ -21,7 +32,6 @@ function Profile() {
 
   if (huddleError || tagsError || userHuddleError) return <div>failed to load</div>;
   if (!huddles || !tags || !userCreatedHuddles) return <div>loading...</div>;
-
   const user: User = {
     name: 'Florio',
     avatar: avatar,
@@ -29,24 +39,15 @@ function Profile() {
     createdOn: 0,
   };
 
-  useEffect(() => {
-    wtf();
-  }, [])
-
-  const wtf = async () => {
-    console.log(await recommendedForUser(68));
-  }
-  console.log(recommendedForUser(68));
-
 
   return (
-    <main className='grid grid-cols-4 h-full py-8'>
-      <div className='flex flex-col h-screen items-center border-x-[0.2px] border-gray-400'>
+    <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 '>
 
+      <div className='flex flex-col h-full items-center border-x-[0.2px] border-gray-400'>
         <Avatar />
         <UserInfo />
 
-        <div className='h-full w-full flex justify-center mt-8 border'>
+        <div className='h-1/9 w-full flex justify-center mt-8 border'>
           <button
             className='border-[0.2px] border-gray-400 bg-blue-400 rounded-[5px] h-16 p-4'
             onClick={() => router.push('/create')}
@@ -57,7 +58,7 @@ function Profile() {
 
       </div>
 
-      <div className='h-full w-full bg-yellow-200 col-span-3'>
+      <div className='h-full w-full col-span-2 2xl:col-span-3 overflow-auto'>
 
         <h1 className='py-8 p-4 text-3xl'>Interests:</h1>
         <div className='flex flex-wrap bg-white gap-4 p-4 border'>
@@ -80,6 +81,17 @@ function Profile() {
         <h1 className='py-8'>My huddles:</h1>
         <div className='bg-slate-200 h-1/4 flex overflow-x-scroll gap-2'>
           {huddles.map((hud) => (
+            <div className='bg-red-200 gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
+
+              <HuddleCarousel hud={hud} />
+
+            </div>
+          ))}
+        </div>
+
+        <h1 className='py-8'>Recommended:</h1>
+        <div className='bg-slate-200 h-1/4 flex overflow-x-scroll gap-2'>
+          {recommended.map((hud) => (
             <div className='bg-red-200 gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
 
               <HuddleCarousel hud={hud} />

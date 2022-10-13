@@ -3,7 +3,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-      <div className='absolute w-full bg-black h-1/4 top-[103%]'>
+      <div className='w-full bg-black h-[400px]'>
           <h1 className="text-white">
           Footer
           
