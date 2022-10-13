@@ -9,6 +9,7 @@ import HuddleCarousel from "../../src/components/Profile components/HuddleCarous
 
 import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
 import { Category, Huddle, User } from "../../src/types";
+import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
 
 export const getServerSideProps = async () => {
   const recommended: Huddle[] = await recommendedForUser(67);
@@ -45,15 +46,14 @@ function Profile({ recommended, huddles }: Props) {
     return <div>loading...</div>;
 
   return (
-    <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light bg-red-200'>
-      <div>
-        <div className='fixed lg:min-w-[400px] w-[20%] h-full'>
+    <main className='flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light bg-red-200'>
+      <div className="hidden lg:block">
+        <div className='fixed min-w-[20%] h-full'>
           <div
             className='flex flex-col h-full items-center
           border-x-[0.2px] shadow-md w-full'
           >
             <Avatar />
-
             <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
             <div className='h-1/9 w-full flex flex-col justify-center mt-8 border gap-6'>
               <h1 className='text-3xl self-center'>Feeling Inspired?</h1>
@@ -67,6 +67,11 @@ function Profile({ recommended, huddles }: Props) {
           </div>
         </div>
       </div>
+      {/* Mobile */}
+      <div className="lg:hidden">
+        <MobileAvatar />
+      </div>
+
 
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
         <h1 className="py-8 p-4 text-3xl">Interests:</h1>

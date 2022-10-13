@@ -11,13 +11,14 @@ function HuddleCarouselItem({ huddle }: Props) {
 
   return (
     <>
-      <Image
-        src={huddle.image}
-        width={300}
-        height={300}
-        className="h-full w-[300px] max-h-72 col-span-1 rounded-l-lg"
-        alt={huddle.name}
-      />
+      <div className="h-full lg:w-[300px] max-h-72 col-span-1 rounded-l-lg relative">
+        <Image
+          src={huddle.image}
+          fill
+          className="h-full w-[300px] max-h-72 col-span-1 rounded-l-lg"
+          alt={huddle.name}
+        />
+      </div>
       <div className="flex flex-col justify-self-start max-w-[300px] w-full text-lg pt-2">
         <h1 className="font-extrabold text-palette-orange text-2xl">
           {huddle.name}
