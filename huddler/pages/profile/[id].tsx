@@ -14,23 +14,23 @@ import HuddleCarousel from '../../src/components/Profile components/HuddleCarous
 
 export const getServerSideProps = async () => {
   const data = await recommendedForUser(67);
-
+  const huddles = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted")
+    
   return {
     props: {
       recommended: data,
+      huddles: huddles
     }
   }
 
 }
 
-function Profile({recommended}) {
+function Profile({recommended, huddles}) {
 
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`, fetcher);
-  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`, fetcher)
-  const { data: huddles, error: huddleError } = getAllHuddles();
-
-  if (huddleError || tagsError || userHuddleError) return <div>failed to load</div>;
+  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`, fetcher);
+  // if (huddleError || tagsError || userHuddleError) return <div>failed to load</div>;
   if (!huddles || !tags || !userCreatedHuddles) return <div>loading...</div>;
   const user: User = {
     name: 'Florio',
