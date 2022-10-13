@@ -58,7 +58,7 @@ function Profile({recommended}) {
 
       </div>
 
-      <div className='h-full w-full bg-yellow-200 col-span-2 2xl:col-span-3 overflow-auto'>
+      <div className='h-full w-full col-span-2 2xl:col-span-3 overflow-auto'>
 
         <h1 className='py-8 p-4 text-3xl'>Interests:</h1>
         <div className='flex flex-wrap bg-white gap-4 p-4 border'>
