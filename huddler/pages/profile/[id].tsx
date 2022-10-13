@@ -10,6 +10,7 @@ import UserInfo from '../../src/components/Profile components/UserInfo';
 import useSWR from 'swr';
 import { fetcher } from '../../src/utils/APIServices/fetcher';
 import { getAllHuddles, recommendedForUser } from '../../src/utils/APIServices/huddleServices';
+import HuddleCarouselItem from '../../src/components/Profile components/HuddleCarouselItem';
 import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
 
 export const getServerSideProps = async () => {
@@ -22,7 +23,6 @@ export const getServerSideProps = async () => {
       huddles: huddles
     }
   }
-
 }
 
 function Profile({recommended, huddles}) {
@@ -46,60 +46,34 @@ function Profile({recommended, huddles}) {
       <div className='flex flex-col h-full items-center border-x-[0.2px] border-gray-400'>
         <Avatar />
         <UserInfo />
-
         <div className='h-1/9 w-full flex justify-center mt-8 border'>
           <button
-            className='border-[0.2px] border-gray-400 bg-blue-400 rounded-[5px] h-16 p-4'
+            className='border-[0.2px] bg-palette-dark text-white rounded-[5px] h-16 p-4'
             onClick={() => router.push('/create')}
           >
             Create a Huddle
           </button>
         </div>
-
       </div>
 
       <div className='h-full w-full col-span-2 2xl:col-span-3 overflow-auto'>
-
         <h1 className='py-8 p-4 text-3xl'>Interests:</h1>
-        <div className='flex flex-wrap bg-white gap-4 p-4 border'>
+        <div className='flex flex-wrap gap-4 p-4 border'>
           {tags.map((tag, i) => (
-            <h1 className='text-xl bg-blue-600 py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer' key={i}>{tag.name}</h1>
+            <h1 className='text-xl bg-palette-dark py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer' key={i}>{tag.name}</h1>
           ))}
         </div>
 
-        <h1 className='py-8'>Created huddles:</h1>
-        <div className=' h-1/4 flex overflow-x-scroll gap-2'>
-          {userCreatedHuddles.map((hud) => (
-            <div className='gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
+        <h1 className='py-6 p-4 text-3xl'>Created huddles:</h1>
+        <HuddleCarousel huddles={userCreatedHuddles} />
 
-              <HuddleCarousel hud={hud} />
+        <h1 className='py-6 p-4 text-3xl'>My huddles:</h1>
+        <HuddleCarousel huddles={huddles} />
 
-            </div>
-          ))}
-        </div>
 
-        <h1 className='py-8'>My huddles:</h1>
-        <div className=' h-1/4 flex overflow-x-scroll gap-2'>
-          {huddles.map((hud) => (
-            <div className=' gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
-
-              <HuddleCarousel hud={hud} />
-
-            </div>
-          ))}
-        </div>
-
-        <h1 className='py-8'>Recommended:</h1>
-        <div className=' h-1/4 flex overflow-x-scroll gap-2'>
-          {recommended.map((hud) => (
-            <div className='gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
-
-              <HuddleCarousel hud={hud} />
-
-            </div>
-          ))}
-        </div>
-
+        <h1 className='py-6 p-4 text-3xl'>Recommended:</h1>
+        <HuddleCarousel huddles={recommended} />
+       
 
       </div>
     </main>
