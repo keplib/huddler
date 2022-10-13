@@ -44,7 +44,7 @@ function MainForm() {
         setUserData({ ...userData, tags: temp })
     }
 
-    const nextPage = (e) => {
+    const nextPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (page < 3) {
             setPage(page + 1);
@@ -53,7 +53,7 @@ function MainForm() {
             
         }
     }
-    const prevPage = (e) => {
+    const prevPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (page > 1) {
             setPage(page - 1);
