@@ -25,6 +25,7 @@ const HuddleCard = ({ item, handleActive, active }: Props) => {
       </h2>
       <div className="flex justify-center">
         <img
+          alt="placeholder"
           src={item.image}
           className="rounded-md h-44 min-w-[12rem] shadow-md"
         ></img>
@@ -47,9 +48,11 @@ const HuddleCard = ({ item, handleActive, active }: Props) => {
         <p>{item.description}</p>
       </div>
       <div className="inline-block h-full w-full">
-        {item.images.stringValues.map((image: string, i: number) => (
-          <Image src={image} height={200} width={200} key={i} />
-        ))}
+        <img
+          alt="placeholder"
+          src={item.image}
+          className="rounded-md h-44 min-w-[12rem] shadow-md"
+        ></img>
       </div>
     </div>
   );

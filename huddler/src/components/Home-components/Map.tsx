@@ -4,7 +4,7 @@ import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
-const image = require("../../../public/pinIcon.jpg");
+const image = require("../../../public/location-pin-svgrepo-com.svg");
 const libraries: (
   | "places"
   | "drawing"
@@ -129,7 +129,7 @@ export default function Map({ huddles }: Props) {
               position={center}
               animation={google.maps.Animation.DROP}
               draggable={true}
-              icon={image}
+              // icon={{ path: "../../../public/location-pin-svgrepo-com.svg" }}
               onDragEnd={(e) =>
                 setCenter({
                   lat: e.latLng?.lat() || center.lat,

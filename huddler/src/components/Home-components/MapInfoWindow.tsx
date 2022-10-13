@@ -46,9 +46,13 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
             <h1 className="font-extrabold text-palette-orange mb-1 text-lg">
               {showHuddle.name}
             </h1>
-            <h1 className="mb-1">
-              On {dateTime.monthDayYear} at {dateTime.time}
-            </h1>
+            {dateTime ? (
+              <h1 className="mb-1">
+                On {dateTime.monthDayYear} at {dateTime.time}
+              </h1>
+            ) : (
+              <></>
+            )}
             <Image
               alt="img"
               src={showHuddle.image}
