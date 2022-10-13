@@ -58,7 +58,7 @@ export default function Map({ huddles }: Props) {
     setSelected(true);
   }, [center]);
   return isLoaded ? (
-    <div className="mt-16 mr-6 fixed right-0">
+    <div className="mt-0 mr-0">
       <div className="absolute pl-3 z-10 mt-24">
         <div className="flex">
           {containerSize.width == "60vw" ? (
