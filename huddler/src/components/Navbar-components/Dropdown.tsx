@@ -38,7 +38,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
       className='mt-24 w-full'
       // onMouseLeave={() => setShowDropDown(false)}
     >
-      <ul className='grid grid-cols-3 gap-4 border-b w-48 absolute bg-black -right-[50%] place-content-center pt-2 text-lg'>
+      <ul className='grid grid-cols-3 gap-4 border-b w-48 absolute bg-palette-black -right-[50%] place-content-center pt-2 text-lg'>
         {serviceDropdown.map((menuItem, i) => {
           return (
             <li

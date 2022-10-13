@@ -1,3 +1,10 @@
 @tailwind base;
+
+@layer base {
+    body {
+        @apply bg-palette-light;
+    }  
+}
+
 @tailwind components;
 @tailwind utilities;
