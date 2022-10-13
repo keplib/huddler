@@ -19,7 +19,7 @@ function Huddles({huddles}) {
     <div className='flex flex-col gap-4 w-3/4 border border-black m-16'>
       {huddles.map((huddle: any) => (
         <HuddleCard
-          huddle={huddle}
+          item={huddle}
           key={huddle.id}
           active={active}
           handleActive={handleActive}
