@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { getHuddlesInCategory } from './APIServices/categoryServices';
 import { getUserCategories } from './APIServices/userServices';
-export const dateFormatter = (date: number) => {
+export const dateFormatter = (date: string) => {
   const toFormat = dayjs(date);
   const dateTime = {
     day: toFormat.format('DD'),

@@ -22,7 +22,7 @@ function index({ recommended }) {
       {/* <Search categories={categories} /> */}
       <div className="flex">
         <Huddles huddles={filter} />
-        <Map huddles={filter} />
+        {/* <Map huddles={filter} /> */}
       </div>
     </>
   );
