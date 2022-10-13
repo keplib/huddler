@@ -21,8 +21,8 @@ export default function Map({ huddles }: Props) {
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
   const [containerSize, setContainerSize] = useState({
-    width: "100%",
-    height: "100%",
+    width: "60vw",
+    height: "40vw",
   });
   // later change center to user location
   const [center, setCenter] = useState({
@@ -58,16 +58,16 @@ export default function Map({ huddles }: Props) {
     setSelected(true);
   }, [center]);
   return isLoaded ? (
-    <div className="mt-16 mr-6 relative">
-      <div className="absolute pl-3 z-10 mt-16">
+    <div className="mt-16 mr-6 fixed right-0">
+      <div className="absolute pl-3 z-10 mt-24">
         <div className="flex">
-          {containerSize.width == "100%" ? (
+          {containerSize.width == "60vw" ? (
             <button
               className="p-2  bg-white shadow-md "
               onClick={() =>
                 setContainerSize({
-                  width: "75%",
-                  height: "75%",
+                  width: "40vw",
+                  height: "40vw",
                 })
               }
             >
@@ -78,8 +78,8 @@ export default function Map({ huddles }: Props) {
               className="p-2 bg-white  shadow-md rounded-sm"
               onClick={() =>
                 setContainerSize({
-                  width: "100%",
-                  height: "100%",
+                  width: "60vw",
+                  height: "40vw",
                 })
               }
             >
@@ -115,7 +115,7 @@ export default function Map({ huddles }: Props) {
           />
         </div>
       </div>
-      <div className="shadow-xl w-[20rem] h-[25rem] sm:w-[40rem] sm:h-[30rem] md:w-[80rem] md:h-[40rem] lg:w-[100rem] lg:h-[55rem]">
+      <div className="shadow-xl rounded-md ">
         <GoogleMap
           zoom={12}
           mapContainerStyle={containerSize}
