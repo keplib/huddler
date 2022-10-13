@@ -4,7 +4,6 @@ import avatar from '../../../public/placeholder.jpg';
 
 function UserInfo() {
 
-
     const user: User = {
         name: 'Florio',
         avatar: avatar,
@@ -14,7 +13,7 @@ function UserInfo() {
 
     return (
         <>
-            <div className='flex px-4 pt-4 w-full '>
+            <div className='flex px-8 pt-4 w-full '>
                 <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
                     <h1>Huddles</h1>
                     <p className='font-bold'>5</p>
