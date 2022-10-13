@@ -1,9 +1,16 @@
 import Image from 'next/image';
 import React from 'react';
+import { Huddle } from '../../types';
 import { dateFormatter } from '../../utils/helperFunctions';
-const HuddleCard = ({ item, handleActive, active }: any) => {
-  console.log(item)
-  const dateTime = dateFormatter(item.day_time)
+
+type Props = {
+  item: Huddle;
+  handleActive: Function;
+  active: Huddle;
+};
+
+const HuddleCard = ({ item, handleActive, active }: Props) => {
+  const dateTime = dateFormatter(item.day_time);
   return item !== active ? (
     // Huddles class
     <div
@@ -23,10 +30,10 @@ const HuddleCard = ({ item, handleActive, active }: any) => {
         <h1>
           <strong>{item.name}</strong>
         </h1>
-        <br/>
+        <br />
         <p>At {item.address}</p>
         <p>{item.description}</p>
-        <br/>
+        <br />
         <p>
           On {dateTime.monthDayYear} at {dateTime.time}
         </p>
@@ -46,6 +53,7 @@ const HuddleCard = ({ item, handleActive, active }: any) => {
         {item.images.stringValues.map((image: string, i: number) => (
           <Image
             src={image}
+            alt='event-image'
             height={200}
             width={200}
             key={i}
@@ -57,8 +65,4 @@ const HuddleCard = ({ item, handleActive, active }: any) => {
 };
 
 export default HuddleCard;
-
-
-
-
 

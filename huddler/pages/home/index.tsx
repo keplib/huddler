@@ -1,9 +1,10 @@
-import React from "react";
-import Huddles from "../../src/components/Home-components/Huddles";
-import Map from "../../src/components/Home-components/Map";
-import Search from "../../src/components/Home-components/Search";
-import { useState } from "react";
-import { recommendedForUser } from "../../src/utils/helperFunctions";
+import React, {useState} from 'react';
+
+import Huddles from '../../src/components/Home-components/Huddles';
+import Map from '../../src/components/Home-components/Map';
+
+import { recommendedForUser } from '../../src/utils/helperFunctions';
+import { Huddle } from '../../src/types';
 
 // we'll need the current user authenticated info
 export const getServerSideProps = async () => {
@@ -14,18 +15,24 @@ export const getServerSideProps = async () => {
     },
   };
 };
-function index({ recommended }) {
-  const [filter, setFilter] = useState(recommended); //by default recommended
+
+type Props = {
+  recommended: Huddle[];
+};
+
+function Home({ recommended }: Props) {
+  const [filterChoice, setFilterChoice] = useState<Huddle[]>(recommended); //by default recommended
   // if user uses another filter let's call a function that does it.
   return (
     <>
       {/* <Search categories={categories} /> */}
-      <div className="flex space-x-0 ">
-        <Huddles huddles={filter} />
-        <Map huddles={filter} />
+      <div className='flex space-x-0'>
+        <Huddles huddles={filterChoice} />
+        <Map huddles={filterChoice} />
       </div>
     </>
   );
 }
 
-export default index;
+export default Home;
+

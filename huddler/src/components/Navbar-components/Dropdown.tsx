@@ -6,6 +6,7 @@ import { AiOutlineCompass } from "react-icons/Ai"
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
 const serviceDropdown = [
   { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
   { name: 'Profile', path: '/profile', icon: <CgProfile /> },
@@ -15,11 +16,9 @@ const serviceDropdown = [
 
 type Props = {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 const Dropdown = ({ setShowDropDown }: Props) => {
-  // const icon = <CgProfile />
-
   const router = useRouter();
   const insideDropDownRef = useRef<HTMLInputElement>(null);
   const handleLogoutClick = (
@@ -33,10 +32,11 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   useEffect(() => {
     document.addEventListener('click', handleClickOutsideDropdown, true);
   }, []);
+
   function handleClickOutsideDropdown(this: HTMLElement) {
     if (insideDropDownRef.current === null) return;
     if (!insideDropDownRef.current!.contains(this)) setShowDropDown(false);
-  };
+  }
 
   return (
     <div
@@ -61,8 +61,4 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
-
-
-
-
 

@@ -1,11 +1,14 @@
-import useSWR from "swr";
 import HuddleCard from "./HuddleCard";
-import { fetcher } from "../../utils/APIServices/fetcher";
 import { useState } from "react";
 import { Huddle } from "../../types";
 
-function Huddles({ huddles }) {
-  const [active, setActive] = useState({});
+type Props = {
+  huddles: Huddle[];
+}
+
+function Huddles({ huddles }: Props) {
+  const [active, setActive] = useState<Huddle | {}>();
+  
   const handleActive = (huddle: Huddle) => {
     if (active === huddle) {
       setActive({});
@@ -20,7 +23,7 @@ function Huddles({ huddles }) {
         <HuddleCard
           item={huddle}
           key={huddle.id}
-          active={active}
+          active={active as Huddle}
           handleActive={handleActive}
         />
       ))}

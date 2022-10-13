@@ -18,8 +18,8 @@ const ChangePassword = () => {
     e.preventDefault();
     try {
       //await update password in the auth provider
-      setSuccess('Success! Your password was changed')
-      console.log('this is success', success)
+      setSuccess('Success! Your password was changed');
+      console.log('this is success', success);
       passwordRef.current!.value = '';
       confirmedPasswordRef.current!.value = '';
     } catch {
@@ -63,9 +63,4 @@ const ChangePassword = () => {
 };
 
 export default ChangePassword;
-
-
-
-
-
 

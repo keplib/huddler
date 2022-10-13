@@ -1,27 +1,27 @@
-import Image from "next/future/image";
-import { useState } from "react";
+import Image from 'next/future/image';
+import { useState } from 'react';
 import rightArrow from '../../../public/right-arrow.png';
 
 type Props = {
   setOption: React.Dispatch<React.SetStateAction<string>>;
 };
 
-  const arrowImage = (
-    <Image
-      src={rightArrow}
-      width={20}
-      height={30}
-      alt='right-arrow'
-    />
-  );
+const arrowImage = (
+  <Image
+    src={rightArrow}
+    width={20}
+    height={30}
+    alt='right-arrow'
+  />
+);
 
-  //Css classes
-  const defaultClass =
-    'flex justify-between h-full border-b-[0.2px border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
-  const defaultClassTop = defaultClass + '  rounded-t-[15px]';
-  const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
-  
-const OptionsMenu = ({setOption}: Props) => {
+//Css classes
+const defaultClass =
+  'flex justify-between h-full border-b-[0.2px border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
+const defaultClassTop = defaultClass + '  rounded-t-[15px]';
+const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
+
+const OptionsMenu = ({ setOption }: Props) => {
   const [selected, setSelected] = useState({
     information: true,
     password: false,
@@ -101,19 +101,6 @@ const OptionsMenu = ({setOption}: Props) => {
       </li>
     </ul>
   );
-}
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-export default OptionsMenu
+export default OptionsMenu;
