@@ -25,8 +25,12 @@ type Props = {
       lng: number;
     }>
   >;
+  center: {
+    lat: number;
+    lng: number;
+  };
 };
-const NewHuddleForm = ({ data, setCenter }: Props) => {
+const NewHuddleForm = ({ data, setCenter, center }: Props) => {
   const router = useRouter();
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -38,6 +42,7 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
     lat: "41.39",
     lng: "2.154",
   });
+  const [finalLocation, setFinalLocation] = useState(locationData);
   const titleRef = useRef<HTMLInputElement>(null);
   const categoriesRef = useRef<HTMLInputElement>(null);
   const whereRef = useRef<HTMLInputElement>(null);
@@ -53,9 +58,9 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
         day_time: whenRef.current!.value,
-        longitude: +locationData.lng,
-        latitude: +locationData.lat,
-        address: locationData.name,
+        longitude: +finalLocation.lng,
+        latitude: +finalLocation.lat,
+        address: finalLocation.name,
         description: descriptionRef.current!.value,
         // for images we'll probably have to split what comes from the input field
         //CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
@@ -101,7 +106,16 @@ const NewHuddleForm = ({ data, setCenter }: Props) => {
       lat: Number(locationData.lat),
       lng: Number(locationData.lng),
     });
+    setFinalLocation(locationData);
   }, [locationData]);
+  useEffect(() => {
+    if (center)
+      setFinalLocation({
+        ...finalLocation,
+        lat: "" + center.lat,
+        lng: "" + center.lng,
+      });
+  }, [center]);
   return (
     <main className="w-[100%]">
       <h1 className="text-center">Let's make a new huddle</h1>

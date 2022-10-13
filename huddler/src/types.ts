@@ -1,8 +1,8 @@
 import { StaticImageData } from "next/image";
 
 export interface Category {
-  id?: number,
-  name: string,
+  id?: number;
+  name: string;
 }
 export interface User {
   name: string;
@@ -14,7 +14,7 @@ export interface User {
   lastName?: string;
   avatar?: File | File[] | string | string[];
   dateOfBirth?: string;
-  interests?: Category[]
+  interests?: Category[];
   longitude: number;
   latitude: number;
 }

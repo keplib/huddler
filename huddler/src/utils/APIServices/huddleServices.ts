@@ -10,11 +10,19 @@ export const getAllHuddles = () =>
   );
 //Returns: Array of Huddle Objects
 
-export const getUsersGoingToHuddle = (huddle_id: number) =>
-  useSWRImmutable(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing?huddle-id=${huddle_id}`,
-    fetcher
-  );
+export const getUsersGoingToHuddle = async (huddle_id: number) => {
+  try {
+    const data = await fetch(
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing?huddle-id=${huddle_id}`,
+      { mode: "cors" }
+    );
+    const res = await data.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Returns: Array of UserId & UserName Objects
 
 export const getHuddleById = (huddle_id: number) => {
@@ -31,9 +39,7 @@ export const getHuddleCategories = async (id: number) => {
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/categories_of_huddle?huddle-id=${id}`,
       { mode: "cors" }
     );
-    console.log(data);
     const res = await data.json();
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -115,5 +121,26 @@ export const postHuddleCategory = async (huddleId: number, catId: number) => {
     return huddleToPost;
   } catch (e) {
     console.log("Error posting a Huddle category in DB  ", e);
+  }
+};
+
+export const postUserGoingToHuddle = async (
+  userId: number,
+  huddleId: number
+) => {
+  try {
+    const useToHuddle = await fetch("", {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({}),
+      headers: {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    return;
+  } catch (e) {
+    console.log("Error posting checkin in user to huddle  ", e);
   }
 };
