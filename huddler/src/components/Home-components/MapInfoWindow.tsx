@@ -7,6 +7,7 @@ import {
   postUserGoingToHuddle,
   removeUserGoingToHuddle,
 } from "../../utils/APIServices/huddleServices";
+import { dateFormatter } from "../../utils/helperFunctions";
 
 type Props = {
   showHuddle: Huddle | undefined;
@@ -14,6 +15,7 @@ type Props = {
 };
 export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
   const [checkedIn, setCheckedIn] = useState(false);
+  const [dateTime, setDateTime] = useState<any>();
   const isUserGoing = async () => {
     if (showHuddle) {
       const users = await getUsersGoingToHuddle(showHuddle.id);
@@ -25,6 +27,7 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
   };
   useEffect(() => {
     isUserGoing();
+    if (showHuddle) setDateTime(dateFormatter(showHuddle.day_time));
   }, [showHuddle]);
   return (
     <div>
@@ -36,11 +39,13 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
           }}
           onCloseClick={() => setShowHuddle(undefined)}
         >
-          <div className="animation-fadein">
-            <h1 className="font-bold text-orange-600 mb-1">
+          <div className="animation-fadein font-medium">
+            <h1 className="font-extrabold text-palette-orange mb-1 text-lg">
               {showHuddle.name}
             </h1>
-            <h1>{showHuddle.day_time}</h1>
+            <h1 className="mb-1">
+              On {dateTime.monthDayYear} at {dateTime.time}
+            </h1>
             <Image
               alt="img"
               src={showHuddle.image}
