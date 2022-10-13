@@ -13,8 +13,8 @@ const HuddleCard = ({ item, handleActive, active }: any) => {
         <Image src={item.image} height={200} width={200} />
       </div>
       <div className="col-span-2">
-        <h1>{item.name}</h1>
-        <p>{item.description}</p>
+        <h1>{huddle.name}</h1>
+        <p>{huddle.description}</p>
       </div>
     </div>
   ) : (

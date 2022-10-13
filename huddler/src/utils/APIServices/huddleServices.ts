@@ -3,11 +3,13 @@ import { Huddle } from "../../types";
 import { fetcher } from "./fetcher";
 //GET Functions
 
-export const getAllHuddles = () =>
-  useSWRImmutable(
+export const getAllHuddles = () => {
+  const { data: allHuddles, error: error } = useSWRImmutable(
     "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted",
     fetcher
   );
+  return allHuddles ? allHuddles : error;
+};
 //Returns: Array of Huddle Objects
 
 export const getUsersGoingToHuddle = async (huddle_id: number) => {
