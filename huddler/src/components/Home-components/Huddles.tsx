@@ -4,7 +4,8 @@ import { fetcher } from '../../utils/APIServices/fetcher';
 import { useState } from 'react';
 import { Huddle } from '../../types';
 
-function Huddles({ huddles }: any) {
+
+function Huddles({huddles}) {
   const [active, setActive] = useState({});
   const handleActive = (huddle: Huddle) => {
     if (active === huddle) {
@@ -13,7 +14,7 @@ function Huddles({ huddles }: any) {
       setActive(huddle);
     }
   };
-
+ 
   return (
     <div className='flex flex-col gap-4 w-3/4 border border-black m-16'>
       {huddles.map((huddle: any) => (
@@ -29,4 +30,7 @@ function Huddles({ huddles }: any) {
 }
 
 export default Huddles;
+
+
+
 

@@ -2,40 +2,30 @@ import React from 'react';
 import Huddles from '../../src/components/Home-components/Huddles';
 import Map from '../../src/components/Home-components/Map';
 import Search from '../../src/components/Home-components/Search';
-import {
-  getUserCategories,
-} from '../../src/utils/APIServices/userServices';
-import { getHuddlesInCategory} from '../../src/utils/APIServices/categoryServices';
 import { useState } from 'react';
-import { User } from '../../src/types';
+import { recommendedForUser } from '../../src/utils/helperFunctions';
 
-function index() {
-  // get current User from auth
-
-  // const [currentUser, setCurrentUser] = useState() //Pass it the user given by Auth
-
-  // const { data: huddles, error: huddleError } = getAllHuddles();
-  // const { data: categories, error: catError } = getAllCategories()
-
-  // const { data: userCategories, error: error } = getUserCategories();
-  
-  // const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
-
-  if (userCategoriesError || error) return <div>failed to load</div>;
-  if (!huddles || !categories) return <div>loading...</div>;
-
+// we'll need the current user authenticated info
+export const getServerSideProps = async () => {
+  const data = await recommendedForUser(67); // put user current user id
+  return {
+    props: {
+      recommended: data,
+    },
+  };
+};
+function index({recommended}) {
+  const [filter, setFilter] = useState(recommended); //by default recommended
+  // if user uses another filter let's call a function that does it.
   return (
     <>
       {/* <Search categories={categories} /> */}
       <div className='flex'>
-        <Huddles huddles={huddles} />
-        {/* <Map huddles={huddles} /> */}
+        <Huddles huddles={filter} />
+        {/* <Map huddles={filter} /> */}
       </div>
     </>
   );
 }
 
 export default index;
-
-
-

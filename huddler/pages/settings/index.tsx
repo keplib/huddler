@@ -7,16 +7,19 @@ import DeleteUser from '../../src/components/Settings-components/DeleteUser';
 import { User } from '../../src/types';
 import OptionsMenu from '../../src/components/Settings-components/OptionsMenu';
 
+
 //mock user
 const user: User = {
   name: 'Florio',
   email: 'flo@flo.flo',
 };
 
+
+
 const SettingsPage = () => {
   const [currentUser, setCurrentUser] = useState<User>(user);
   const [option, setOption] = useState('information');
-
+  
   return (
     <main className='flex h-screen justify-center items-center'>
       <OptionsMenu setOption={setOption} />

@@ -105,6 +105,7 @@ export default function Map({ huddles }: Props) {
           className="hidden flex-col items-center border-solid border-2 p-4 mt-4 bg-white w-[20rem] shadow-sm"
         >
           <NewHuddleForm
+            center={center}
             setCenter={setCenter}
             data={{
               name: locationName,
