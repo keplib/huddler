@@ -102,7 +102,7 @@ export default function Map({ huddles }: Props) {
         </div>
         <div
           id="huddle-form"
-          className="hidden flex-col items-center border-solid border-2 p-4 mt-4 bg-white w-[20rem] shadow-sm"
+          className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
         >
           <NewHuddleForm
             center={center}

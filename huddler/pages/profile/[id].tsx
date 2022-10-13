@@ -39,9 +39,14 @@ function Profile({ recommended, huddles }: Props) {
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
     fetcher
   );
+  const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${67}`,
+    fetcher
+  );
 
-  if (tagsError || userHuddleError) return <div>failed to load</div>;
-  if (!huddles || !tags || !userCreatedHuddles || !recommended)
+  if (tagsError || userHuddleError || userGoingError)
+    return <div>failed to load</div>;
+  if (!tags || !userCreatedHuddles || !recommended || !huddlesUserIsGoing)
     return <div>loading...</div>;
 
   return (
@@ -70,10 +75,10 @@ function Profile({ recommended, huddles }: Props) {
 
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
         <h1 className="py-8 p-4 text-3xl">Interests:</h1>
-        <div className="flex flex-wrap gap-4 p-4 border">
+        <div className="flex flex-wrap gap-4 p-4">
           {tags.map((tag: Category, i: number) => (
             <h1
-              className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:scale-150 hover:mx-4 cursor-pointer"
+              className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
               key={i}
             >
               {tag.name}
@@ -85,7 +90,7 @@ function Profile({ recommended, huddles }: Props) {
         <HuddleCarousel huddles={userCreatedHuddles} />
 
         <h1 className="py-6 p-4 text-3xl">Huddles I'm going to:</h1>
-        <HuddleCarousel huddles={huddles} />
+        <HuddleCarousel huddles={huddlesUserIsGoing} />
 
         <h1 className="py-6 p-4 text-3xl">Recommended:</h1>
         <HuddleCarousel huddles={recommended} />

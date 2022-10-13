@@ -14,7 +14,7 @@ const HuddleCard = ({ item, handleActive, active }: Props) => {
   return item !== active ? (
     // Huddles class
     <div
-      className="rounded-lg border-solid border-[0.5px] bg-white bg-opacity-50 border-palette-dark p-4 shadow-md hover:border-palette-orange"
+      className="rounded-lg border-solid border-[0.5px] border-palette-dark bg-white bg-opacity-50  p-4 shadow-md hover:border-palette-orange"
       onClick={() => handleActive(item)}
     >
       <h1 className="mb-2 font-extrabold text-palette-orange text-lg">
