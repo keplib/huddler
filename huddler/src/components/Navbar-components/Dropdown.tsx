@@ -1,19 +1,25 @@
 import React, { useState, useRef, useEffect, EventHandler } from 'react';
+import { CgProfile } from "react-icons/Cg"
+import { FiSettings } from "react-icons/Fi"
+import { HiOutlineLogout } from "react-icons/Hi"
+import { AiOutlineCompass } from "react-icons/Ai"
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 const serviceDropdown = [
-  { name: 'Explore', path: '/home' },
-  { name: 'Profile', path: '/profile' },
-  { name: 'Settings', path: '/settings' },
-  { name: 'Log Out', path: '/' },
+  { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
+  { name: 'Profile', path: '/profile', icon: <CgProfile /> },
+  { name: 'Settings', path: '/settings', icon: <FiSettings /> },
+  { name: 'Log Out', path: '/', icon: <HiOutlineLogout /> },
 ];
 
 type Props = {
-  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>; 
+  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const Dropdown = ({ setShowDropDown }: Props) => {
-  
+  // const icon = <CgProfile />
+
   const router = useRouter();
   const insideDropDownRef = useRef<HTMLInputElement>(null);
   const handleLogoutClick = (
@@ -36,23 +42,17 @@ const Dropdown = ({ setShowDropDown }: Props) => {
     <div
       ref={insideDropDownRef}
       className='mt-24 w-full'
-      // onMouseLeave={() => setShowDropDown(false)}
+    // onMouseLeave={() => setShowDropDown(false)}
     >
-      <ul className='grid grid-cols-3 gap-4 border-b w-48 absolute bg-palette-black -right-[50%] place-content-center pt-2 text-lg'>
+      <ul className='grid grid-cols-3 gap-4 border-b w-64 absolute bg-palette-dark -right-[50%] place-content-center pt-3'>
         {serviceDropdown.map((menuItem, i) => {
           return (
-            <li
-              className='col-span-3 border-b p-4'
-              key={i}
-            >
-              {menuItem.name === 'Log Out' ? (
-                <Link href=''>
-                  <a onClick={(e) => handleLogoutClick(e)}>{menuItem.name}</a>
-                </Link>
-              ) : (
-                <Link href={menuItem.path}>{menuItem.name}</Link>
-              )}
-            </li>
+            <Link href={menuItem.path}>
+              <a className='col-span-3 border-b p-5 flex gap-4 text-2xl items-center font-bold' key={i}>
+                <p className='text-3xl'>{menuItem.icon}</p>
+                <p>{menuItem.name}</p>
+              </a>
+            </Link>
           );
         })}
       </ul>

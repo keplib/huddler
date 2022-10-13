@@ -2,7 +2,7 @@ import React from 'react'
 import { User } from '../../../src/types';
 import avatar from '../../../public/placeholder.jpg';
 
-function UserInfo() {
+function UserInfo({ created }) {
 
     const user: User = {
         name: 'Florio',
@@ -13,18 +13,18 @@ function UserInfo() {
 
     return (
         <>
-            <div className='flex px-8 pt-4 w-full '>
-                <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
-                    <h1>Huddles</h1>
-                    <p className='font-bold'>5</p>
+            <div className='flex px-8 pt-4 w-full'>
+                <div className=' border border-black rounded-lg flex flex-col justify-center items-center py-4 w-full'>
+                    <h1>Created</h1>
+                    <p className='font-bold'>{created}</p>
                 </div>
 
-                <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
-                    <h1>Something</h1>
+                <div className=' border border-black rounded-lg flex flex-col justify-center items-center py-4 w-full'>
+                    <h1>Huddles</h1>
                     <p className='font-bold'>6</p>
                 </div>
 
-                <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
+                <div className=' border border-black rounded-lg flex flex-col justify-center items-center py-4 w-full'>
                     <h1>Something</h1>
                     <p className='font-bold'>234</p>
                 </div>
