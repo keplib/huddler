@@ -46,16 +46,25 @@ function Profile({ recommended, huddles }: Props) {
 
   return (
     <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light bg-red-200'>
-      <div className='flex flex-col h-full items-center border-x-[0.2px] border-gray-400'>
-        <Avatar />
-        <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
-        <div className='h-1/9 w-full flex justify-center mt-8 border'>
-          <button
-            className='border-[0.2px] bg-palette-dark text-white rounded-[5px] h-16 p-4'
-            onClick={() => router.push('/create')}
+      <div>
+        <div className='fixed min-w-[400px] w-[20%] h-full'>
+          <div
+            className='flex flex-col h-full items-center
+          border-x-[0.2px] shadow-md w-full'
           >
-            Create a Huddle
-          </button>
+            <Avatar />
+
+            <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
+            <div className='h-1/9 w-full flex flex-col justify-center mt-8 border gap-6'>
+              <h1 className='text-3xl self-center'>Feeling Inspired?</h1>
+              <button
+                className='self-center text-2xl bg-palette-dark text-white rounded-[5px] h-16 p-4 w-[210px] active:translate-x-[1px] active:translate-y-[1px]'
+                onClick={() => router.push('/create')}
+              >
+                Create a Huddle
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

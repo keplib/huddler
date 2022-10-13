@@ -12,12 +12,12 @@ const user: User = {
 
 function Avatar() {
   return (
-    <div className='w-full h-[38%] flex flex-col bg-blue py-8 justify-center'>
-      <h1 className='text-[2rem] justify-self-center'>
+    <div className='w-full flex flex-col bg-blue py-8 justify-center'>
+      <h1 className='text-[2rem] self-center'>
         Welcome back, {user.name}
       </h1>
-
-      <div className='rounded-full border border-black w-auto h-full mx-4 2xl:ml-16 relative max-w-[420px]'>
+    <br/>
+      <div className='rounded-full self-center shadow-md w-[200px] h-[200px]  relative'>
         <Image
           className='rounded-full'
           src={user.image! as string}

@@ -16,31 +16,17 @@ function UserInfo({ numOfCreatedHuddles }: Props) {
 
   return (
     <>
-      <div className='flex px-8 pt-4 w-full'>
-        <div className=' border border-black rounded-lg flex flex-col justify-center items-center py-4 w-full'>
-          <h1>Created</h1>
-          <p className='font-bold'>{numOfCreatedHuddles}</p>
+      <h1 className='text-3xl'>My Huddles</h1>
+      <br />
+      <div className='flex gap-5 justify-center w-full'>
+        <div className='flex flex-col justify-center w-[150px] text-2xl border-solid border-[0.5px] border-palette-orange shadow-md rounded-l-[50px] rounded-r-[50px]'>
+          <h1 className='self-center'>Created</h1>
+          <p className='font-bold self-center'>{numOfCreatedHuddles}</p>
         </div>
-
-        <div className=' border border-black rounded-lg flex flex-col justify-center items-center py-4 w-full'>
-          <h1>Huddles</h1>
-          <p className='font-bold'>6</p>
+        <div className='flex flex-col justify-center  w-[150px] text-2xl border-solid border-[0.5px] border-palette-orange   shadow-md rounded-l-[50px] rounded-r-[50px] '>
+          <h1 className='self-center'>Going</h1>
+          <p className='font-bold self-center'>6</p>
         </div>
-
-        <div className=' border border-black rounded-lg flex flex-col justify-center items-center py-4 w-full'>
-          <h1>Something</h1>
-          <p className='font-bold'>234</p>
-        </div>
-      </div>
-
-      <div className=' w-full p-6 px-12 text-lg'>
-        <h1>User Info:</h1>
-        <h1>Name</h1>
-        <h1 className='text-2xl'>{user.name}</h1>
-        <h1>Name</h1>
-        <h1 className='text-2xl'>{user.name}</h1>
-        <h1>Name</h1>
-        <h1 className='text-2xl'>{user.name}</h1>
       </div>
     </>
   );

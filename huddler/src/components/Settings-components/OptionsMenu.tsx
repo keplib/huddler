@@ -17,7 +17,7 @@ const arrowImage = (
 
 //Css classes
 const defaultClass =
-  'flex justify-between h-full border-b-[0.2px border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
+  'flex justify-between h-full border-b-[0.2px] border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
 const defaultClassTop = defaultClass + '  rounded-t-[15px]';
 const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
 
