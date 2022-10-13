@@ -129,18 +129,45 @@ export const postUserGoingToHuddle = async (
   huddleId: number
 ) => {
   try {
-    const useToHuddle = await fetch("", {
-      method: "POST",
-      mode: "no-cors",
-      body: JSON.stringify({}),
-      headers: {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-
+    const userToHuddle = await fetch(
+      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing",
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({ FK_huddle_id: huddleId, FK_user_id: userId }),
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    console.log(`User ${userId} was checked in to huddle ${huddleId}`);
     return;
   } catch (e) {
     console.log("Error posting checkin in user to huddle  ", e);
+  }
+};
+
+export const removeUserGoingToHuddle = async (
+  userId: number,
+  huddleId: number
+) => {
+  try {
+    const userToHuddle = await fetch(
+      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_huddle",
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({ FK_huddle_id: huddleId, FK_user_id: userId }),
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+
+    return;
+  } catch (e) {
+    console.log("Error checkin out user", e);
   }
 };

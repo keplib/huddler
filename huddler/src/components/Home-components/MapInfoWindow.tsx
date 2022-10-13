@@ -2,7 +2,11 @@ import { InfoWindowF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
 import { Huddle } from "../../types";
 import Image from "next/future/image";
-import { getUsersGoingToHuddle } from "../../utils/APIServices/huddleServices";
+import {
+  getUsersGoingToHuddle,
+  postUserGoingToHuddle,
+  removeUserGoingToHuddle,
+} from "../../utils/APIServices/huddleServices";
 
 type Props = {
   showHuddle: Huddle | undefined;
@@ -14,9 +18,14 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
     if (showHuddle) {
       const users = await getUsersGoingToHuddle(showHuddle.id);
       //CHANGE TO CURRENT USER
-      users.find(67) ? setCheckedIn(true) : setCheckedIn(false);
+      users.find((user: any) => (user = 67))
+        ? setCheckedIn(true)
+        : setCheckedIn(false);
     }
   };
+  useEffect(() => {
+    isUserGoing();
+  }, [showHuddle]);
   return (
     <div>
       {showHuddle ? (
@@ -46,7 +55,10 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
             {checkedIn ? (
               <button
                 className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
-                onClick={() => setCheckedIn(false)}
+                onClick={() => {
+                  setCheckedIn(false);
+                  removeUserGoingToHuddle(67, showHuddle.id);
+                }}
               >
                 Check out
               </button>
@@ -55,7 +67,7 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
                 className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
                   setCheckedIn(true);
-                  postUserGoingToHuddle(userId, huddleId);
+                  postUserGoingToHuddle(67, showHuddle.id);
                 }}
               >
                 Check in
