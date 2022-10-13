@@ -22,7 +22,9 @@ function index() {
   // const { data: userCategories, error: error } = getUserCategories();
   // const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
 
-  if (userCategoriesError || error) return <div>failed to load</div>;
+  // const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
+
+  // if (userCategoriesError || error) return <div>failed to load</div>;
   if (!huddles || !categories) return <div>loading...</div>;
 
   return (
@@ -30,7 +32,7 @@ function index() {
       {/* <Search categories={categories} /> */}
       <div className="flex">
         <Huddles huddles={huddles} />
-        {/* <Map huddles={huddles} /> */}
+        <Map huddles={huddles} />
       </div>
     </>
   );

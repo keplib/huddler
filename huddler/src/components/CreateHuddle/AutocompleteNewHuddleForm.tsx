@@ -57,7 +57,6 @@ const AutocompleteHuddleForm = ({
   const handleSelect =
     ({ description }: Description) =>
     () => {
-      setLocationData({ ...locationData, name: description });
       // When user selects a place, we can replace the keyword without request data from API
       // by setting the second parameter to "false"
       setValue(description, false);
@@ -66,7 +65,7 @@ const AutocompleteHuddleForm = ({
       // Get latitude and longitude via utility functions
       getGeocode({ address: description }).then((results) => {
         const { lat, lng } = getLatLng(results[0]);
-        setLocationData({ ...locationData, lat: "" + lat, lng: "" + lng });
+        setLocationData({ name: description, lat: "" + lat, lng: "" + lng });
       });
     };
 

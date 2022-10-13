@@ -1,14 +1,13 @@
-import useSWRImmutable from 'swr/immutable';
-import { fetcher } from './fetcher';
+import useSWRImmutable from "swr/immutable";
+import { fetcher } from "./fetcher";
 
 // GET Functions
 
-
 export const getAllCategories = () =>
   useSWRImmutable(
-    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories',
+    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories",
     fetcher
-);
+  );
 // Returns: Array of Huddle Objects
 
 export const getUsersInCategory = (category_id: number) =>
@@ -18,7 +17,7 @@ export const getUsersInCategory = (category_id: number) =>
   );
 //Returns: Array of User Objects
 
-export const getCategoryById = () => useSWRImmutable(, fetcher);
+export const getCategoryById = () => useSWRImmutable(fetcher);
 
 export const getHuddlesInCategory = (category_id: number) =>
   useSWRImmutable(
