@@ -3,12 +3,17 @@ import { fetcher } from "./fetcher";
 
 // GET Functions
 
-export const getAllCategories = () => {
-  const { data: allCategories, error: error } = seSWRImmutable(
-    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories',
-    fetcher
+export const getAllCategories = async () => {
+  // const { data: allCategories, error: error } = seSWRImmutable(
+  //   'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories',
+  //   fetcher
+  // );
+  // return allCategories ? allCategories : error;
+  const data = await fetch(
+    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories"
   );
-  return allCategories ? allCategories : error;
+  const res = await data.json();
+  return res;
 };
 // Returns: Array of Huddle Objects
 
@@ -32,10 +37,9 @@ export const getUsersInCategory = (category_id: number) => {
 // };
 
 export const getHuddlesInCategory = async (category_id: number) => {
-   return await fetcher(
+  return await fetcher(
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/gethuddles_bycategory?category-id=${category_id}`
   );
- 
 };
 
 //Returns: Array of Huddle Objects

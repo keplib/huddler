@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
+import { getAllCategories } from "../utils/APIServices/categoryServices";
 import { fetcher } from "../utils/APIServices/fetcher";
 type Props = {
   setAllCategories: React.Dispatch<
@@ -13,11 +14,15 @@ type Props = {
 };
 const TagList = ({ setAllCategories }: Props) => {
   //should compare string in input to categories and display ones that match
-  const { data: categories, error: catError } = useSWRImmutable(
-    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/get-all-categories",
-    fetcher
-  );
   const [comparator, setComparator] = useState("");
+  const [categories, setCategories] = useState<any>([]);
+  const getter = async () => {
+    const data = await getAllCategories();
+    setCategories(data);
+  };
+  useEffect(() => {
+    getter();
+  }, []);
   //matches input with categories to display
   useEffect(() => {
     setAllCategories([{ id: 0, name: "" }]);
