@@ -61,8 +61,8 @@ module.exports = {
       colors: {
         "palette-light": "#f0e3ca",
         "palette-orange": "#ff8303",
-        "palette-dark": "#ff8303",
-        "palette-black": "#ff8303",
+        "palette-dark": "#a35709",
+        "palette-black": "#1b1a17",
       },
     },
   },

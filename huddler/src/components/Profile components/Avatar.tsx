@@ -15,7 +15,7 @@ type Props = {
 
 function Avatar() {
     return (
-        <div className='w-full h-[38%] flex flex-col bg-blue py-8 bg-yellow-300 justify-center'>
+        <div className='w-full h-[38%] flex flex-col bg-blue py-8 justify-center'>
             <h1 className='text-[2rem] justify-self-center'>Welcome back, {user.name}</h1>
 
             <div className='rounded-full border border-black w-auto h-full mx-4 2xl:ml-16 relative max-w-[420px]'>

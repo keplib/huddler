@@ -14,7 +14,7 @@ function Navbar() {
   
 
   return (
-    <div className="h-24 w-full bg-black text-white flex items-center justify-between fixed top-0 px-12 z-10">
+    <div className="h-24 w-full bg-palette-dark text-white flex items-center justify-between fixed top-0 px-12 z-10 border-b border-palette-orange">
       <Link href={'/home'}><a>Logo here</a></Link>
       {/* <Search /> */}
       <div className="w-24 h-24 relative">

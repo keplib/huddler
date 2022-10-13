@@ -14,7 +14,7 @@ function UserInfo() {
 
     return (
         <>
-            <div className='flex px-4 pt-4 w-full bg-green-200'>
+            <div className='flex px-4 pt-4 w-full '>
                 <div className=' border border-black flex flex-col justify-center items-center py-4 w-full'>
                     <h1>Huddles</h1>
                     <p className='font-bold'>5</p>
@@ -31,7 +31,7 @@ function UserInfo() {
                 </div>
             </div>
 
-            <div className=' w-full p-6 px-12 text-lg bg-red-200'>
+            <div className=' w-full p-6 px-12 text-lg'>
                 <h1>User Info:</h1>
                 <h1>Name</h1>
                 <h1 className='text-2xl'>{user.name}</h1>

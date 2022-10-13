@@ -41,7 +41,7 @@ function Profile({recommended, huddles}) {
 
 
   return (
-    <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 '>
+    <main className='grid grid-cols-3 2xl:grid-cols-4 h-full py-8 bg-palette-light '>
 
       <div className='flex flex-col h-full items-center border-x-[0.2px] border-gray-400'>
         <Avatar />
@@ -68,9 +68,9 @@ function Profile({recommended, huddles}) {
         </div>
 
         <h1 className='py-8'>Created huddles:</h1>
-        <div className='bg-slate-200 h-1/4 flex overflow-x-scroll gap-2'>
+        <div className=' h-1/4 flex overflow-x-scroll gap-2'>
           {userCreatedHuddles.map((hud) => (
-            <div className='bg-red-500 gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
+            <div className='gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
 
               <HuddleCarousel hud={hud} />
 
@@ -79,9 +79,9 @@ function Profile({recommended, huddles}) {
         </div>
 
         <h1 className='py-8'>My huddles:</h1>
-        <div className='bg-slate-200 h-1/4 flex overflow-x-scroll gap-2'>
+        <div className=' h-1/4 flex overflow-x-scroll gap-2'>
           {huddles.map((hud) => (
-            <div className='bg-red-200 gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
+            <div className=' gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
 
               <HuddleCarousel hud={hud} />
 
@@ -90,9 +90,9 @@ function Profile({recommended, huddles}) {
         </div>
 
         <h1 className='py-8'>Recommended:</h1>
-        <div className='bg-slate-200 h-1/4 flex overflow-x-scroll gap-2'>
+        <div className=' h-1/4 flex overflow-x-scroll gap-2'>
           {recommended.map((hud) => (
-            <div className='bg-red-200 gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
+            <div className='gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 border-black border relative' key={hud.id}>
 
               <HuddleCarousel hud={hud} />
 
