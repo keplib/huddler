@@ -8,21 +8,22 @@ import {
 import { getHuddlesInCategory} from '../../src/utils/APIServices/categoryServices';
 import { useState } from 'react';
 import { User } from '../../src/types';
+import { getAllHuddles } from '../../src/utils/APIServices/huddleServices';
 
 function index() {
   // get current User from auth
 
   // const [currentUser, setCurrentUser] = useState() //Pass it the user given by Auth
 
-  // const { data: huddles, error: huddleError } = getAllHuddles();
+  const { data: huddles, error: huddleError } = getAllHuddles();
   // const { data: categories, error: catError } = getAllCategories()
 
   // const { data: userCategories, error: error } = getUserCategories();
   
   // const { data: huddlesInCategory, error: error } = getHuddlesInCategory();
 
-  if (userCategoriesError || error) return <div>failed to load</div>;
-  if (!huddles || !categories) return <div>loading...</div>;
+  // if (userCategoriesError || error) return <div>failed to load</div>;
+  if (!huddles) return <div>loading...</div>;
 
   return (
     <>
