@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "huddler7fd8486f": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

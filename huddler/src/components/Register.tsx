@@ -3,9 +3,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState, useRef } from 'react';
 import { User } from '../types';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
-function Register() {
-  const router = useRouter();
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from '../aws-exports';
+Amplify.configure(awsconfig);
+import awsExports from '../aws-exports';
+Amplify.configure(awsExports);
+
+function Register({ signOut, user }: any) {
+  
+  console.log(user.attributes.email, user.username)
+
+  const router = useRouter()
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,6 +25,7 @@ function Register() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmedPasswordRef = useRef<HTMLInputElement>(null);
+
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,7 +76,12 @@ function Register() {
   };
   return (
     <main className='h-auto w-auto flex flex-col items-center border-solid border-2 rounded border-indigo-600 bg-white absolute my-24 px-24 py-12 ml-[50%]'>
-      <h1>Share your Passions</h1>
+      <>
+        <h1>Hello</h1>
+        <button onClick={signOut}>Sign out</button>
+      </>
+      
+      {/* <h1>Share your Passions</h1>
       <br />
       {error && <div className='bg-red-600'>{error}</div>}
       <form
@@ -122,10 +139,10 @@ function Register() {
       <div className=''>------------------------</div>
       <div className=''>Sign Up with Google</div>
       <div>Already have an account?</div>
-      <Link href='/Login'>Log in</Link>
+      <Link href='/Login'>Log in</Link> */}
     </main>
   );
 }
-
-export default Register;
+export default withAuthenticator(Register);
+// export default Register;
 
