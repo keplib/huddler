@@ -1,14 +1,20 @@
-import React from "react";
-import { categoryTags } from "../../categoryTags";
+import React, { useEffect } from "react";
+import { User } from "../../types";
 import Map from "../Home-components/Map";
 
 // Contains a form for the categories
 
 type Props = {
   location: any;
-  setLocation: React.Dispatch<React.SetStateAction<undefined>>;
+  setLocation: React.Dispatch<React.SetStateAction<any>>;
+  userData: User;
+  setUserData: React.Dispatch<React.SetStateAction<any>>;
 };
-function Location({ setLocation, location }: Props) {
+
+function Location({ location, setLocation, userData, setUserData }: Props) {
+  useEffect(()=> {
+    setUserData({...userData, default_latitude: location.lat, default_longitude: location.lng})
+  }, [location])
   // some logic where the user chooses its location and updates with setLocation()
   return (
     <div>

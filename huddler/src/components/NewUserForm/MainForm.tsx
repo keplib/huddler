@@ -4,20 +4,22 @@ import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
+import { postNewUserInfo, postUserCategories } from '../../utils/APIServices/userServices';
 
 function MainForm() {
   const [page, setPage] = useState(1);
   const [userImage, setUserImage] = useState();
- 
-  const [location, setLocation] = useState();
 
+  const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
+  const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
   const [userData, setUserData] = useState<User>({
-    name: '',
-    email: '',
-    description: '',
+    username: '',
+    first_name: '',
+    last_name: '',
     image: '',
-    categories: [],
-    longitude: 0,
+    default_longitude: 0,
+    default_latitude: 0,
+    description: '',
   });
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,12 +39,16 @@ function MainForm() {
   };
 
   const handleSubmit = () => {
-    setUserData({...userData, longitude: location.lng})
+    console.log('hereeeeee');
     console.log(userData);
-    // console.log('sub');
-    // setTimeout(() => {
-    //   Router.push('./home');
-    // }, 5000);
+
+    console.log(categoriesPicked);
+    postNewUserInfo(userData, 179);
+    //posting the categories to new huddle
+    categoriesPicked.forEach((category) => {
+      postUserCategories(179, category.id as number);
+    });
+    Router.replace('./home');
   };
 
   return (
@@ -51,22 +57,22 @@ function MainForm() {
       <div className='h-[60vh] w-full flex justify-center'>
         {page === 1 && (
           <Interests
-        
-            userData={userData}
-            setUserData={setUserData}
+            categoriesPicked={categoriesPicked}
+            setCategoriesPicked={setCategoriesPicked}
           />
         )}
         {page === 2 && (
           <Location
             location={location}
             setLocation={setLocation}
+            setUserData={setUserData}
+            userData={userData}
           />
         )}
         {page === 3 && (
           <UserInfo
             userData={userData!}
             setUserData={setUserData!}
-            setUserImage={setUserImage}
             handleSubmit={handleSubmit}
           />
         )}
@@ -82,7 +88,10 @@ function MainForm() {
         )}
         {page > 2 ? (
           <button
-            onClick={(e) => nextPage(e)}
+            onClick={(e) => {
+              nextPage(e);
+              handleSubmit();
+            }}
             className='px-6 py-2 bg-palette-dark text-white'
           >
             Submit
@@ -101,3 +110,7 @@ function MainForm() {
 }
 
 export default MainForm;
+function postuserCategories(arg0: number, arg1: number) {
+  throw new Error('Function not implemented.');
+}
+
