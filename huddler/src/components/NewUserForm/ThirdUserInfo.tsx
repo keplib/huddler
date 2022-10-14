@@ -1,58 +1,40 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { User } from '../../types';
-
+import Image, { StaticImageData } from 'next/future/image';
+import DefaultUserImage from '../../../public/defaultUserImage.png';
 type Props = {
   userData: User;
   setUserData: React.Dispatch<React.SetStateAction<User | null>>;
+  handleSubmit: Function;
 };
 
 // Contains a form for the user details
 
-function UserInfo({ userData, setUserData }: Props) {
-  console.log(userData);
+function UserInfo({
+  userData,
+  setUserData,
+  handleSubmit,
+}: Props) {
+  const [imageSelected, setImageSelected] = useState<StaticImageData | string>(
+    DefaultUserImage
+  );
+  const imageRef = useRef<HTMLInputElement | null>(null);
+
+  const changeUserImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const image = URL.createObjectURL(e.target.files[0]);
+    setImageSelected(image);
+    setUserData({ ...userData, image: e.target.files[0]});
+    handleSubmit();
+  };
   return (
     <>
-      <div className='flex flex-col items-center py-8 w-3/4'>
-        <h1 className='font-bold text-xl'>
-          Do you want to upload profile image?
-        </h1>
-
-        <div className='h-full w-3/4 grid grid-cols-2'>
-          <div className='flex justify-center items-center'>
-            <input
-              className=''
-              ref={imagesRef}
-              type='file'
-              accept='.jpg, jpeg, .png, .gif'
-              onChange={() => onSelectFile()}
-              id='images'
-            ></input>
-          </div>
-
-          <figure className='flex w-full h-full relative border rounded-full'>
-            {imageSelected && (
-              <Image
-                className='w-full h-full rounded-full absolute px-8 mt-12'
-                alt='image-preview'
-                src={userData.image as string}
-                width={300}
-                height={300}
-              />
-            )}
-          </figure>
-        </div>
-        <div className='p-24'></div>
-
-        <div className='p-6'></div>
-      </div>
-
-      <div className='flex flex-col py-8 w-3/5'>
+      <div className='flex flex-col py-8 w-1/2 px-10'>
         <form className='flex flex-col'>
-          <h1 className='font-bold text-2xl pb-4'>User details:</h1>
+          <h1 className='font-bold text-2xl pb-4 self-center'>User details</h1>
           <label>First Name</label>
           <input
             className='py-3'
-            value={userData.firstName}
             onChange={(e) =>
               setUserData({ ...userData, firstName: e.target.value })
             }
@@ -60,7 +42,6 @@ function UserInfo({ userData, setUserData }: Props) {
           <label>Last Name</label>
           <input
             className='py-3'
-            value={userData.lastName}
             onChange={(e) =>
               setUserData({ ...userData, lastName: e.target.value })
             }
@@ -68,12 +49,36 @@ function UserInfo({ userData, setUserData }: Props) {
           <label>Tell people who you are and what are your interests:</label>
           <textarea
             className='pb-16'
-            value={userData.description}
             onChange={(e) =>
               setUserData({ ...userData, description: e.target.value })
             }
           ></textarea>
         </form>
+      </div>
+      <div className='flex flex-col items-center py-8 w-1/2 h-full'>
+        <h1 className='font-bold text-xl'>
+          Do you want to upload a profile image?
+        </h1>
+        <div className='flex flex-col items-center justify-center mt-20'>
+          <div>
+            Click on the image to change it
+            <input
+              type='file'
+              className='hidden'
+              accept='.jpg, jpeg, .png, .gif'
+              ref={imageRef}
+              onChange={changeUserImage}
+            />
+            <Image
+              className='rounded-full hover:cursor-pointer ml-10'
+              alt='image-preview'
+              src={imageSelected}
+              width={150}
+              height={150}
+              onClick={() => imageRef.current!.click()}
+            />
+          </div>
+        </div>
       </div>
     </>
   );

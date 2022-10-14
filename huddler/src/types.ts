@@ -5,8 +5,8 @@ export interface Category {
   name: string;
 }
 export interface User {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   createdOn?: number;
   id?: number;
   password?: string;
