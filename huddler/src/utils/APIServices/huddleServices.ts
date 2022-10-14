@@ -42,7 +42,7 @@ export const postHuddle = async (huddle: Huddle) => {
       "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle",
       {
         method: "POST",
-        mode: "no-cors",
+        mode: "cors",
         body: JSON.stringify(huddle),
         headers: {
           "Content-type": "application/json",
@@ -58,10 +58,10 @@ export const postHuddle = async (huddle: Huddle) => {
         },
       }
     );
-    // console.log(huddleToPost.status);
+    console.log(huddleToPost.status);
 
-    // const test = await huddleToPost.json();
-    // console.log(test);
+    const test = await huddleToPost.json();
+    console.log(test);
 
     return huddleToPost;
   } catch (e) {

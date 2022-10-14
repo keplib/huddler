@@ -1,10 +1,10 @@
-import { fetcher } from '../helperFunctions';
+import { fetcher } from "../helperFunctions";
 
 // GET Functions
 
 export const getAllUsers = async () =>
   await fetcher(
-    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers'
+    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers"
   );
 //Returns: Array of User Objects
 
@@ -27,8 +27,9 @@ export const getUserCreatedHuddles = async (user_id: number) =>
 // Return: Array of Huddle Objects
 
 export const getUserGoingHuddles = async (user_id: number) =>
-  await `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${user_id}`;
+  await fetcher(
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${user_id}`
+  );
 //Return: Array of Huddle Objects
 
 // POST Functions
-
