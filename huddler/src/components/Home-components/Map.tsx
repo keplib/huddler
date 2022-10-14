@@ -81,7 +81,7 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
     }
   }, []);
   return isLoaded ? (
-    <div className="mt-0 mr-0">
+    <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
         <div className="flex">
           {containerSize.width == "40vw" ? (

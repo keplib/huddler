@@ -5,7 +5,8 @@ import Map from "../../src/components/Home-components/Map";
 import { getAllHuddles } from "../../src/utils/APIServices/huddleServices";
 import { recommendedForUser } from "../../src/utils/helperFunctions";
 import { Huddle } from "../../src/types";
-import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
+// import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
+import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
 
 // we'll need the current user authenticated info
 export const getServerSideProps = async () => {
@@ -30,10 +31,10 @@ function Home({ recommended }: Props) {
   // if user uses another filter let's call a function that does it.
   return (
 
-    <div className="sm:block md:flex gap-10 mr-0 mt-10 relative">
+    <div className="sm:block md:flex gap-10 mt-10 relative h-full px-5">
 
-      <div className="max-h-[80vh] overflow-scroll w-full">
-        <div className="flex p-5 mb-2 shadow-md pl-10">
+      <div className="max-h-[87vh] overflow-y-auto w-full" id="carousel">
+        <div className="flex p-5 mb-2 shadow-md">
           <button
             className="mr-4"
             onClick={(e) => setFilterChoice(recommended)} >
@@ -43,10 +44,10 @@ function Home({ recommended }: Props) {
         </div>
 
         {/* <Huddles huddles={filterChoice} /> */}
-        <HuddleCarousel huddles={filterChoice} />
+        <HuddlesNew huddles={filterChoice} />
       </div>
 
-      <div className="">
+      <div className="mt-16">
         <Map huddles={filterChoice} />
       </div>
     </div>
