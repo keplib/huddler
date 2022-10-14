@@ -1,18 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
-import UserDetails from './SecondPage';
+import UserDetails from './ThirdUserInfo';
 import Third from './ThirdPage';
-import Welcome from './FormWelcomePage';
-import LocationTags from './LocationTags';
+import Interests from './FirstInterests';
+import Location from './SecondLocation';
 import Router from 'next/router';
 import { Category, User } from '../../types';
-import SecondPage from './SecondPage';
+import UserInfo from './ThirdUserInfo';
 
 function MainForm() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [imageSelected, setImageSelected] = useState(false);
+  const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([])
+  const [location, setLocation] = useState()
+
   const imagesRef = useRef<HTMLInputElement | null>(null);
 
-  const [userData, setUserData] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User>({
+    name: '',
+    email: '',
+    description:'',
+  });
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -25,11 +32,7 @@ function MainForm() {
     }
   };
 
-  const handleTag = (tag: Category) => {
-    const category = [...userData!.categories!, tag];
-    setUserData({ ...userData!, categories: category });
-  };
-
+ 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (page < 3) {
@@ -55,19 +58,18 @@ function MainForm() {
   };
 
   return (
-    <div className='flex items-center flex-col py-8'>
-      <h1>{page}/3</h1>
+    <div className='flex items-center flex-col py-3'>
+      <h1 className='my-0'>{page}/3</h1>
       <div className='h-[60vh] w-full flex justify-center'>
-        {page == 0 ? (
-          <Welcome />
-        ) : page == 1 ? (
-          <LocationTags handleTag={handleTag} />
-        ) : page == 2 ? (
-          <SecondPage
+        {page === 1 && <Interests setCategoriesPicked={setCategoriesPicked} categoriesPicked={categoriesPicked}/>}
+        {page === 2 && <Location location={location} setLocation={setLocation} />}
+        {page === 3 && (
+          <UserInfo
             userData={userData!}
             setUserData={setUserData!}
           />
-        ) : (
+        )}
+        {page === 4 && (
           <Third
             userData={userData!}
             imagesRef={imagesRef}
@@ -80,7 +82,7 @@ function MainForm() {
         {page > 1 && (
           <button
             onClick={(e) => prevPage(e)}
-            className='px-6 py-2 bg-blue-500 text-white'
+            className='px-6 py-2 bg-palette-dark text-white'
           >
             prev
           </button>
@@ -88,14 +90,14 @@ function MainForm() {
         {page > 2 ? (
           <button
             onClick={(e) => nextPage(e)}
-            className='px-6 py-2 bg-red-500 text-white'
+            className='px-6 py-2 bg-palette-darktext-white'
           >
             submit
           </button>
         ) : (
           <button
             onClick={(e) => nextPage(e)}
-            className='px-6 py-2 bg-blue-500 text-white'
+            className='px-6 py-2 bg-palette-dark text-white'
           >
             next
           </button>
