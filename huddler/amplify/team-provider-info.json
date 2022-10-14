@@ -14,10 +14,10 @@
     "categories": {
       "auth": {
         "huddler7fd8486f": {
-          "userPoolId": "eu-west-3_xkF7n1qKX",
-          "userPoolName": "huddler2",
-          "webClientId": "1ogpbk1av74ickk7i3vlskd6du",
-          "nativeClientId": "1ogpbk1av74ickk7i3vlskd6du"
+          "userPoolId": "eu-west-3_yCr5dwvKK",
+          "userPoolName": "huddler3",
+          "webClientId": "qrbirft14db4eb95figbrh8p6",
+          "nativeClientId": "qrbirft14db4eb95figbrh8p6"
         }
       }
     }

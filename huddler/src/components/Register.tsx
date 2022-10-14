@@ -9,19 +9,21 @@ import '@aws-amplify/ui-react/styles.css';
 import { Amplify, Auth } from 'aws-amplify';
 import awsconfig from '../aws-exports';
 Amplify.configure(awsconfig);
-
 import awsExports from '../aws-exports';
 Amplify.configure(awsExports);
 
 function Register({ signOut, user }: any) {
 
-  const getUser = async () => {
-    const res = await Auth.currentSession();
-    console.log('res: ', res.idToken.payload.email);
-    return res;
-  }
+  // const getUser = async () => {
+  //   const res = await Auth.currentSession();
+  //   console.log('res: ', res.idToken.payload.email);
+  //   return res;
+  // }
 
-  getUser();
+  
+  console.log(user.attributes.email)
+
+  // getUser();
 
   const router = useRouter()
 
