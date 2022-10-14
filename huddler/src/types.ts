@@ -5,18 +5,18 @@ export interface Category {
   name: string;
 }
 export interface User {
-  name: string;
-  email: string;
+  username?: string;
+  email?: string;
   createdOn?: number;
   id?: number;
   password?: string;
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
   image?: File | File[] | string | string[] | StaticImageData;
-  dateOfBirth?: string;
+  date_of_birth?: string;
   interests?: Category[];
-  longitude?: number;
-  latitude?: number;
+  default_longitude?: number;
+  default_latitude?: number;
   description?: string;
   categories?: Category[];
 }
@@ -39,3 +39,5 @@ export interface Category {
   id?: number;
   name: string;
 }
+
+

@@ -10,6 +10,8 @@ import HuddleCarousel from "../../src/components/Profile components/HuddleCarous
 import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
 import { Category, Huddle, User } from "../../src/types";
 import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
+import { getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
+import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
 
 export const getServerSideProps = async () => {
   const recommended: Huddle[] = await recommendedForUser(67);
@@ -31,6 +33,13 @@ type Props = {
 };
 
 function Profile({ recommended, huddles }: Props) {
+  //This is for updating the huddles i'm going to row
+  const [update, setUpdate] = useState(false);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
+  const [lastRow, setLastRow] = useState({
+    name: "Recommended",
+    huddles: recommended,
+  });
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
@@ -40,31 +49,46 @@ function Profile({ recommended, huddles }: Props) {
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
     fetcher
   );
-  const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${67}`,
-    fetcher
-  );
+  const getter = async () => {
+    const res = await getUserGoingHuddles(67);
+    setHuddlesUserIsGoing(res);
+  };
+  useEffect(() => {
+    getter();
+  }, [update]);
 
-  if (tagsError || userHuddleError || userGoingError)
-    return <div>failed to load</div>;
+  const changeDisplayedCategory = async (category: Category) => {
+    const data = await getHuddlesInCategory(category.id);
+    if (lastRow.name == category.name) {
+      document.getElementById(category.name)?.classList.remove("opacity-60");
+      setLastRow({
+        name: "Recommended",
+        huddles: recommended,
+      });
+    } else {
+      document.getElementById(category.name)?.classList.add("opacity-60");
+      setLastRow({ name: category.name, huddles: data });
+    }
+  };
+  if (tagsError || userHuddleError) return <div>failed to load</div>;
   if (!tags || !userCreatedHuddles || !recommended || !huddlesUserIsGoing)
     return <div>loading...</div>;
 
   return (
-    <main className='flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light'>
+    <main className="flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light">
       <div className="hidden lg:block">
-        <div className='fixed min-w-[20%] h-full'>
+        <div className="fixed min-w-[20%] h-full">
           <div
-            className='flex flex-col h-full items-center
-          border-x-[0.2px] shadow-md w-full'
+            className="flex flex-col h-full items-center
+          border-x-[0.2px] shadow-md w-full"
           >
             <Avatar />
             <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
-            <div className='h-1/9 w-full flex flex-col justify-center mt-8 border gap-6'>
-              <h1 className='text-3xl self-center'>Feeling Inspired?</h1>
+            <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
+              <h1 className="text-3xl self-center">Feeling Inspired?</h1>
               <button
-                className='self-center text-2xl bg-palette-dark text-white rounded-[5px] h-16 p-4 w-[210px] active:translate-x-[1px] active:translate-y-[1px]'
-                onClick={() => router.push('/create')}
+                className="self-center text-2xl bg-palette-dark text-white rounded-[5px] h-16 p-4 w-[210px] active:translate-x-[1px] active:translate-y-[1px]"
+                onClick={() => router.push("/create")}
               >
                 Create a Huddle
               </button>
@@ -72,19 +96,20 @@ function Profile({ recommended, huddles }: Props) {
           </div>
         </div>
       </div>
-      
+
       {/* Mobile */}
       <div className="lg:hidden w-full h-1/3 flex-col">
         <MobileAvatar />
         <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
       </div>
 
-
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
         <h1 className="py-8 p-4 text-3xl font-bold">Interests:</h1>
         <div className="flex flex-wrap gap-4 p-4">
           {tags.map((tag: Category, i: number) => (
             <h1
+              id={tag.name}
+              onClick={(e) => changeDisplayedCategory(tag)}
               className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
               key={i}
             >
@@ -93,14 +118,35 @@ function Profile({ recommended, huddles }: Props) {
           ))}
         </div>
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Created huddles:</h1>
-        <HuddleCarousel huddles={userCreatedHuddles} />
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+          Created huddles:
+        </h1>
+        <HuddleCarousel
+          setUpdate={setUpdate}
+          update={update}
+          huddles={userCreatedHuddles}
+          huddlesUserIsGoing={huddlesUserIsGoing}
+        />
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Huddles I'm going to:</h1>
-        <HuddleCarousel huddles={huddlesUserIsGoing} />
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+          Huddles I'm going to:
+        </h1>
+        <HuddleCarousel
+          setUpdate={setUpdate}
+          update={update}
+          huddles={huddlesUserIsGoing}
+          huddlesUserIsGoing={huddlesUserIsGoing}
+        />
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Recommended:</h1>
-        <HuddleCarousel huddles={recommended} />
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+          {lastRow.name} huddles:
+        </h1>
+        <HuddleCarousel
+          setUpdate={setUpdate}
+          update={update}
+          huddles={lastRow.huddles}
+          huddlesUserIsGoing={huddlesUserIsGoing}
+        />
       </div>
     </main>
   );
