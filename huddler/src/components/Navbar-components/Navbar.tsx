@@ -15,7 +15,7 @@ function Navbar() {
   return (
     <div className="h-24 w-full bg-palette-dark text-white flex items-center justify-between fixed top-0 px-12 z-10 border-b border-palette-orange">
       <Link href={"/home"}>
-        <a className="animate-pulse">
+        <a className="animate-pulse text-3xl">
           <b>
             {" "}
             <i>Huddler</i>
