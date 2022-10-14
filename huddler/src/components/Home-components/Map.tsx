@@ -126,7 +126,6 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
           id="huddle-form"
           className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
         >
-          (
           <NewHuddleForm
             center={center}
             setCenter={setCenter}
@@ -136,7 +135,6 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
               lng: "" + center.lng,
             }}
           />
-          )
         </div>
       </div>
       <div className="shadow-xl rounded-md ">
