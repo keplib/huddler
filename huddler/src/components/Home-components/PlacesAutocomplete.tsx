@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from 'use-places-autocomplete';
-import useOnclickOutside from 'react-cool-onclickoutside';
+} from "use-places-autocomplete";
+import useOnclickOutside from "react-cool-onclickoutside";
 
 type Props = {
   hook: React.Dispatch<
@@ -57,7 +57,7 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
         hook({ lat, lng });
         setSelected(true);
       });
-      setValue('');
+      setValue("");
     };
 
   const renderSuggestions = () =>
@@ -71,7 +71,7 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
         <li
           key={place_id}
           onClick={handleSelect(suggestion)}
-          className='bg-white py-1 px-2 border-slate-400 border-b-2 cursor-pointer'
+          className="bg-white py-1 px-2 border-palette-light border-b-2 cursor-pointer"
         >
           <strong>{main_text}</strong> <small>{secondary_text}</small>
         </li>
@@ -81,19 +81,18 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
   return (
     <div ref={ref}>
       <input
-        className='py-1 outline-none border-slate-400 border-b-2 placeholder: pl-2 w-62 shadow-md rounded-sm'
+        className="py-1 outline-none border-palette-orange border-b-2 placeholder: pl-2 w-[100%] shadow-md rounded-sm"
         value={value}
         onChange={handleInput}
         disabled={!ready}
-        placeholder='Look for a Place . . .'
+        placeholder="Enter a Place . . ."
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
-      {status === 'OK' && (
-        <ul className='absolute shadow-sm rounded-sm'>{renderSuggestions()}</ul>
+      {status === "OK" && (
+        <ul className="absolute shadow-sm rounded-sm">{renderSuggestions()}</ul>
       )}
     </div>
   );
 };
 
 export default PlacesAutocomplete;
-
