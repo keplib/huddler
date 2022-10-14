@@ -84,6 +84,13 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
       });
       //redirect to user home page
       // router.replace("/home");
+      const form = document.getElementById("huddle-form");
+      form?.classList.remove("animate-fade-in");
+      form?.classList.add("animate-fade-out");
+      setTimeout(() => {
+        form?.classList.remove("flex");
+        form?.classList.add("hidden");
+      }, 500);
     } catch {
       setError("We could not create the huddle");
     }
