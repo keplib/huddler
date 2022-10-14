@@ -30,5 +30,6 @@ export const getUserGoingHuddles = async (user_id: number) =>
   await `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${user_id}`;
 //Return: Array of Huddle Objects
 
+
 // POST Functions
 
