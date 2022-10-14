@@ -17,6 +17,7 @@ function MainForm() {
     description: '',
     image: '',
     categories: [],
+    longitude: 0,
   });
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,6 +37,7 @@ function MainForm() {
   };
 
   const handleSubmit = () => {
+    setUserData({...userData, longitude: location.lng})
     console.log(userData);
     // console.log('sub');
     // setTimeout(() => {
