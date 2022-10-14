@@ -58,10 +58,10 @@ export const postHuddle = async (huddle: Huddle) => {
         },
       }
     );
-    // console.log(huddleToPost.status);
+    console.log(huddleToPost.status);
 
-    // const test = await huddleToPost.json();
-    // console.log(test);
+    const test = await huddleToPost.json();
+    console.log(test);
 
     return huddleToPost;
   } catch (e) {
