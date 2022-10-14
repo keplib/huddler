@@ -30,7 +30,7 @@ function Home({ recommended }: Props) {
   return (
     <>
       {/* <Search categories={categories} /> */}
-      <div className="sm:block md:flex  space-x-0 mt-14  mr-0">
+      <div className="sm:block md:flex  space-x-0  mr-0">
         <div>
           <div className="flex p-5 mb-2 shadow-md pl-10">
             <button
