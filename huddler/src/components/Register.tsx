@@ -13,17 +13,8 @@ import awsExports from '../aws-exports';
 Amplify.configure(awsExports);
 
 function Register({ signOut, user }: any) {
-
-  // const getUser = async () => {
-  //   const res = await Auth.currentSession();
-  //   console.log('res: ', res.idToken.payload.email);
-  //   return res;
-  // }
-
   
-  console.log(user.attributes.email)
-
-  // getUser();
+  console.log(user.attributes.email, user.username)
 
   const router = useRouter()
 
