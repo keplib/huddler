@@ -13,18 +13,23 @@ const libraries: (
   | "visualization"
 )[] = ["places"];
 
-type Props = { huddles?: Huddle[] };
-export default function Map({ huddles }: Props) {
+type Props = {
+  huddles?: Huddle[];
+  currentPage: string;
+  setLocation: React.Dispatch<React.SetStateAction<any>>;
+};
+export default function Map({ huddles, currentPage, setLocation }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [locationName, setLocationName] = useState("");
   const [selected, setSelected] = useState(false);
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
-  const [containerSize, setContainerSize] = useState({
+  const [mapSize, setMapSize] = useState({
     width: "60vw",
     height: "40vw",
   });
-  // later change center to user location
+  const [containerSize, setContainerSize] = useState(mapSize);
+  // later change center to user real life location
   const [center, setCenter] = useState({
     lat: 41.39,
     lng: 2.154,
@@ -56,12 +61,37 @@ export default function Map({ huddles }: Props) {
   };
   useEffect(() => {
     if (center.lat !== 41.39) setSelected(true);
+    if (currentPage)
+      setLocation({
+        name: locationName,
+        lat: "" + center.lat,
+        lng: "" + center.lng,
+      });
   }, [center]);
+  useEffect(() => {
+    if (currentPage === "newuser") {
+      setMapSize({
+        width: "46.5vw",
+        height: "28vw",
+      });
+      setContainerSize({
+        width: "46.5vw",
+        height: "28vw",
+      });
+    }
+  }, []);
   return isLoaded ? (
     <div className="mt-0 mr-0">
       <div className="absolute pl-3 z-10 mt-24">
         <div className="flex">
-          {containerSize.width == "60vw" ? (
+          {containerSize.width == "40vw" ? (
+            <button
+              className="p-2 bg-white  shadow-md rounded-sm"
+              onClick={() => setContainerSize(mapSize)}
+            >
+              &#x2770;
+            </button>
+          ) : (
             <button
               className="p-2  bg-white shadow-md "
               onClick={() =>
@@ -73,27 +103,19 @@ export default function Map({ huddles }: Props) {
             >
               &#x2771;
             </button>
+          )}
+          {currentPage === "newuser" ? (
+            <></>
           ) : (
             <button
-              className="p-2 bg-white  shadow-md rounded-sm"
-              onClick={() =>
-                setContainerSize({
-                  width: "60vw",
-                  height: "40vw",
-                })
-              }
+              className="bg-white shadow-md ml-3 p-2 rounded-sm"
+              onClick={() => toggleCreate()}
             >
-              &#x2770;
+              Create
             </button>
           )}
-          <button
-            className="bg-white shadow-md ml-3 p-2 rounded-sm"
-            onClick={() => toggleCreate()}
-          >
-            Create
-          </button>
         </div>
-        <div className="z-10 mt-3">
+        <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete
             hook={setCenter}
             setSelected={setSelected}
@@ -104,6 +126,7 @@ export default function Map({ huddles }: Props) {
           id="huddle-form"
           className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
         >
+          (
           <NewHuddleForm
             center={center}
             setCenter={setCenter}
@@ -113,6 +136,7 @@ export default function Map({ huddles }: Props) {
               lng: "" + center.lng,
             }}
           />
+          )
         </div>
       </div>
       <div className="shadow-xl rounded-md ">

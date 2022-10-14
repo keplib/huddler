@@ -11,11 +11,11 @@ function HuddleCarouselItem({ huddle }: Props) {
 
   return (
     <>
-      <div className="h-full lg:w-[300px] max-h-72 col-span-1 rounded-l-lg relative">
+      <div className="h-full w-[300px] max-h-72 rounded-lg relative">
         <Image
           src={huddle.image}
           fill
-          className="h-full w-[300px] max-h-72 col-span-1 rounded-l-lg"
+          className="h-full rounded-lg"
           alt={huddle.name}
         />
       </div>

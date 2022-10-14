@@ -1,7 +1,7 @@
 import { setDefaultResultOrder } from 'dns';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useState, useRef } from 'react';
+import Router, { useRouter } from 'next/router';
+import React, { useState, useRef, useEffect } from 'react';
 import { User } from '../types';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
@@ -10,77 +10,60 @@ import { Amplify, Auth } from 'aws-amplify';
 import awsconfig from '../aws-exports';
 Amplify.configure(awsconfig);
 import awsExports from '../aws-exports';
+import { fetcher } from '../utils/helperFunctions';
 Amplify.configure(awsExports);
 
 function Register({ signOut, user }: any) {
-  
+  const router = useRouter();
+
   console.log(user.attributes.email, user.username)
+  useEffect(() => {
+    postHandler()
+    postsecondHandler()
+  }, [])
 
-  const router = useRouter()
-
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const confirmedPasswordRef = useRef<HTMLInputElement>(null);
-
-
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (passwordRef.current!.value !== confirmedPasswordRef.current!.value) {
-      setError('Passwords do not match');
-      return;
-    }
+  const postHandler = async () => {
+    console.log(user.attributes.email, user.username)
+    const newUser: any = {
+      aws_id: user.username,
+      email: user.attributes.email,
+    };
     try {
-      setError('');
-      setLoading(true);
-      const newUser: any = {
-        username: nameRef.current!.value,
-        email: emailRef.current!.value,
-        aws_id: 'abc1234',
-        // password: passwordRef.current!.value,
-        // createdOn: Date.now(),
-      };
-      // console.log(newUser);
-
-      const res = await fetch(
-        'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser',
-        {
-          method: 'POST',
-          credentials: 'include',
-          mode: 'no-cors',
-          body: JSON.stringify(newUser),
-          headers: {
-            Accept: 'application/json',
-            'Content-type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
+      const res = await fetch('https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser', {
+        method: 'POST',
+        credentials: 'include',
+        mode: 'no-cors',
+        body: JSON.stringify(newUser),
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         }
-      );
-      // console.log(await res);
-      console.log('Success asd', await res);
-      const data = await res.json();
-      console.log('Success', data);
-      //Do sth with AWS authentication
-      //Do sth with our DB
+      });
 
-      // go to the home page
-      // router.replace('/newuser')
+      const data = await res.json()
+      console.log('first', await data);
     } catch (err) {
-      setError('Failed to create an account');
-      console.log(err);
+      console.log("ERROR: ", err);
     }
-    setLoading(false);
-  };
+  }
+  const postsecondHandler = async () => {
+    try {
+      const restwo = await fetch(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getuser_byawsid?aws-id=${user.username}`);
+      const datatwo = await restwo.json()
+      console.log('second', await datatwo);
+      Router.replace("/newuser")
+    } catch (err) {
+      console.log("ERROR2", err)
+    }
+  }
+
   return (
     <main className='h-auto w-auto flex flex-col items-center border-solid border-2 rounded border-indigo-600 bg-white absolute my-24 px-24 py-12 ml-[50%]'>
       <>
         <h1>Hello</h1>
         <button onClick={signOut}>Sign out</button>
       </>
-      
+
       {/* <h1>Share your Passions</h1>
       <br />
       {error && <div className='bg-red-600'>{error}</div>}

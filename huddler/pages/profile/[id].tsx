@@ -51,7 +51,7 @@ function Profile({ recommended, huddles }: Props) {
     return <div>loading...</div>;
 
   return (
-    <main className='flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light bg-red-200'>
+    <main className='flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light'>
       <div className="hidden lg:block">
         <div className='fixed min-w-[20%] h-full'>
           <div
@@ -72,14 +72,16 @@ function Profile({ recommended, huddles }: Props) {
           </div>
         </div>
       </div>
+      
       {/* Mobile */}
-      <div className="lg:hidden">
+      <div className="lg:hidden w-full h-1/3 flex-col">
         <MobileAvatar />
+        <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
       </div>
 
 
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
-        <h1 className="py-8 p-4 text-3xl">Interests:</h1>
+        <h1 className="py-8 p-4 text-3xl font-bold">Interests:</h1>
         <div className="flex flex-wrap gap-4 p-4">
           {tags.map((tag: Category, i: number) => (
             <h1
@@ -91,13 +93,13 @@ function Profile({ recommended, huddles }: Props) {
           ))}
         </div>
 
-        <h1 className="py-6 p-4 text-3xl">Created huddles:</h1>
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Created huddles:</h1>
         <HuddleCarousel huddles={userCreatedHuddles} />
 
-        <h1 className="py-6 p-4 text-3xl">Huddles I'm going to:</h1>
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Huddles I'm going to:</h1>
         <HuddleCarousel huddles={huddlesUserIsGoing} />
 
-        <h1 className="py-6 p-4 text-3xl">Recommended:</h1>
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Recommended:</h1>
         <HuddleCarousel huddles={recommended} />
       </div>
     </main>

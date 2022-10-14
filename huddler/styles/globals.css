@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-palette-light;
+        @apply bg-palette-light w-full;
     }  
 }
 
