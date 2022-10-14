@@ -4,46 +4,49 @@ import Image, { StaticImageData } from 'next/future/image';
 import DefaultUserImage from '../../../public/defaultUserImage.png';
 type Props = {
   userData: User;
-  setUserData: React.Dispatch<React.SetStateAction<User | null>>;
+  setUserData: React.Dispatch<React.SetStateAction<User>>;
   handleSubmit: Function;
 };
 
 // Contains a form for the user details
 
-function UserInfo({
-  userData,
-  setUserData,
-  handleSubmit,
-}: Props) {
+function UserInfo({ userData, setUserData, handleSubmit }: Props) {
   const [imageSelected, setImageSelected] = useState<StaticImageData | string>(
     DefaultUserImage
   );
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const changeUserImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     if (!e.target.files) return;
     const image = URL.createObjectURL(e.target.files[0]);
     setImageSelected(image);
-    setUserData({ ...userData, image: e.target.files[0]});
-    handleSubmit();
+    setUserData({ ...userData, image: image });
   };
   return (
     <>
       <div className='flex flex-col py-8 w-1/2 px-10'>
         <form className='flex flex-col'>
           <h1 className='font-bold text-2xl pb-4 self-center'>User details</h1>
+          <label>Choose a User Name</label>
+          <input
+            className='py-3'
+            onChange={(e) =>
+              setUserData({ ...userData, username: e.target.value })
+            }
+          ></input>
           <label>First Name</label>
           <input
             className='py-3'
             onChange={(e) =>
-              setUserData({ ...userData, firstName: e.target.value })
+              setUserData({ ...userData, first_name: e.target.value })
             }
           ></input>
           <label>Last Name</label>
           <input
             className='py-3'
             onChange={(e) =>
-              setUserData({ ...userData, lastName: e.target.value })
+              setUserData({ ...userData, last_name: e.target.value })
             }
           ></input>
           <label>Tell people who you are and what are your interests:</label>

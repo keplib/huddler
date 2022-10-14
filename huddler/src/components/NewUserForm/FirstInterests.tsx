@@ -4,15 +4,15 @@ import { Category, User } from '../../types';
 import { getAllCategories } from '../../utils/APIServices/categoryServices';
 
 type Props = {
-  userData: User;
-  setUserData: React.Dispatch<React.SetStateAction<User>>;
+  categoriesPicked: Category[];
+  setCategoriesPicked: React.Dispatch<React.SetStateAction<Category[]>>;
 };
 
-function Interests({ userData, setUserData }: Props) {
+function Interests({ categoriesPicked, setCategoriesPicked }: Props) {
   const tagCSS = 'h-[40px] text-xl py-2 px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px]'
   
   const [displayCategories, setDisplayCategories] = useState<Category[]>([]);
-  const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
+  
   useEffect(() => {
     loadCategories();
   }, []);
@@ -26,7 +26,6 @@ function Interests({ userData, setUserData }: Props) {
 
   const addCategory = (category: Category) => {
     setCategoriesPicked([...categoriesPicked, category]);
-    setUserData({ ...userData, categories: categoriesPicked });
   };
   console.log(categoriesPicked);
 
