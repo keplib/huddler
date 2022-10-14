@@ -10,16 +10,8 @@
   "requiredAttributes": [
     "email"
   ],
-  "passwordPolicyMinLength": 8,
-  "passwordPolicyCharacters": [
-    "Requires Lowercase",
-    "Requires Uppercase",
-    "Requires Numbers",
-    "Requires Symbols"
-  ],
+  "passwordPolicyMinLength": 6,
+  "passwordPolicyCharacters": [],
   "mfaConfiguration": "OFF",
-  "autoVerifiedAttributes": [
-    "email"
-  ],
   "mfaTypes": []
 }
