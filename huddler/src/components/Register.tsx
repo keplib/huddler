@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState, useRef } from 'react';
 import { User } from '../types';
+import { Auth } from 'aws-amplify';
 
 function Register() {
   const router = useRouter();
@@ -14,6 +15,21 @@ function Register() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmedPasswordRef = useRef<HTMLInputElement>(null);
+
+  // async function signUp() {
+  //   try {
+  //       const { user } = await Auth.signUp({
+  //           email,
+  //           password,
+  //           autoSignIn: { // optional - enables auto sign in after user is confirmed
+  //               enabled: true,
+  //           }
+  //       });
+  //       console.log(user);
+  //   } catch (error) {
+  //       console.log('error signing up:', error);
+  //   }
+  // }
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
