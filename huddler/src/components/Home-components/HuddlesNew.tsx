@@ -29,10 +29,10 @@ function Huddles({ huddles }: Props) {
 
     return (
         <div className="flex flex-col justify-start px-2 h-full" id="carousel" >
-            <div className="gap-4 grid grid-cols-2">
+            <div className="gap-4 grid 2xl:grid-cols-2 bg-red-200">
             {huddles.map((huddle) => (
                 <div
-                    className="gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
+                    className="h-72 p-2 gap-4 grid grid-cols-2 flex-grow-1 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
                     key={huddle.id}
                 >
                     {/* <HuddleCarouselItem */}

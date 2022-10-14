@@ -37,7 +37,7 @@ function HuddleCarouselItem({ huddle, huddlesUserIsGoing }: Props) {
   }, []);
   return (
     <>
-      <div className="h-[300px] w-[300px] max-h-72 rounded-lg relative">
+      <div className="xl:h-72 xl:w-72 2xl:w-full max-h-72 rounded-lg relative">
         <Image
           src={huddle.image}
           fill
@@ -77,8 +77,8 @@ function HuddleCarouselItem({ huddle, huddlesUserIsGoing }: Props) {
         </p>
         <p>attending: {data.attending}</p>
         <p className="mt-8">At {huddle.address}</p>
-        <p>{huddle.description}</p>
-        <div className="grid grid-cols-3 gap-x-4 gap-y-2 mr-3 mt-auto mb-2">
+        <p className="hidden md:block">{huddle.description}</p>
+        <div className="grid grid-cols-3 gap-x-4 gap-y-2 mr-3 mt-auto mb-2 w-full">
           {data.categories.map((category, i) => {
             return i > 2 ? (
               <></>

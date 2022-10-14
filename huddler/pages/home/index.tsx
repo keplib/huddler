@@ -31,8 +31,7 @@ function Home({ recommended }: Props) {
   // if user uses another filter let's call a function that does it.
   return (
 
-    <div className="sm:block md:flex gap-10 mt-10 relative h-full px-5">
-
+    <div className="sm:block md:flex xl:gap-10 mt-10 relative h-full md:px-24 lg:px-1 2xl:px-5">
       <div className="max-h-[87vh] overflow-y-auto w-full" id="carousel">
         <div className="flex p-5 mb-2 shadow-md">
           <button
@@ -47,7 +46,7 @@ function Home({ recommended }: Props) {
         <HuddlesNew huddles={filterChoice} />
       </div>
 
-      <div className="mt-16">
+      <div className="mt-16 hidden lg:flex ">
         <Map huddles={filterChoice} />
       </div>
     </div>
