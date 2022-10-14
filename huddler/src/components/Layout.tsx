@@ -10,7 +10,7 @@ function Layout({ children }: Props) {
     <>
       <div className='w-full h-screen flex flex-col justify-center'>
         <Navbar />
-        <div className='self-center bg-palette-light h-full w-full mt-24'>
+        <div className='self-center h-full w-full mt-24 grid'>
           <main>{children}</main>
         </div>
       </div>
