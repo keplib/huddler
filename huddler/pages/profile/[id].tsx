@@ -10,6 +10,7 @@ import HuddleCarousel from "../../src/components/Profile components/HuddleCarous
 import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
 import { Category, Huddle, User } from "../../src/types";
 import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
+import { getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
 
 export const getServerSideProps = async () => {
   const recommended: Huddle[] = await recommendedForUser(67);
@@ -31,6 +32,9 @@ type Props = {
 };
 
 function Profile({ recommended, huddles }: Props) {
+  //This is for updating the huddles i'm going to row
+  const [update, setUpdate] = useState(false);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
@@ -40,13 +44,15 @@ function Profile({ recommended, huddles }: Props) {
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
     fetcher
   );
-  const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${67}`,
-    fetcher
-  );
+  const getter = async () => {
+    const res = await getUserGoingHuddles(67);
+    setHuddlesUserIsGoing(res);
+  };
+  useEffect(() => {
+    getter();
+  }, [update]);
 
-  if (tagsError || userHuddleError || userGoingError)
-    return <div>failed to load</div>;
+  if (tagsError || userHuddleError) return <div>failed to load</div>;
   if (!tags || !userCreatedHuddles || !recommended || !huddlesUserIsGoing)
     return <div>loading...</div>;
 
@@ -96,6 +102,8 @@ function Profile({ recommended, huddles }: Props) {
           Created huddles:
         </h1>
         <HuddleCarousel
+          setUpdate={setUpdate}
+          update={update}
           huddles={userCreatedHuddles}
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
@@ -104,12 +112,16 @@ function Profile({ recommended, huddles }: Props) {
           Huddles I'm going to:
         </h1>
         <HuddleCarousel
+          setUpdate={setUpdate}
+          update={update}
           huddles={huddlesUserIsGoing}
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
 
         <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Recommended:</h1>
         <HuddleCarousel
+          setUpdate={setUpdate}
+          update={update}
           huddles={recommended}
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
