@@ -64,8 +64,8 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
     if (currentPage)
       setLocation({
         name: locationName,
-        lat: "" + center.lat,
-        lng: "" + center.lng,
+        lat: center.lat,
+        lng: center.lng,
       });
   }, [center]);
   useEffect(() => {
