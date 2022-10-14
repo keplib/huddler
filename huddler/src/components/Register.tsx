@@ -7,11 +7,11 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 import { Amplify, Auth } from 'aws-amplify';
-import awsconfig from '../aws-exports';
-Amplify.configure(awsconfig);
-import awsExports from '../aws-exports';
-import { fetcher } from '../utils/helperFunctions';
-Amplify.configure(awsExports);
+// import awsconfig from '../aws-exports';
+// Amplify.configure(awsconfig);
+// import awsExports from '../aws-exports';
+// import { fetcher } from '../utils/helperFunctions';
+// Amplify.configure(awsExports);
 
 function Register({ signOut, user }: any) {
   const router = useRouter();
@@ -51,7 +51,7 @@ function Register({ signOut, user }: any) {
       const restwo = await fetch(`https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getuser_byawsid?aws-id=${user.username}`);
       const datatwo = await restwo.json()
       console.log('second', await datatwo);
-      Router.replace("/newuser")
+      // Router.replace("/newuser")
     } catch (err) {
       console.log("ERROR2", err)
     }

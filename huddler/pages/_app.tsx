@@ -3,6 +3,12 @@ import type { AppProps } from 'next/app'
 import Layout from '../src/components/Layout'
 import { ReactElement, ReactNode } from 'react'
 import { NextPage } from 'next'
+import { Amplify, Auth } from 'aws-amplify';
+
+import awsconfig from '../src/aws-exports';
+Amplify.configure(awsconfig);
+import awsExports from '../src/aws-exports';
+Amplify.configure(awsExports);
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

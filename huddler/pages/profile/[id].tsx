@@ -11,6 +11,8 @@ import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
 import { Category, Huddle, User } from "../../src/types";
 import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
 
+import { Auth } from 'aws-amplify';
+
 export const getServerSideProps = async () => {
   const recommended: Huddle[] = await recommendedForUser(67);
   const huddles: Huddle[] = await fetcher(
@@ -31,6 +33,14 @@ type Props = {
 };
 
 function Profile({ recommended, huddles }: Props) {
+  useEffect(() => {
+    // Access the user session on the client
+    Auth.currentAuthenticatedUser()
+      .then(user => {
+        console.log("User: ", user)
+      })
+      .catch(err => console.log(err))
+  }, [])
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
