@@ -33,6 +33,7 @@ export const getUserGoingHuddles = async (user_id: number) =>
   );
 //Return: Array of Huddle Objects
 
+
 // POST Functions
 
 export const postNewUserInfo = async (newUser: User, userId: number) => {

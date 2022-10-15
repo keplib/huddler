@@ -1,5 +1,6 @@
 {
   "projectPath": "/Users/aferrarifirmo/Repositories/huddler-front-end/huddler",
   "envName": "dev",
-  "defaultEditor": "vscode"
+  "defaultEditor": "vscode",
+  "noUpdateBackend": true
 }
