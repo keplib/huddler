@@ -1,14 +1,21 @@
+//MainForm
+
 import React, { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
+<<<<<<< HEAD
 import { postUserInfo, postUserCategy } from '../../utils/APIServices/userServices';
+=======
+import { postNewUserInfo, postUserCategories } from '../../utils/APIServices/userServices';
+import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
+>>>>>>> s3userimg
 
 function MainForm() {
   const [page, setPage] = useState(1);
-  const [userImage, setUserImage] = useState();
+  const [userImg, setUserImg] = useState({});
 
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
   const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
@@ -38,15 +45,24 @@ function MainForm() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('hereeeeee');
-    console.log(userData);
+  const handleSubmit = async () => {
+    // console.log('hereeeeee');
+    const data = await getUploadUrl();
+    const uploadUrl = data.uploadURL
+    const filename = data.filename
+    const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
+    // console.log(userData)
+    // console.log(fileURL);
+    setUserData({ ...userData, image: fileURL});
+    await uploadImgToS3(uploadUrl, userImg); 
 
-    console.log(categoriesPicked);
-    postUserInfo(userData, 179);
-    //posting the categories to new huddle
+    // console.log(categoriesPicked);
+    const formData = {...userData, image: fileURL};
+    // console.log('FORMDATA : ', formData)
+    await postNewUserInfo(formData, '37rgh348gfv3yveyf10');
+    // posting the categories to new huddle
     categoriesPicked.forEach((category) => {
-      postUserCategory(179, category.id as number);
+      postUserCategories(68, category.id as number);
     });
     Router.replace('./home');
   };
@@ -73,6 +89,7 @@ function MainForm() {
           <UserInfo
             userData={userData!}
             setUserData={setUserData!}
+            setUserImg={setUserImg}
             handleSubmit={handleSubmit}
           />
         )}
@@ -113,4 +130,5 @@ export default MainForm;
 function postuserCategories(arg0: number, arg1: number) {
   throw new Error('Function not implemented.');
 }
+
 
