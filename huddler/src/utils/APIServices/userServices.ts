@@ -33,16 +33,16 @@ export const getUserGoingHuddles = async (user_id: number) =>
 
 // POST Functions
 
-export const postNewUserInfo = async (newUser: User, userId: number) => {
+export const postUserInfo = async (user: User, userId: number) => {
   try {
-    console.log('trying to post huddle category', newUser, userId);
+    console.log('trying to post huddle category', user, userId);
 
     const newUserToPost = await fetch(
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser/update?user-id=${userId}`,
       {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(user),
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -56,7 +56,10 @@ export const postNewUserInfo = async (newUser: User, userId: number) => {
   }
 };
 
-export const postUserCategories = async (userId: number, userCategory: number) => {
+export const postUserCategory = async (
+  userId: number,
+  userCategory: number
+) => {
   try {
     console.log('trying to post huddle category', userId, userCategory);
 
@@ -65,7 +68,10 @@ export const postUserCategories = async (userId: number, userCategory: number) =
       {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify({ fk_user_id: userId, fk_category_id: userCategory}),
+        body: JSON.stringify({
+          fk_user_id: userId,
+          fk_category_id: userCategory,
+        }),
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -77,6 +83,81 @@ export const postUserCategories = async (userId: number, userCategory: number) =
   } catch (e) {
     console.log('Error posting a new user category in DB  ', e);
   }
-
-
 };
+
+export const deleteUser = async (userId: number) => {
+  try {
+    console.log('trying to delete user with user id: ', userId);
+
+    const userToDelete = await fetch(
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user`,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ user_id: userId }),
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+    console.log(userToDelete);
+    return userToDelete;
+  } catch (e) {
+    console.log('Error deleting a user in DB  ', e);
+  }
+};
+
+export const deleteOneUserCategory = async (userId: number, categoryId: number) => {
+  try {
+    console.log(`trying to delete a user categories, user_id ${userId}, categoryId: ${categoryId}`);
+
+    const userToDelete = await fetch(
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_category`,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ fk_user_id: userId, fk_category_id: categoryId }),
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+    console.log(userToDelete);
+    return userToDelete;
+  } catch (e) {
+    console.log('Error deleting a category in DB  ', e);
+  }
+};
+
+export const deleteAllUserCategories = async (userId: number) => {
+  try {
+    console.log('trying to delete all user categories: ', userId);
+
+    const categoriesToDelete = await fetch(
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_all_user_categories`,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ fk_user_id: userId }),
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+    console.log(categoriesToDelete);
+    return categoriesToDelete;
+  } catch (e) {
+    console.log('Error deleting all categories in DB  ', e);
+  }
+};
+
+
+
+
+
+
+
+

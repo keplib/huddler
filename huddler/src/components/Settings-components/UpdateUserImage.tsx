@@ -5,10 +5,11 @@ import { useState, useRef } from 'react';
 type Props = {
   setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
+  image: string;
 };
 
-const UpdateAvatar = ({ setDisabledButton, setError }: Props) => {
-  const [avatar, setAvatar] = useState<StaticImageData | string>(
+const UserImage = ({ setDisabledButton, setError, image }: Props) => {
+  const [userImage, setUserImage] = useState<StaticImageData | string>(
     DefaultUserImage
   );
   const inputImageRef = useRef<HTMLInputElement>(null);
@@ -18,13 +19,14 @@ const UpdateAvatar = ({ setDisabledButton, setError }: Props) => {
     try {
       //Update image in DB
       setDisabledButton(false);
-      setAvatar(URL.createObjectURL(e.target.files[0]));
+      setUserImage(URL.createObjectURL(e.target.files[0]));
+      image = URL.createObjectURL(e.target.files[0]);
     } catch {
-      setError('Failed to upload the new image. Please try again');
+      setError('Failed to upload the new user image. Please try again');
     }
   };
   return (
-    <div>
+    <div className='flex flex-col items-center mb-10'>
       Click on the image to change it
       <input
         type='file'
@@ -34,16 +36,16 @@ const UpdateAvatar = ({ setDisabledButton, setError }: Props) => {
         onChange={changeUserImage}
       />
       <Image
-        src={avatar}
+        src={userImage}
         className='rounded-full hover:cursor-pointer'
         width={150}
         height={150}
-        alt='avatar'
+        alt='user-image'
         onClick={() => inputImageRef.current!.click()}
       />
     </div>
   );
 };
 
-export default UpdateAvatar;
+export default UserImage;
 

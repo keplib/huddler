@@ -7,9 +7,9 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 import { Amplify, Auth } from 'aws-amplify';
-import awsconfig from '../aws-exports';
+import awsconfig from '../../src/aws-exports';
 Amplify.configure(awsconfig);
-import awsExports from '../aws-exports';
+import awsExports from '../../src/aws-exports';
 import { fetcher } from '../utils/helperFunctions';
 Amplify.configure(awsExports);
 
@@ -128,4 +128,5 @@ function Register({ signOut, user }: any) {
 }
 export default withAuthenticator(Register);
 // export default Register;
+
 

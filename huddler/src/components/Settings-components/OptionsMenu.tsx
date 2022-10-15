@@ -72,7 +72,7 @@ const OptionsMenu = ({ setOption }: Props) => {
         onClick={handleOption}
         id='location'
       >
-        Update Default Location
+        Update default location
         {arrowImage}
       </li>
       <li
@@ -84,7 +84,7 @@ const OptionsMenu = ({ setOption }: Props) => {
         onClick={handleOption}
         id='interests'
       >
-        Update Interests
+        Update interests
         {arrowImage}
       </li>
       <li

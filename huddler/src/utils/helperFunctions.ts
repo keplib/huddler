@@ -6,6 +6,7 @@ import { getUserCategories } from './APIServices/userServices';
 // 1. Fetcher
 // 2. Recommended Huddles
 // 3. Dates handler
+// 4. Sort by name, any array of objects that contains the field name
 
 // 1. Fetcher
 export const fetcher = async (...args: string[]) => {
@@ -53,3 +54,7 @@ export const nowFormatted = () => {
   return dayjs(Date.now()).format('YYYY-MM-DDTHH:mm');
 };
 
+// 4. Sort by name
+export const sortByName = (arrOfObj) => {
+  return arrOfObj.sort((a, b) => a.name.localeCompare(b.name));
+}

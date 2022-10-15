@@ -41,17 +41,17 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   return (
     <div
       ref={insideDropDownRef}
-      className='mt-24 w-full'
+      className='mt-24 w-full rounded-[5px] shadow-md'
       // onMouseLeave={() => setShowDropDown(false)}
     >
-      <ul className='grid grid-cols-3 gap-4 border-b w-64 absolute bg-palette-dark -right-[50%] place-content-center pt-3'>
+      <ul className='border-b w-64 absolute bg-palette-dark -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
         {serviceDropdown.map((menuItem, i) => {
           return (
             <Link
               href={menuItem.path}
               key={i}
             >
-              <a className='col-span-3 border-b p-5 flex gap-4 text-2xl items-center font-bold'>
+              <a className='border-b px-5 mb-[0.8px] flex gap-10 hover:bg-palette-orange py-2 text-2xl items-center'>
                 <p className='text-3xl'>{menuItem.icon}</p>
                 <p>{menuItem.name}</p>
               </a>
@@ -64,4 +64,6 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
+
+
 
