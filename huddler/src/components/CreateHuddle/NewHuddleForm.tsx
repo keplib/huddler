@@ -9,12 +9,8 @@ import {
   getIdOfHuddleByDateOfCreation,
   postHuddle,
   postHuddleCategory,
-<<<<<<< HEAD
 } from "../../utils/APIServices/huddleServices";
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
-=======
-} from '../../utils/APIServices/huddleServices';
->>>>>>> settings
 
 type Props = {
   data: {
@@ -61,7 +57,6 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-<<<<<<< HEAD
       const data = await getUploadUrl();
       const uploadUrl = data.uploadURL
       const filename = data.filename
@@ -71,9 +66,6 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
       // 
 
       setError("");
-=======
-      setError('');
->>>>>>> settings
       const date = Date.now();
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
@@ -188,15 +180,9 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
           </div>
         ) : (
           <></>
-<<<<<<< HEAD
         )} 
         { <div className="my-3 mt-2">
           <ul className="grid grid-cols-3 gap-2">
-=======
-        )}
-        <div className='my-3 mt-2'>
-          <ul className='grid grid-cols-3 gap-2'>
->>>>>>> settings
             {addedCategories.map((category, i) => {
               return (
                 <li
