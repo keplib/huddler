@@ -41,6 +41,7 @@ function HuddleCarouselItem({
       setData({ attending: attending.length, categories });
     };
     getter();
+    console.log(data.categories)
   }, []);
   return (
     <div className="ml-3 mr-3 mt-3">
@@ -88,7 +89,8 @@ function HuddleCarouselItem({
                 <></>
               ) : (
                 <p className="text-center py-1 bg-palette-dark rounded-md text-white">
-                  {category.name}
+                    {category.name}
+                    {/* key={category.id} */}
                 </p>
               );
             })}

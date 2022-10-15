@@ -24,7 +24,6 @@ export const fetcher = async (...args: string[]) => {
 //For now this functions returns all the huddles that are in user categories. Eventually we should do some kind of sorting or also recommend by location. Now we don't have enough huddles in each categories to test it.
 export const recommendedForUser = async (userId: number) => {
   const userCategories = await getUserCategories(userId);
-  console.log('userCategories', userCategories);
   const promises = userCategories.map((category: Category) =>
     getHuddlesInCategory(category.id as number)
   );

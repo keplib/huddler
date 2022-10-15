@@ -56,13 +56,13 @@ function Home({ recommended }: Props) {
             Recommended
           </button>
           <button onClick={(e) => getter()}>All Huddles</button>
-          <button onClick={() => setMobileShowMap(!mobileShowMap)} className="md:hidden">{mobileShowMap ?
+          <button onClick={() => setMobileShowMap(!mobileShowMap)} className="lg:hidden">{mobileShowMap ?
             <AiOutlineArrowUp /> : <AiOutlineArrowUp className=" rotate-180" />} </button>
         </div>
 
         {/* <Huddles huddles={filterChoice} /> */}
         {mobileShowMap &&
-          <div className="absolute md:hidden block h-full w-full z-30">
+          <div className="absolute lg:hidden block h-full w-full z-30">
           <MobileMap huddles={filterChoice} />
         </div>}
 
