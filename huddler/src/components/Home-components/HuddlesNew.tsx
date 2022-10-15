@@ -30,7 +30,6 @@ function Huddles({ huddles, update, setUpdate }: Props) {
             setActive(huddle);
         }
     };
-    console.log(huddles)
 
     return (
         <div className="flex flex-col justify-start px-2 h-full" id="carousel" >
