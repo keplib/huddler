@@ -6,12 +6,8 @@ import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
-<<<<<<< HEAD
-import { postUserInfo, postUserCategy } from '../../utils/APIServices/userServices';
-=======
-import { postNewUserInfo, postUserCategories } from '../../utils/APIServices/userServices';
+import { postUserInfo, postUserCategory } from '../../utils/APIServices/userServices';
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
->>>>>>> s3userimg
 
 function MainForm() {
   const [page, setPage] = useState(1);
@@ -59,10 +55,10 @@ function MainForm() {
     // console.log(categoriesPicked);
     const formData = {...userData, image: fileURL};
     // console.log('FORMDATA : ', formData)
-    await postNewUserInfo(formData, '37rgh348gfv3yveyf10');
+    await postUserInfo(formData, '37rgh348gfv3yveyf10');
     // posting the categories to new huddle
     categoriesPicked.forEach((category) => {
-      postUserCategories(68, category.id as number);
+      postUserCategory('37rgh348gfv3yveyf10', category.id as number);
     });
     Router.replace('./home');
   };
