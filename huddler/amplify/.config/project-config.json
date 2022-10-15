@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "huddler",
+  "projectName": "huddlerroot",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
