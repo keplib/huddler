@@ -56,11 +56,11 @@ function Profile({ recommended, huddles }: Props) {
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
     fetcher
   );
-  // const { data: userCreatedHuddles, error: userHuddleError } = useSWR(
-  //   `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
-  //   fetcher
-  // );
-  const getter = async () => {
+  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
+    fetcher
+  ) || [];
+  const getter = async () =>{
     const res = await getUserGoingHuddles(67);
     const sorted = res.sort((a: Huddle, b: Huddle) => {
       return new Date(a.day_time) - new Date(b.day_time);
@@ -68,7 +68,7 @@ function Profile({ recommended, huddles }: Props) {
     setHuddlesUserIsGoing(sorted);
   };
   useEffect(() => {
-    getter();
+    // getter();
   }, [update]);
 
   const changeDisplayedCategory = async (category: Category) => {
@@ -85,11 +85,11 @@ function Profile({ recommended, huddles }: Props) {
     }
   };
   if (tagsError) return <div>failed to load</div>;
-  if (!tags || !recommended || !huddlesUserIsGoing)
+  if (!tags || !recommended)
     return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light">
+    <main className="flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
       <div className="hidden lg:block">
         <div className="fixed min-w-[20%] h-full">
           <div
@@ -103,12 +103,12 @@ function Profile({ recommended, huddles }: Props) {
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
-                <HuddleCarouselItem
+                {/* <HuddleCarouselItem
                   setUpdate={setUpdate}
                   update={update}
                   huddle={huddlesUserIsGoing[0]}
                   huddlesUserIsGoing={huddlesUserIsGoing}
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -116,33 +116,34 @@ function Profile({ recommended, huddles }: Props) {
       </div>
 
       {/* Mobile */}
-      <div className="lg:hidden w-full h-1/3 flex-col">
+      <div className="lg:hidden w-full pt-4 h-auto flex-col">
         <MobileAvatar />
         <UserInfo numOfCreatedHuddles={5} />
       </div>
 
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
-        <h1 className="py-8 p-4 text-3xl font-bold">Interests:</h1>
-        <div className="flex flex-wrap gap-4 p-4">
-          {tags.map((tag: Category, i: number) => (
-            <h1
-              id={tag.name}
-              onClick={(e) => changeDisplayedCategory(tag)}
-              className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
-              key={i}
-            >
-              {tag.name}
-            </h1>
-          ))}
-        </div>
+        <h1 className="py-8 px-4 text-3xl font-bold">Interests:</h1>
+        {Array.isArray(tags) &&
+          <div className="flex flex-wrap gap-4 p-4">
+            {tags.map((tag: Category, i: number) => (
+              <h1
+                id={tag.name}
+                onClick={(e) => changeDisplayedCategory(tag)}
+                className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
+                key={i}
+              >
+                {tag.name}
+              </h1>
+            ))}
+          </div>}
 
         <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
           Created huddles:
         </h1>
-        <HuddleCarousel
+       <HuddleCarousel
           setUpdate={setUpdate}
           update={update}
-          huddles={[]}
+          huddles={userCreatedHuddles}
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
 

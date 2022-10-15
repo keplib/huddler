@@ -13,21 +13,20 @@ function MobileAvatar() {
 
     return (
       
-      <div className='w-full flex flex-col py-6 justify-center items-center'>       
-          <div className='rounded-full w-96 h-[20rem] relative justify-center flex'>
+        <div className=' w-full flex flex-col py-6 justify-center items-center'>       
+            {/* <div className='rounded-full h-72 w-72 md:w-96 md:h-96 relative flex'>
               <Image
                   className='rounded-full'
                   src={user.image! as string}
                   placeholder='empty'
                   alt='avatar'
-                  width={320}
-                  height={320}
+                  fill
                   priority={true}
                   />
-                  <h1 className='px-4 text-[2rem] self-center'>
+          </div> */}
+                  <h1 className='p-4 text-[2rem] font-bold'>
                       Welcome back, {user.name}
                   </h1>
-          </div>
       </div>
   )
 }

@@ -8,13 +8,13 @@ type Props = {
 function Layout({ children }: Props) {
   return (
     <>
-      <div className='w-full h-[95vh] flex flex-col justify-center overflow-hidden'>
+      <div className='w-full h-screen flex flex-col justify-center' id="carousel">
         <Navbar />
-        <div className='self-center h-full w-full mt-24 grid'>
+        <div className='self-center h-full w-full mt-24 grid' id="carousel">
           <main>{children}</main>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
