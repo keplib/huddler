@@ -10,6 +10,7 @@ import {
   postHuddle,
   postHuddleCategory,
 } from "../../utils/APIServices/huddleServices";
+import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
 
 type Props = {
   data: {
@@ -32,6 +33,8 @@ type Props = {
 const NewHuddleForm = ({ data, setCenter, center }: Props) => {
   const router = useRouter();
 
+  const [imgUrl, setImageUrl] = useState({});
+  const [uploadImg, setUploadImg] = useState({});
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [addedCategories, setAddedCategories] = useState<Category[]>([
@@ -54,6 +57,14 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      const data = await getUploadUrl();
+      const uploadUrl = data.uploadURL
+      const filename = data.filename
+      console.log(data);
+      uploadImgToS3(uploadUrl, uploadImg);
+
+      // 
+
       setError("");
       const date = Date.now();
       const newHuddle: Huddle = {
@@ -64,17 +75,17 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
         address: finalLocation.name,
         description: descriptionRef.current!.value,
         // for images we'll probably have to split what comes from the input field
-        //CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
-        image: "https://tall.life/wp-content/uploads/2015/12/6foot9inches.jpg",
+        // CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
+        image: 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' + filename,
         date_of_creation: date,
         link: "",
         fk_author_id: 2, //here we'll require the uid from the authentication
       };
       // postHuddle2(newHuddle);
-      //Post huddle in DB
+      // Post huddle in DB
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
-      //getting id of huddle
+      // getting id of huddle
       const huddleId = await getIdOfHuddleByDateOfCreation(date);
       console.log(huddleId);
 
@@ -82,8 +93,11 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
       addedCategories.forEach((el) => {
         postHuddleCategory(huddleId[0].id, el.id as number);
       });
-      //redirect to user home page
-      // router.replace("/home");
+      // redirect to user home page
+      router.replace("/home");
+    
+      
+
     } catch {
       setError("We could not create the huddle");
     }
@@ -92,6 +106,9 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
     if (!e.target.files) return;
     setImageSelected(true);
     setImagePreview(URL.createObjectURL(e.target.files[0]));
+    const img = e.target.files[0]
+    console.log(img);
+    setUploadImg(img)
   };
 
   let huddleCategories: string[] = [];
@@ -103,6 +120,7 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
       : setAddedCategories([...addedCategories, category]);
     console.log("These are the selected categories,", addedCategories);
   };
+
   useEffect(() => {
     setCenter({
       lat: Number(locationData.lat),
@@ -156,8 +174,8 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
           </div>
         ) : (
           <></>
-        )}
-        <div className="my-3 mt-2">
+        )} 
+        { <div className="my-3 mt-2">
           <ul className="grid grid-cols-3 gap-2">
             {addedCategories.map((category, i) => {
               return (
@@ -175,7 +193,7 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
               );
             })}
           </ul>
-        </div>
+        </div> }
         <TagList setAllCategories={setAllCategories} />
         <label className="mt-2" htmlFor="where">
           Where?

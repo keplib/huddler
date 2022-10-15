@@ -11,6 +11,8 @@ import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
 import { Category, Huddle, User } from "../../src/types";
 import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
 import { getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
+import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
+import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
 
 import { Auth } from 'aws-amplify';
 
@@ -45,6 +47,10 @@ function Profile({ recommended, huddles }: Props) {
   //This is for updating the huddles i'm going to row
   const [update, setUpdate] = useState(false);
   const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
+  const [lastRow, setLastRow] = useState({
+    name: "Recommended",
+    huddles: recommended,
+  });
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
@@ -56,12 +62,28 @@ function Profile({ recommended, huddles }: Props) {
   );
   const getter = async () => {
     const res = await getUserGoingHuddles(67);
-    setHuddlesUserIsGoing(res);
+    const sorted = res.sort((a: Huddle, b: Huddle) => {
+      return new Date(a.day_time) - new Date(b.day_time);
+    });
+    setHuddlesUserIsGoing(sorted);
   };
   useEffect(() => {
     getter();
   }, [update]);
 
+  const changeDisplayedCategory = async (category: Category) => {
+    const data = await getHuddlesInCategory(category.id);
+    if (lastRow.name == category.name) {
+      document.getElementById(category.name)?.classList.remove("opacity-60");
+      setLastRow({
+        name: "Recommended",
+        huddles: recommended,
+      });
+    } else {
+      document.getElementById(category.name)?.classList.add("opacity-60");
+      setLastRow({ name: category.name, huddles: data });
+    }
+  };
   if (tagsError || userHuddleError) return <div>failed to load</div>;
   if (!tags || !userCreatedHuddles || !recommended || !huddlesUserIsGoing)
     return <div>loading...</div>;
@@ -77,13 +99,17 @@ function Profile({ recommended, huddles }: Props) {
             <Avatar />
             <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl self-center">Feeling Inspired?</h1>
-              <button
-                className="self-center text-2xl bg-palette-dark text-white rounded-[5px] h-16 p-4 w-[210px] active:translate-x-[1px] active:translate-y-[1px]"
-                onClick={() => router.push("/create")}
-              >
-                Create a Huddle
-              </button>
+              <h1 className="text-3xl self-center mt-10 font-bold">
+                Upcoming Huddle
+              </h1>
+              <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
+                <HuddleCarouselItem
+                  setUpdate={setUpdate}
+                  update={update}
+                  huddle={huddlesUserIsGoing[0]}
+                  huddlesUserIsGoing={huddlesUserIsGoing}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -100,6 +126,8 @@ function Profile({ recommended, huddles }: Props) {
         <div className="flex flex-wrap gap-4 p-4">
           {tags.map((tag: Category, i: number) => (
             <h1
+              id={tag.name}
+              onClick={(e) => changeDisplayedCategory(tag)}
               className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
               key={i}
             >
@@ -128,11 +156,13 @@ function Profile({ recommended, huddles }: Props) {
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">Recommended:</h1>
+        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+          {lastRow.name} huddles:
+        </h1>
         <HuddleCarousel
           setUpdate={setUpdate}
           update={update}
-          huddles={recommended}
+          huddles={lastRow.huddles}
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
       </div>
