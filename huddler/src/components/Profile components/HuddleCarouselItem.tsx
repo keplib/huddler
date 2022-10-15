@@ -51,6 +51,7 @@ function HuddleCarouselItem({
         <div className="ml-auto mr-3">
           {going ? (
             <button
+              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
                 setUpdate(!update);
@@ -61,6 +62,7 @@ function HuddleCarouselItem({
             </button>
           ) : (
             <button
+              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
                 setUpdate(!update);
