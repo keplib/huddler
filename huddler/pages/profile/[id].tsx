@@ -89,7 +89,9 @@ function Profile({ recommended, huddles }: Props) {
             <Avatar />
             <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl self-center mt-10">Upcoming Huddle</h1>
+              <h1 className="text-3xl self-center mt-10 font-bold">
+                Upcoming Huddle
+              </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
                 <HuddleCarouselItem
                   setUpdate={setUpdate}
