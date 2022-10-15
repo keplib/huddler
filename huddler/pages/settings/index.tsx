@@ -7,17 +7,39 @@ import UpdateInterests from '../../src/components/Settings-components/UpdateInte
 import DeleteUser from '../../src/components/Settings-components/DeleteUser';
 import { User } from '../../src/types';
 import OptionsMenu from '../../src/components/Settings-components/OptionsMenu';
+import { useRouter } from 'next/router';
+import { Auth} from 'aws-amplify'
+import { getUserById } from '../../src/utils/APIServices/userServices';
 
-//mock user
-const user: User = {
-  name: 'Florian',
-  email: 'flo@flo.flo',
-  firstName: 'Florio',
-};
+let aws_id = '';
+
+Auth.currentAuthenticatedUser()
+  .then((user) => {
+    console.log('User: ', user);
+    aws_id = user.username;
+    console.log('this is aws', aws_id);
+  })
+  .catch((err) => console.log(err));
+// //mock user
+// const user: User = {
+//   name: 'Florian',
+//   email: 'flo@flo.flo',
+//   firstName: 'Florio',
+// };
 
 const SettingsPage = () => {
-  const [currentUser, setCurrentUser] = useState<User>(user);
+  // const router = useRouter();
+  // if (!aws_id) router.replace('/');
+  const [currentUser, setCurrentUser] = useState<User>();
   const [option, setOption] = useState('information');
+  useEffect(()=>{
+    loadUser()
+  },[])
+
+const loadUser = async () => {
+  const user = await getUserById(aws_id)
+  setCurrentUser(user)
+}
 
   return (
     <main className='flex h-screen justify-center items-center'>
@@ -42,4 +64,5 @@ const SettingsPage = () => {
 };
 
 export default SettingsPage;
+
 

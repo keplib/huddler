@@ -8,8 +8,20 @@ import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
 import { postUserInfo, postUserCategory } from '../../utils/APIServices/userServices';
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
+import { Auth} from 'aws-amplify'
 
 function MainForm() {
+  let aws_idRef = useRef('') 
+  useEffect(() => {
+      // Access the user session on the client
+      Auth.currentAuthenticatedUser()
+        .then((user) => {
+          console.log('User: ', user);
+          console.log('UserName: ', user.username);
+          aws_idRef.current = user.username
+        })
+        .catch((err) => console.log(err));
+    }, []);
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
 
@@ -25,6 +37,7 @@ function MainForm() {
     description: '',
   });
 
+  console.log('the reeeef', aws_idRef.current)
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (page < 3) {
@@ -42,23 +55,19 @@ function MainForm() {
   };
 
   const handleSubmit = async () => {
-    // console.log('hereeeeee');
     const data = await getUploadUrl();
     const uploadUrl = data.uploadURL
     const filename = data.filename
     const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
-    // console.log(userData)
-    // console.log(fileURL);
+
     setUserData({ ...userData, image: fileURL});
     await uploadImgToS3(uploadUrl, userImg); 
 
-    // console.log(categoriesPicked);
     const formData = {...userData, image: fileURL};
-    // console.log('FORMDATA : ', formData)
-    await postUserInfo(formData, '37rgh348gfv3yveyf10');
-    // posting the categories to new huddle
+    await postUserInfo(formData, aws_idRef.current);
+    // // posting the categories to new huddle
     categoriesPicked.forEach((category) => {
-      postUserCategory('37rgh348gfv3yveyf10', category.id as number);
+      postUserCategory(aws_idRef.current, category.id as number);
     });
     Router.replace('./home');
   };

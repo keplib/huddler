@@ -10,13 +10,13 @@ import CategoriesContainer from '../CategoriesContainer';
 const UpdateInterests = () => {
   // get current user interests either as a prop of the current user object if we have global access to the authenticated user, or by calling here to the API to retrieve the categories of the user.
   // for now and to test, we use a hardcoded example
-  const initialCategories = [
-    { id: 36, name: 'Cycling                  ' },
-    { id: 35, name: 'Music                    ' },
-    { id: 67, name: 'Swimming                 ' },
-    { id: 34, name: 'Outdoors                 ' },
-    { id: 70, name: 'Literature               ' },
-  ];
+  // const initialCategories = [
+  //   { id: 36, name: 'Cycling                  ' },
+  //   { id: 35, name: 'Music                    ' },
+  //   { id: 67, name: 'Swimming                 ' },
+  //   { id: 34, name: 'Outdoors                 ' },
+  //   { id: 70, name: 'Literature               ' },
+  // ];
 
   // useEffect(() => {
   //   loadUserCategories();

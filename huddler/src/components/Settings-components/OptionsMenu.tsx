@@ -1,7 +1,7 @@
 import Image from 'next/future/image';
 import { useState } from 'react';
 import rightArrow from '../../../public/right-arrow.png';
-
+import { Auth} from 'aws-amplify'
 type Props = {
   setOption: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -20,6 +20,17 @@ const defaultClass =
   'flex justify-between h-full border-b-[0.2px] border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
 const defaultClassTop = defaultClass + '  rounded-t-[15px]';
 const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
+
+let aws_id = '';
+
+Auth.currentAuthenticatedUser()
+  .then((user) => {
+    console.log('User: ', user);
+    aws_id = user.username;
+    console.log('this is aws', aws_id);
+  })
+  .catch((err) => console.log(err));
+
 
 const OptionsMenu = ({ setOption }: Props) => {
   const [selected, setSelected] = useState({
@@ -104,3 +115,4 @@ const OptionsMenu = ({ setOption }: Props) => {
 };
 
 export default OptionsMenu;
+
