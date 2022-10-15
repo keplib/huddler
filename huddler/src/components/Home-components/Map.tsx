@@ -25,7 +25,7 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
   const [mapSize, setMapSize] = useState({
-    width: "60vw",
+    width: "40vw",
     height: "40vw",
   });
   const [containerSize, setContainerSize] = useState(mapSize);

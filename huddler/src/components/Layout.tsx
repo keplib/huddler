@@ -8,7 +8,7 @@ type Props = {
 function Layout({ children }: Props) {
   return (
     <>
-      <div className='w-full h-[96vh] flex flex-col justify-center'>
+      <div className='w-full h-[95vh] flex flex-col justify-center overflow-hidden'>
         <Navbar />
         <div className='self-center h-full w-full mt-24 grid'>
           <main>{children}</main>

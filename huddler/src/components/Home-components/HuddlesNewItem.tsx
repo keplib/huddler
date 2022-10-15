@@ -38,11 +38,11 @@ function HuddleCarouselItem({ huddle, huddlesUserIsGoing }: Props) {
   
   return (
     <>
-      <div className="h-full xl:h-72 xl:w-72 2xl:w-full max-h-72 rounded-lg relative">
+      <div className="w-[300px] h-64 rounded-lg relative">
         <Image
           src={huddle.image}
           fill
-          className="h-full rounded-l-lg"
+          className="h-full rounded-lg"
           alt={huddle.name}
         />
       </div>
