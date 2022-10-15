@@ -9,62 +9,59 @@ export const getAllUsers = async () =>
   );
 //Returns: Array of User Objects
 
-export const getUserById = async (user_id: number) =>
+export const getUserById = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getuser_byid?user-id=${user_id}`
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getuser_byid?user-id=${aws_id}`
   );
 // Returns: Array of One User Object
 
-export const getUserCategories = async (user_id: number) =>
+export const getUserCategories = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${user_id}`
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${aws_id}`
   );
 //Returns: Array of CategoryID (id) & CategoryName (name) Objects
 
-export const getUserCreatedHuddles = async (user_id: number) =>
+export const getUserCreatedHuddles = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${user_id}`
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${aws_id}`
   );
 // Return: Array of Huddle Objects
 
-export const getUserGoingHuddles = async (user_id: number) =>
+export const getUserGoingHuddles = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${user_id}`
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${aws_id}`
   );
 //Return: Array of Huddle Objects
 
 
 // POST Functions
 
-export const postUserInfo = async (user: User, userId: number) => {
+export const postUserInfo = async (user: User, aws_id: string) => {
   try {
-    console.log("trying to post huddle category", user, userId);
+    console.log('trying to post huddle category', user, aws_id);
 
     const newUserToPost = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser/update?user-id=${userId}`,
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser/update?user-id=${aws_id}`,
       {
         method: 'POST',
         mode: 'no-cors',
         body: JSON.stringify(user),
         headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       }
     );
     console.log(newUserToPost);
     return newUserToPost;
   } catch (e) {
-    console.log("Error posting a a new user category in DB  ", e);
+    console.log('Error posting a a new user category in DB  ', e);
   }
 };
 
-export const postUserCategory = async (
-  userId: number,
-  userCategory: number
-) => {
+export const postUserCategory = async (aws_id: string, userCategory: number) => {
   try {
-    console.log("trying to post huddle category", userId, userCategory);
+    console.log('trying to post huddle category', aws_id, userCategory);
 
     const userCategoriesPost = await fetch(
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories`,
@@ -72,32 +69,32 @@ export const postUserCategory = async (
         method: 'POST',
         mode: 'no-cors',
         body: JSON.stringify({
-          fk_user_id: userId,
+          fk_user_id: aws_id,
           fk_category_id: userCategory,
         }),
         headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       }
     );
     console.log(userCategoriesPost);
     return userCategoriesPost;
   } catch (e) {
-    console.log("Error posting a new user category in DB  ", e);
+    console.log('Error posting a new user category in DB  ', e);
   }
 };
 
-export const deleteUser = async (userId: number) => {
+export const deleteUser = async (aws_id: string) => {
   try {
-    console.log('trying to delete user with user id: ', userId);
+    console.log('trying to delete user with user id: ', aws_id);
 
     const userToDelete = await fetch(
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user`,
       {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify({ user_id: userId }),
+        body: JSON.stringify({ user_id: aws_id }),
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -111,16 +108,21 @@ export const deleteUser = async (userId: number) => {
   }
 };
 
-export const deleteOneUserCategory = async (userId: number, categoryId: number) => {
+export const deleteOneUserCategory = async (aws_id: string, categoryId: number) => {
   try {
-    console.log(`trying to delete a user categories, user_id ${userId}, categoryId: ${categoryId}`);
+    console.log(
+      `trying to delete a user categories, user_id ${aws_id}, categoryId: ${categoryId}`
+    );
 
     const userToDelete = await fetch(
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_category`,
       {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify({ fk_user_id: userId, fk_category_id: categoryId }),
+        body: JSON.stringify({
+          fk_user_id: aws_id,
+          fk_category_id: categoryId,
+        }),
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -134,16 +136,16 @@ export const deleteOneUserCategory = async (userId: number, categoryId: number) 
   }
 };
 
-export const deleteAllUserCategories = async (userId: number) => {
+export const deleteAllUserCategories = async (aws_id: string) => {
   try {
-    console.log('trying to delete all user categories: ', userId);
+    console.log('trying to delete all user categories: ', aws_id);
 
     const categoriesToDelete = await fetch(
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_all_user_categories`,
       {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify({ fk_user_id: userId }),
+        body: JSON.stringify({ fk_user_id: aws_id }),
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -156,6 +158,29 @@ export const deleteAllUserCategories = async (userId: number) => {
     console.log('Error deleting all categories in DB  ', e);
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
