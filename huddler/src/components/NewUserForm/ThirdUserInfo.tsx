@@ -6,14 +6,16 @@ type Props = {
   userData: User;
   setUserData: React.Dispatch<React.SetStateAction<User>>;
   handleSubmit: Function;
+  setUserImg: React.Dispatch<React.SetStateAction<any>>;
 };
 
 // Contains a form for the user details
 
-function UserInfo({ userData, setUserData, handleSubmit }: Props) {
+function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
   const [imageSelected, setImageSelected] = useState<StaticImageData | string>(
     DefaultUserImage
   );
+  
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const changeUserImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +23,9 @@ function UserInfo({ userData, setUserData, handleSubmit }: Props) {
     if (!e.target.files) return;
     const image = URL.createObjectURL(e.target.files[0]);
     setImageSelected(image);
-    setUserData({ ...userData, image: image });
+    const img = e.target.files[0];
+    setUserImg(img);
+    
   };
   return (
     <>
@@ -80,6 +84,9 @@ function UserInfo({ userData, setUserData, handleSubmit }: Props) {
               height={150}
               onClick={() => imageRef.current!.click()}
             />
+            <div>
+              userdata : {JSON.stringify(userData.image)}
+            </div>
           </div>
         </div>
       </div>
