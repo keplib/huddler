@@ -12,6 +12,7 @@ import { Category, Huddle, User } from "../../src/types";
 import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
 import { getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
 import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
+import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
 
 export const getServerSideProps = async () => {
   const recommended: Huddle[] = await recommendedForUser(67);
@@ -51,7 +52,10 @@ function Profile({ recommended, huddles }: Props) {
   );
   const getter = async () => {
     const res = await getUserGoingHuddles(67);
-    setHuddlesUserIsGoing(res);
+    const sorted = res.sort((a: Huddle, b: Huddle) => {
+      return new Date(a.day_time) - new Date(b.day_time);
+    });
+    setHuddlesUserIsGoing(sorted);
   };
   useEffect(() => {
     getter();
@@ -85,13 +89,15 @@ function Profile({ recommended, huddles }: Props) {
             <Avatar />
             <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl self-center">Feeling Inspired?</h1>
-              <button
-                className="self-center text-2xl bg-palette-dark text-white rounded-[5px] h-16 p-4 w-[210px] active:translate-x-[1px] active:translate-y-[1px]"
-                onClick={() => router.push("/create")}
-              >
-                Create a Huddle
-              </button>
+              <h1 className="text-3xl self-center mt-10">Upcoming Huddle</h1>
+              <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
+                <HuddleCarouselItem
+                  setUpdate={setUpdate}
+                  update={update}
+                  huddle={huddlesUserIsGoing[0]}
+                  huddlesUserIsGoing={huddlesUserIsGoing}
+                />
+              </div>
             </div>
           </div>
         </div>
