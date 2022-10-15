@@ -32,7 +32,7 @@ const ChangePassword = () => {
       {error && <div className='bg-red-600'>{error}</div>}
       {success && <div className='bg-green-600'>{success}</div>}
       <form onSubmit={handleSubmit}>
-        <label htmlFor='password'>Type your new password</label>
+        <label htmlFor='password'>New password</label>
         <input
           className='block'
           type='password'
@@ -41,6 +41,7 @@ const ChangePassword = () => {
           autoComplete='on'
           ref={passwordRef}
         />
+        <br/>
         <label htmlFor='confirm-password'>Confirm Password</label>
         <input
           className='block'

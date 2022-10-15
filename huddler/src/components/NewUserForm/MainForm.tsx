@@ -4,7 +4,7 @@ import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
-import { postNewUserInfo, postUserCategories } from '../../utils/APIServices/userServices';
+import { postUserInfo, postUserCategy } from '../../utils/APIServices/userServices';
 
 function MainForm() {
   const [page, setPage] = useState(1);
@@ -43,10 +43,10 @@ function MainForm() {
     console.log(userData);
 
     console.log(categoriesPicked);
-    postNewUserInfo(userData, 179);
+    postUserInfo(userData, 179);
     //posting the categories to new huddle
     categoriesPicked.forEach((category) => {
-      postUserCategories(179, category.id as number);
+      postUserCategory(179, category.id as number);
     });
     Router.replace('./home');
   };

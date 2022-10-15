@@ -9,7 +9,6 @@ export interface User {
   email?: string;
   createdOn?: number;
   id?: number;
-  password?: string;
   first_name?: string;
   last_name?: string;
   image?: File | File[] | string | string[] | StaticImageData;
@@ -35,9 +34,5 @@ export interface Huddle {
   link: string;
 }
 
-export interface Category {
-  id?: number;
-  name: string;
-}
 
 

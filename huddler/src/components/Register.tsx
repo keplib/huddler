@@ -129,3 +129,4 @@ function Register({ signOut, user }: any) {
 export default withAuthenticator(Register);
 // export default Register;
 
+
