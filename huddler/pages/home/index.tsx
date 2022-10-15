@@ -47,7 +47,7 @@ function Home({ recommended }: Props) {
 
   return (
 
-    <div className="sm:block md:flex xl:gap-10 mt-10 relative h-full md:px-24 lg:px-1 2xl:px-5">
+    <div className="sm:block md:flex xl:gap-10 mt-6 relative h-full md:px-24 lg:px-1 2xl:px-5">
       <div className="max-h-[87vh] overflow-y-auto w-full" id="carousel">
         <div className="flex p-5 mb-2 shadow-md justify-around md:justify-start">
           <button
@@ -56,13 +56,13 @@ function Home({ recommended }: Props) {
             Recommended
           </button>
           <button onClick={(e) => getter()}>All Huddles</button>
-          <button onClick={() => setMobileShowMap(!mobileShowMap)} className="md:hidden">{mobileShowMap ?
+          <button onClick={() => setMobileShowMap(!mobileShowMap)} className="lg:hidden">{mobileShowMap ?
             <AiOutlineArrowUp /> : <AiOutlineArrowUp className=" rotate-180" />} </button>
         </div>
 
         {/* <Huddles huddles={filterChoice} /> */}
         {mobileShowMap &&
-          <div className="absolute md:hidden block h-full w-full z-30">
+          <div className="absolute lg:hidden block h-full w-full z-30">
           <MobileMap huddles={filterChoice} />
         </div>}
 

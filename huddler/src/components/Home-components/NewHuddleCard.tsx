@@ -71,52 +71,53 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, setUpdate, update, }: Props
                 </div>
             </div>
             <div className="grid grid-cols-2 md:flex h-full" >
+                <div className="flex">
+                    <div className="h-3/4 md:w-[24rem] mr-3">
 
-                <div className="h-3/4 md:w-[24rem] mr-3">
+                        <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
+                            <Image
+                                src={huddle.image}
+                                fill
+                                className="rounded-lg"
+                                alt={huddle.name}
+                            />
+                        </div>
 
-                    <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
-                        <Image
-                            src={huddle.image}
-                            fill
-                            className="rounded-lg"
-                            alt={huddle.name}
-                        />
+                        <p>attending: {data.attending}</p>
+
+                        <div className="hidden md:grid grid-cols-2 gap-2">
+                            {data.categories.map((category, i) => {
+                                return i > 3 ? (
+                                    <></>
+                                ) : (
+                                        <p className="text-center py-1 bg-palette-dark rounded-md text-white" key={category.id}>
+                                        {category.name}
+                                    </p>
+                                );
+                            })}
+                        </div>
+                        {/* Mobile */}
+                        <div className="grid md:hidden grid-cols-2 gap-2 py-1">
+                            {data.categories.map((category, i) => {
+                                return i > 1 ? (
+                                    <></>
+                                ) : (
+                                        <p className="text-center py-1 bg-palette-dark rounded-md text-white" key={category.id}>
+                                        {category.name}
+                                    </p>
+                                );
+                            })}
+                        </div>
                     </div>
-
-                    <p>attending: {data.attending}</p>
-
-                    <div className="hidden md:grid grid-cols-2 gap-2">
-                        {data.categories.map((category, i) => {
-                            return i > 3 ? (
-                                <></>
-                            ) : (
-                                <p className="text-center py-1 bg-palette-dark rounded-md text-white">
-                                    {category.name}
-                                </p>
-                            );
-                        })}
+                    {/* Description */}
+                    <div className="grid max-w-[300px] md:h-56 py-2 w-full space-x-0 ">
+                        <p>{huddle.description}</p>
+                        <p className="text-sm self-end">
+                            At {huddle.address}
+                            <br></br>
+                            {dateTime.monthDayYear} at {dateTime.time}
+                        </p>
                     </div>
-                    {/* Mobile */}
-                    <div className="grid md:hidden grid-cols-2 gap-2 py-1">
-                        {data.categories.map((category, i) => {
-                            return i > 1 ? (
-                                <></>
-                            ) : (
-                                <p className="text-center py-1 bg-palette-dark rounded-md text-white">
-                                    {category.name}
-                                </p>
-                            );
-                        })}
-                    </div>
-                </div>
-                {/* Description */}
-                <div className="grid max-w-[300px] md:h-56 py-2 w-full space-x-0 ">
-                    <p>{huddle.description}</p>
-                    <p className="text-sm self-end">
-                        At {huddle.address}
-                        <br></br>
-                        {dateTime.monthDayYear} at {dateTime.time}
-                    </p>
                 </div>
             </div>
         </div>
