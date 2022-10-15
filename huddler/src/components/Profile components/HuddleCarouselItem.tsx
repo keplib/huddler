@@ -8,6 +8,7 @@ import {
   postUserGoingToHuddle,
   removeUserGoingToHuddle,
 } from "../../utils/APIServices/huddleServices";
+import Link from "next/link";
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
@@ -43,6 +44,7 @@ function HuddleCarouselItem({
     getter();
   }, []);
   return (
+    <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
     <div className="ml-3 mr-3 mt-3">
       <div className="flex mb-1">
         <h1 className="font-extrabold text-palette-orange text-2xl">
@@ -118,8 +120,9 @@ function HuddleCarouselItem({
             {dateTime.monthDayYear} at {dateTime.time}
           </p>
         </div>
-      </div>
-    </div>
+        </div>
+        </div>
+    </Link>
   );
 }
 
