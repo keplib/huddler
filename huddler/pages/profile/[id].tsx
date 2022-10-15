@@ -56,10 +56,10 @@ function Profile({ recommended, huddles }: Props) {
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${67}`,
     fetcher
   );
-  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
-    fetcher
-  );
+  // const { data: userCreatedHuddles, error: userHuddleError } = useSWR(
+  //   `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${67}`,
+  //   fetcher
+  // );
   const getter = async () => {
     const res = await getUserGoingHuddles(67);
     const sorted = res.sort((a: Huddle, b: Huddle) => {
@@ -84,8 +84,8 @@ function Profile({ recommended, huddles }: Props) {
       setLastRow({ name: category.name, huddles: data });
     }
   };
-  if (tagsError || userHuddleError) return <div>failed to load</div>;
-  if (!tags || !userCreatedHuddles || !recommended || !huddlesUserIsGoing)
+  if (tagsError) return <div>failed to load</div>;
+  if (!tags || !recommended || !huddlesUserIsGoing)
     return <div>loading...</div>;
 
   return (
@@ -97,7 +97,7 @@ function Profile({ recommended, huddles }: Props) {
           border-x-[0.2px] shadow-md w-full"
           >
             <Avatar />
-            <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
+            <UserInfo numOfCreatedHuddles={5} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
               <h1 className="text-3xl self-center mt-10 font-bold">
                 Upcoming Huddle
@@ -118,7 +118,7 @@ function Profile({ recommended, huddles }: Props) {
       {/* Mobile */}
       <div className="lg:hidden w-full h-1/3 flex-col">
         <MobileAvatar />
-        <UserInfo numOfCreatedHuddles={userCreatedHuddles.length} />
+        <UserInfo numOfCreatedHuddles={5} />
       </div>
 
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
@@ -142,7 +142,7 @@ function Profile({ recommended, huddles }: Props) {
         <HuddleCarousel
           setUpdate={setUpdate}
           update={update}
-          huddles={userCreatedHuddles}
+          huddles={[]}
           huddlesUserIsGoing={huddlesUserIsGoing}
         />
 
