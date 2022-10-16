@@ -59,3 +59,7 @@ export const sortByName = (arrOfObj) => {
   return arrOfObj.sort((a, b) => a.name.localeCompare(b.name));
 };
 
+export const getSession = async () => {
+  const res = await Auth.currentAuthenticatedUser();
+  return res.CognitoUser.username;
+};

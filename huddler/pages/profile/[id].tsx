@@ -54,11 +54,10 @@ function Profile({ recommended, huddles, authenticated, username }: Props) {
   
   const getter = async () =>{
     const res = await getUserGoingHuddles(username);
-    // const sorted = res.sort((a: Huddle, b: Huddle) => {
-    //   return new Date(a.day_time) - new Date(b.day_time);
-    // });
-    // setHuddlesUserIsGoing(sorted);
-    console.log(await res);
+    const sorted = (res.length) ? res.sort((a: Huddle, b: Huddle) => {
+      return new Date(a.day_time) - new Date(b.day_time);
+    }): huddles[0];
+    setHuddlesUserIsGoing(sorted);
   };
 
   useEffect(() => {
