@@ -2,7 +2,7 @@ import { User } from '../../types';
 import { useState, useRef } from 'react';
 import UserImage from './UpdateUserImage';
 import { postUserInfo } from '../../utils/APIServices/userServices';
-
+import DefaultUserImage from '../../../public/defaultUserImage.png'
 type Props = {
   currentUser: User;
 };
@@ -63,7 +63,6 @@ const PersonalInfo = ({ currentUser }: Props) => {
           <UserImage
             setDisabledButton={setDisabledButton}
             setError={setError}
-            image={currentUser.image as string}
           />
           <label htmlFor='description'>Description</label>
           <textarea

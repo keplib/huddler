@@ -18,7 +18,7 @@ const CategoriesContainer = ({
   setUserCategories,
 }: Props) => {
   const notSelectedClass =
-    'h-[40px] text-xl py-2 px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange';
+    'h-[40px] text-xl py-2 px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange hover:opacity-50';
   const selectedClass = notSelectedClass + ' bg-orange-600';
 
   const [displayCategories, setDisplayCategories] = useState<Category[]>([]);

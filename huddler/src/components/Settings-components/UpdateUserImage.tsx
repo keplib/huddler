@@ -5,10 +5,10 @@ import { useState, useRef } from 'react';
 type Props = {
   setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
-  image: string;
+  image?: string;
 };
 
-const UserImage = ({ setDisabledButton, setError, image }: Props) => {
+const UserImage = ({ setDisabledButton, setError }: Props) => {
   const [userImage, setUserImage] = useState<StaticImageData | string>(
     DefaultUserImage
   );
@@ -20,7 +20,7 @@ const UserImage = ({ setDisabledButton, setError, image }: Props) => {
       //Update image in DB
       setDisabledButton(false);
       setUserImage(URL.createObjectURL(e.target.files[0]));
-      image = URL.createObjectURL(e.target.files[0]);
+      // image = URL.createObjectURL(e.target.files[0]);
     } catch {
       setError('Failed to upload the new user image. Please try again');
     }

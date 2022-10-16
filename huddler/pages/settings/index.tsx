@@ -32,12 +32,16 @@ const SettingsPage = () => {
   // if (!aws_id) router.replace('/');
   const [currentUser, setCurrentUser] = useState<User>();
   const [option, setOption] = useState('information');
+
   useEffect(()=>{
     loadUser()
   },[])
 
+  console.log('aws_id', aws_id)
+
 const loadUser = async () => {
   const user = await getUserById(aws_id)
+  console.log('this is user', user)
   setCurrentUser(user)
 }
 

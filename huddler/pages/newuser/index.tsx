@@ -5,6 +5,8 @@ import { Auth } from 'aws-amplify'
 
 let aws_id = '';
 
+
+Auth.currentUserInfo
 Auth.currentAuthenticatedUser()
   .then((user) => {
     console.log('User: ', user);
@@ -16,7 +18,7 @@ Auth.currentAuthenticatedUser()
 function Index() {
   const router = useRouter();
   //redirect if not authenticated
-  if (!aws_id) router.push('/');
+  // if (!aws_id) router.push('/');
   return (
     <div className='flex justify-center '>
       <div className='border-solid border-[1px] border-palette-orange min-w-fit w-[50%] mt-10 px-3 rounded-[5px] shadow-md'>

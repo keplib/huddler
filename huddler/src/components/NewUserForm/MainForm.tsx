@@ -6,7 +6,7 @@ import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
-import { postUserInfo, postUserCategory } from '../../utils/APIServices/userServices';
+import { postUserInfo, postUserCategory, getUserById } from '../../utils/APIServices/userServices';
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
 import { Auth} from 'aws-amplify'
 
@@ -14,7 +14,7 @@ function MainForm() {
   let aws_idRef = useRef('') 
   useEffect(() => {
       // Access the user session on the client
-      Auth.currentAuthenticatedUser()
+      Auth.currentUserInfo()
         .then((user) => {
           console.log('User: ', user);
           console.log('UserName: ', user.username);
@@ -38,6 +38,9 @@ function MainForm() {
   });
 
   console.log('the reeeef', aws_idRef.current)
+
+  const userT = getUserById(aws_idRef.current)
+  console.log('useeeer', userT)
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (page < 3) {
