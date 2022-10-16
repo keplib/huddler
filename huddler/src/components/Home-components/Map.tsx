@@ -82,10 +82,12 @@ export default function Map({
     const getter = async () => {
       const userData = await getUserById(currentUser);
       setUser(userData[0]);
-      setCenter({
-        lat: Number(userData[0].default_latitude),
-        lng: Number(userData[0].default_longitude),
-      });
+      user
+        ? setCenter({
+            lat: Number(userData[0].default_latitude),
+            lng: Number(userData[0].default_longitude),
+          })
+        : setCenter({ lat: 41.39, lng: 2.15 });
     };
     getter();
     if (currentPage === "newuser") {
