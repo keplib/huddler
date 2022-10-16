@@ -11,6 +11,7 @@ import {
   postHuddleCategory,
 } from "../../utils/APIServices/huddleServices";
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
+import { useAuth } from "../../contexts/AuthContext";
 
 type Props = {
   data: {
@@ -31,7 +32,9 @@ type Props = {
 };
 
 const NewHuddleForm = ({ data, setCenter, center }: Props) => {
+
   const router = useRouter();
+  const { currentUser } = useAuth();
 
   const [imgUrl, setImageUrl] = useState({});
   const [uploadImg, setUploadImg] = useState({});
@@ -55,6 +58,9 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+
+
     e.preventDefault();
     try {
       const data = await getUploadUrl();
@@ -81,10 +87,12 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
           filename,
         date_of_creation: date,
         link: "",
-        fk_author_id: 2, //here we'll require the uid from the authentication
+        fk_author_id: currentUser, //here we'll require the uid from the authentication
       };
       // postHuddle2(newHuddle);
       // Post huddle in DB
+      console.log("new huddle", newHuddle);
+      console.log("user", currentUser);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
