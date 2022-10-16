@@ -89,19 +89,19 @@ function HuddleCarouselItem({
           </div>
           <p>attending: {data.attending}</p>
           <div className="hidden md:grid grid-cols-2 gap-2">
-              {data.categories.map((category, i) => (
-                <p className="text-center py-1 bg-palette-dark rounded-md text-white" key={category.id}>
+            {data.categories.map((category, i) => {
+              return i <= 3 && (
+                <p className="text-center py-0.5 bg-palette-dark rounded-md text-white" key={category.id+ (i-i)}>
                   {category.name}
-                </p>                       
-            ))}
+                </p>
+              );
+            })}
           </div>
           {/* mobile */}
           <div className="md:hidden grid grid-cols-2 gap-2">
             {data.categories.map((category, i) => {
-              return i > 1 ? (
-                <></>
-              ) : (
-                <p className="text-center py-1 bg-palette-dark rounded-md text-white" key={category.id}>
+              return i <= 1 && (
+                <p className="text-center py-0.5 bg-palette-dark rounded-md text-white" key={category.id + (i - i)}>
                   {category.name}
                 </p>
               );
