@@ -10,18 +10,11 @@ import { postUserInfo, postUserCategory, getUserById } from '../../utils/APIServ
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
 import { Auth} from 'aws-amplify'
 
-function MainForm() {
-  let aws_idRef = useRef('') 
-  useEffect(() => {
-      // Access the user session on the client
-      Auth.currentUserInfo()
-        .then((user) => {
-          console.log('User: ', user);
-          console.log('UserName: ', user.username);
-          aws_idRef.current = user.username
-        })
-        .catch((err) => console.log(err));
-    }, []);
+type Props = {
+  currentUser: any;
+}
+
+function MainForm({currentUser}: Props) {
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
 
@@ -37,10 +30,16 @@ function MainForm() {
     description: '',
   });
 
-  console.log('the reeeef', aws_idRef.current)
+  useEffect(()=>{
+    handlePromise()
+  },[])
 
-  const userT = getUserById(aws_idRef.current)
-  console.log('useeeer', userT)
+  const handlePromise = async () => {
+    const userT = await getUserById(currentUser)
+    setUserData(...userT)
+    console.log('useeeer', userData)
+  }
+
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (page < 3) {

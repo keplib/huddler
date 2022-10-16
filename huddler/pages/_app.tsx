@@ -1,9 +1,10 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import Layout from '../src/components/Layout'
-import { ReactElement, ReactNode } from 'react'
-import { NextPage } from 'next'
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import Layout from '../src/components/Layout';
+import { ReactElement, ReactNode } from 'react';
+import { NextPage } from 'next';
 import { Amplify, Auth } from 'aws-amplify';
+import { AuthProvider } from '../src/contexts/AuthContext';
 
 import awsconfig from '../src/aws-exports';
 Amplify.configure(awsconfig);
@@ -11,21 +12,22 @@ import awsExports from '../src/aws-exports';
 Amplify.configure(awsExports);
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-
   return (
     <Layout>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </Layout>
-  )
-
+  );
 }
 
-export default MyApp
+export default MyApp;
+
