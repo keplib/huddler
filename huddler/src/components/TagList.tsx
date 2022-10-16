@@ -12,7 +12,10 @@ const TagList = ({ setAllCategories }: Props) => {
 
   const getter = async () => {
     const data = await getAllCategories();
-    setCategories(data);
+    const array = data.map(function (el) {
+      return { id: el.id, name: el.name.trim() };
+    });
+    setCategories(array);
   };
   useEffect(() => {
     getter();
@@ -28,10 +31,9 @@ const TagList = ({ setAllCategories }: Props) => {
       // Typescript error. It thinks we are trying to assing a different type value with arr.includes
       //@ts-ignore
       if (name.includes(comparator.toLowerCase()) && !arr.includes(el.name)) {
-        arr = [...arr, { id: el.id, name: el.name.replace(/\s/g, "") }];
+        arr = [...arr, { id: el.id, name: el.name }];
       }
     });
-    arr.shift();
     setAllCategories(arr);
   }, [comparator]);
   return (
