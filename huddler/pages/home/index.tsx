@@ -16,16 +16,7 @@ import useSWR from "swr";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import MobileMap from "../../src/components/Home-components/MobileMap";
 import { useAuth } from "../../src/contexts/AuthContext";
-
-// we'll need the current user authenticated info
-export const getServerSideProps = async () => {
-  const data = await recommendedForUser(67); // put user current user id
-  return {
-    props: {
-      recommended: data,
-    },
-  };
-};
+import { Auth, withSSRContext } from "aws-amplify";
 
 type Props = {
   recommended: Huddle[];
@@ -100,3 +91,31 @@ function Home({ recommended }: Props) {
 }
 
 export default Home;
+
+export const getServerSideProps = async (context) => {
+  const { Auth } = withSSRContext(context);
+
+  try {
+    const huddles: Huddle[] = await fetcher(
+      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted"
+    );
+    const { username } = await Auth.currentUserInfo();
+    const recommended: Huddle[] = await recommendedForUser(username);
+    return {
+      props: {
+        authenticated: true,
+        username,
+        recommended,
+        huddles,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        authenticated: false,
+        recommended: [],
+        huddles: [],
+      },
+    };
+  }
+};
