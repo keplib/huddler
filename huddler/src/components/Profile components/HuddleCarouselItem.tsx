@@ -22,12 +22,12 @@ function HuddleCarouselItem({
   setUpdate,
   update,
 }: Props) {
-  const dateTime = dateFormatter(huddle.day_time);
+  const dateTime = dateFormatter(huddle.day_time || '');
   const [going, setGoing] = useState(false);
   //getting addicional huddle data
   const [data, setData] = useState({
     attending: 0,
-    categories: [{ name: "" }],
+    categories: [{ name: "", id: 0 }],
   });
   useEffect(() => {
     if (huddlesUserIsGoing) {
