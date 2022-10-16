@@ -103,6 +103,13 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
       addedCategories.forEach((el) => {
         postHuddleCategory(huddleId[0].id, el.id as number);
       });
+      const form = document.getElementById("huddle-form");
+      form?.classList.remove("animate-fade-in");
+      form?.classList.add("animate-fade-out");
+      setTimeout(() => {
+        form?.classList.remove("flex");
+        form?.classList.add("hidden");
+      }, 500);
       // redirect to user home page
       router.replace("/home");
     } catch {
