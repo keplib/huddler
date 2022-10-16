@@ -7,6 +7,7 @@ export async function middleware(request: NextRequest) {
   //auth
   if (request.nextUrl.pathname === '/profile') {
     const url = request.nextUrl.clone();
+    
     url.pathname = 'profile/userNameHere';
     const response = NextResponse.redirect(url);
 

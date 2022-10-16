@@ -13,6 +13,7 @@ export const getUsersGoingToHuddle = async (huddle_id?: number) =>
   await fetcher(
     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing?huddle-id=${huddle_id}`
   );
+// Not working
 //Returns: Array of UserId & UserName Objects
 
 export const getHuddleById = async (huddle_id: number) =>
