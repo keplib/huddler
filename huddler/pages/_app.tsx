@@ -7,7 +7,7 @@ import { Amplify, Auth } from 'aws-amplify';
 import { AuthProvider } from '../src/contexts/AuthContext';
 
 import awsconfig from '../src/aws-exports';
-Amplify.configure(awsconfig);
+Amplify.configure({awsconfig, ssr: true });
 import awsExports from '../src/aws-exports';
 Amplify.configure(awsExports);
 

@@ -16,8 +16,6 @@ function HuddleCarousel({
   update,
 }: Props) {
 
-  console.log(huddles);
-
   return Array.isArray(huddles) ? (
     <div
       className="pl-1 h-64 lg:h-[19rem] flex overflow-x-scroll gap-4 px-2"
