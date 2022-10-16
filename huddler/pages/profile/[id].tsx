@@ -113,12 +113,12 @@ function Profile({ recommended, huddles }: Props) {
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
-                {/* <HuddleCarouselItem
+                {huddlesUserIsGoing && <HuddleCarouselItem
                   setUpdate={setUpdate}
                   update={update}
                   huddle={huddlesUserIsGoing[0]}
                   huddlesUserIsGoing={huddlesUserIsGoing}
-                /> */}
+                />}
               </div>
             </div>
           </div>
