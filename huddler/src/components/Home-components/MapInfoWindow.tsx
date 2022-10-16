@@ -18,13 +18,13 @@ type Props = {
 export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [dateTime, setDateTime] = useState<any>();
-  const [goingToHuddle, setGoingToHuddle] = useState<Number>();
+  const [goingToHuddle, setGoingToHuddle] = useState<number>();
   const isUserGoing = async () => {
     if (showHuddle) {
       const users = await getUsersGoingToHuddle(showHuddle.id as number);
       setGoingToHuddle(users.length);
       //CHANGE TO CURRENT USER
-      users.find((users: any) => (users.aws_id = user.aws_id))
+      users.find((users: any) => users.aws_id === user.aws_id)
         ? setCheckedIn(true)
         : setCheckedIn(false);
     }
@@ -71,6 +71,8 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
               <button
                 className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
+                  const val = goingToHuddle - 1;
+                  setGoingToHuddle(val);
                   setCheckedIn(false);
                   removeUserGoingToHuddle(user.aws_id, showHuddle.id as number);
                 }}
@@ -81,6 +83,9 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
               <button
                 className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
+                  const val = goingToHuddle + 1;
+
+                  setGoingToHuddle(val);
                   setCheckedIn(true);
                   postUserGoingToHuddle(user.aws_id, showHuddle.id as number);
                 }}

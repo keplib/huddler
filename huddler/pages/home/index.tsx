@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Huddles from "../../src/components/Home-components/Huddles";
 import Map from "../../src/components/Home-components/Map";
@@ -47,6 +47,10 @@ function Home({ recommended }: Props) {
   const [update, setUpdate] = useState(false);
   const [mobileShowMap, setMobileShowMap] = useState(false);
   const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
+  useEffect(() => {
+    getter();
+    console.log("no loop pls");
+  }, [update]);
   // if user uses another filter let's call a function that does it.
   if (userHuddleError) return <div>failed to load</div>;
   if (!userCreatedHuddles || !recommended) return <div>loading...</div>;
@@ -89,7 +93,7 @@ function Home({ recommended }: Props) {
       </div>
 
       <div className="mt-16 hidden lg:flex ">
-        <Map huddles={filterChoice} />
+        <Map huddles={filterChoice} update={update} />
       </div>
     </div>
   );

@@ -19,8 +19,14 @@ type Props = {
   huddles?: Huddle[];
   currentPage: string;
   setLocation: React.Dispatch<React.SetStateAction<any>>;
+  update: boolean;
 };
-export default function Map({ huddles, currentPage, setLocation }: Props) {
+export default function Map({
+  huddles,
+  currentPage,
+  setLocation,
+  update,
+}: Props) {
   const { currentUser } = useAuth();
   const [user, setUser] = useState<User>();
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
@@ -147,6 +153,7 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
+            update={update}
           />
         </div>
       </div>
@@ -162,9 +169,8 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
           {selected && (
             <MarkerF
               position={center}
-              animation={google.maps.Animation.DROP}
+              animation={google.maps.Animation.BOUNCE}
               draggable={true}
-              // icon={{ path: "../../../public/location-pin-svgrepo-com.svg" }}
               onDragEnd={(e) =>
                 setCenter({
                   lat: e.latLng?.lat() || center.lat,
