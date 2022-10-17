@@ -16,8 +16,8 @@ type Props = {
 };
 
 function Huddles({ huddles, update, setUpdate }: Props) {
+    
     const [active, setActive] = useState<Huddle | {}>();
-
     const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
         `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${67}`,
         fetcher

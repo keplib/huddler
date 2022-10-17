@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 import dayjs from "dayjs";
 import { Category } from "../types";
 import { getHuddlesInCategory } from "./APIServices/categoryServices";
@@ -56,4 +57,9 @@ export const nowFormatted = () => {
 // 4. Sort by name
 export const sortByName = (arrOfObj) => {
   return arrOfObj.sort((a, b) => a.name.localeCompare(b.name));
+};
+
+export const getSession = async () => {
+  const res = await Auth.currentAuthenticatedUser();
+  return res.CognitoUser.username;
 };

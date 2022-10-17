@@ -1,6 +1,6 @@
 import { InfoWindowF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import { Huddle } from "../../types";
+import { Huddle, User } from "../../types";
 import Image from "next/future/image";
 import {
   getUsersGoingToHuddle,
@@ -11,17 +11,20 @@ import { dateFormatter } from "../../utils/helperFunctions";
 
 type Props = {
   showHuddle: Huddle | undefined;
+  user: User;
   setShowHuddle: React.Dispatch<React.SetStateAction<Huddle | undefined>>;
 };
 
-export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
+export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [dateTime, setDateTime] = useState<any>();
+  const [goingToHuddle, setGoingToHuddle] = useState<number>();
   const isUserGoing = async () => {
     if (showHuddle) {
       const users = await getUsersGoingToHuddle(showHuddle.id as number);
+      setGoingToHuddle(users.length);
       //CHANGE TO CURRENT USER
-      users.find((user: number) => (user = 67))
+      users.find((users: any) => users.aws_id === user.aws_id)
         ? setCheckedIn(true)
         : setCheckedIn(false);
     }
@@ -60,7 +63,7 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
               width={200}
               className="rounded-lg"
             />
-            <h2 className="mt-1">attendants: 1234</h2>
+            <h2 className="mt-1">attendants: {goingToHuddle}</h2>
             <h3 className="h-12 w-48 overflow-auto mt-3">
               {showHuddle.description}
             </h3>
@@ -68,8 +71,10 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
               <button
                 className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
+                  const val = goingToHuddle - 1;
+                  setGoingToHuddle(val);
                   setCheckedIn(false);
-                  removeUserGoingToHuddle(67, showHuddle.id as number);
+                  removeUserGoingToHuddle(user.aws_id, showHuddle.id as number);
                 }}
               >
                 Check out
@@ -78,8 +83,11 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle }: Props) => {
               <button
                 className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
+                  const val = goingToHuddle + 1;
+
+                  setGoingToHuddle(val);
                   setCheckedIn(true);
-                  postUserGoingToHuddle(67, showHuddle.id as number);
+                  postUserGoingToHuddle(user.aws_id, showHuddle.id as number);
                 }}
               >
                 Check in

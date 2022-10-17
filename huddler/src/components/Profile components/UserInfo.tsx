@@ -4,9 +4,10 @@ import avatar from "../../../public/placeholder.jpg";
 
 type Props = {
   numOfCreatedHuddles: number;
+  huddlesUserIsGoing: number;
 };
 
-function UserInfo({ numOfCreatedHuddles }: Props) {
+function UserInfo({ numOfCreatedHuddles, huddlesUserIsGoing }: Props) {
   const user: User = {
     name: "Florio",
     image: avatar,
@@ -25,7 +26,7 @@ function UserInfo({ numOfCreatedHuddles }: Props) {
         </div>
         <div className="flex flex-col justify-center  w-[150px] text-2xl border-solid border-[0.5px] border-palette-orange   shadow-md rounded-lg ">
           <h1 className="self-center">Going</h1>
-          <p className="font-bold self-center">6</p>
+          <p className="font-bold self-center">{huddlesUserIsGoing}</p>
         </div>
       </div>
     </>

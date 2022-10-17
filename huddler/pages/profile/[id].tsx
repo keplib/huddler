@@ -6,54 +6,40 @@ import UserInfo from "../../src/components/Profile components/UserInfo";
 import avatar from "../../public/placeholder.jpg";
 import useSWR from "swr";
 import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
-
 import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
 import { Category, Huddle, User } from "../../src/types";
 import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
-import { getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
+import { getUserById, getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
 import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
 import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
 
-import { Auth } from 'aws-amplify';
+import { Auth, withSSRContext } from 'aws-amplify';
 
 let aws_id = ''
 
-Auth.currentAuthenticatedUser()
-  .then((user) => {
-    console.log('User: ', user);
-    aws_id = user.username;
-    console.log('this is aws', aws_id)
-  })
-  .catch((err) => console.log(err));
-
-export const getServerSideProps = async () => {
-   
-  const recommended: Huddle[] = await recommendedForUser(aws_id);
-  const huddles: Huddle[] = await fetcher(
-    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted"
-  );
-       
-  return {
-    props: {
-      recommended,
-      huddles,
-    },
-  };
-};
+// Auth.currentAuthenticatedUser()
+//   .then((user) => {
+//     aws_id = user.username;
+//     console.log('this is aws', aws_id)
+//   })
+//   .catch((err) => console.log(err));
 
 type Props = {
   recommended: Huddle[];
   huddles: Huddle[];
+  authenticated: boolean;
+  username: string;
+  user: User;
 };
 
-function Profile({ recommended, huddles }: Props) {
+function Profile({ recommended, huddles, authenticated, username, user }: Props) {
   const router = useRouter();
   //redirect if not authenticated
-  if (!aws_id) router.replace('/')
+  if (!authenticated) router.replace('/')
 
   //This is for updating the huddles i'm going to row
   const [update, setUpdate] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>([]);
   const [lastRow, setLastRow] = useState({
     name: "Recommended",
     huddles: recommended,
@@ -68,18 +54,25 @@ function Profile({ recommended, huddles }: Props) {
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${aws_id}`,
       fetcher
     ) || [];
-  const getter = async () =>{
-    const res = await getUserGoingHuddles(aws_id);
-    const sorted = res.sort((a: Huddle, b: Huddle) => {
-      return new Date(a.day_time) - new Date(b.day_time);
-    });
-    setHuddlesUserIsGoing(sorted);
+
+  const getter = async () => {
+    const res = await getUserGoingHuddles(username);
+
+    if(res.length)  {
+    try {
+      const sorted: Huddle[] = await res.sort((a: Huddle, b: Huddle) => {
+        return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
+      });
+      setHuddlesUserIsGoing(sorted);
+    } catch (err) {
+      console.log(err)
+      }
+    }
   };
 
-
-  // useEffect(() => {
-  //   // getter();
-  // }, [update]);
+  useEffect(() => {
+    getter();
+  }, [update]);
 
   const changeDisplayedCategory = async (category: Category) => {
     const data = await getHuddlesInCategory(category.id);
@@ -94,8 +87,10 @@ function Profile({ recommended, huddles }: Props) {
       setLastRow({ name: category.name, huddles: data });
     }
   };
+
+
   if (tagsError) return <div>failed to load</div>;
-  if (!tags || !recommended)
+  if (!tags)
     return <div>loading...</div>;
 
   return (
@@ -107,18 +102,18 @@ function Profile({ recommended, huddles }: Props) {
           border-x-[0.2px] shadow-md w-full"
           >
             <Avatar />
-            <UserInfo numOfCreatedHuddles={5} />
+            <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0} huddlesUserIsGoing={huddlesUserIsGoing.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
               <h1 className="text-3xl self-center mt-10 font-bold">
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
-                {/* <HuddleCarouselItem
+                {userCreatedHuddles && <HuddleCarouselItem
                   setUpdate={setUpdate}
                   update={update}
                   huddle={huddlesUserIsGoing[0]}
                   huddlesUserIsGoing={huddlesUserIsGoing}
-                /> */}
+                />}
               </div>
             </div>
           </div>
@@ -128,7 +123,7 @@ function Profile({ recommended, huddles }: Props) {
       {/* Mobile */}
       <div className="lg:hidden w-full pt-4 h-auto flex-col">
         <MobileAvatar />
-        <UserInfo numOfCreatedHuddles={5} />
+        <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0} huddlesUserIsGoing={huddlesUserIsGoing.length} />
       </div>
 
       <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
@@ -150,7 +145,7 @@ function Profile({ recommended, huddles }: Props) {
         <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
           Created huddles:
         </h1>
-       <HuddleCarousel
+        <HuddleCarousel
           setUpdate={setUpdate}
           update={update}
           huddles={userCreatedHuddles}
@@ -182,6 +177,35 @@ function Profile({ recommended, huddles }: Props) {
 }
 
 export default Profile;
+
+export const getServerSideProps = async (context: { req?: any; modules?: any[] | undefined; } | undefined) => {
+  const { Auth } = withSSRContext(context);
+
+  try {
+    const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
+    const { username } = await Auth.currentUserInfo();
+    const recommended: Huddle[] = await recommendedForUser(username);
+    const user: User = await getUserById(username);
+    return {
+      props: {
+        authenticated: true,
+        username,
+        user,
+        recommended,
+        huddles,
+      }
+    }
+  } catch (err) {
+    return {
+      props: {
+        authenticated: false,
+        recommended: [],
+        huddles: [],
+      }
+    }
+  }
+}
+
 
 
 

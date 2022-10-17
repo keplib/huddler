@@ -10,7 +10,11 @@ import {
   postHuddle,
   postHuddleCategory,
 } from "../../utils/APIServices/huddleServices";
-import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
+import {
+  getUploadUrl,
+  uploadImgToS3,
+} from "../../utils/APIServices/imageServices";
+import { useAuth } from "../../contexts/AuthContext";
 
 type Props = {
   data: {
@@ -18,6 +22,7 @@ type Props = {
     lat: string;
     lng: string;
   };
+  update: boolean;
   setCenter: React.Dispatch<
     React.SetStateAction<{
       lat: number;
@@ -32,6 +37,7 @@ type Props = {
 
 const NewHuddleForm = ({ data, setCenter, center }: Props) => {
   const router = useRouter();
+  const { currentUser } = useAuth();
 
   const [imgUrl, setImageUrl] = useState({});
   const [uploadImg, setUploadImg] = useState({});
@@ -81,10 +87,12 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
           filename,
         date_of_creation: date,
         link: "",
-        fk_author_id: 2, //here we'll require the uid from the authentication
+        fk_author_id: currentUser, //here we'll require the uid from the authentication
       };
       // postHuddle2(newHuddle);
       // Post huddle in DB
+      console.log("new huddle", newHuddle);
+      console.log("user", currentUser);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
@@ -95,6 +103,13 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
       addedCategories.forEach((el) => {
         postHuddleCategory(huddleId[0].id, el.id as number);
       });
+      const form = document.getElementById("huddle-form");
+      form?.classList.remove("animate-fade-in");
+      form?.classList.add("animate-fade-out");
+      setTimeout(() => {
+        form?.classList.remove("flex");
+        form?.classList.add("hidden");
+      }, 500);
       // redirect to user home page
       router.replace("/home");
     } catch {
@@ -173,26 +188,28 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
           </div>
         ) : (
           <></>
-        )} 
-        { <div className="my-3 mt-2">
-          <ul className="grid grid-cols-3 gap-2">
-            {addedCategories.map((category, i) => {
-              return (
-                <li
-                  key={i}
-                  className='cursor-pointer bg-white bg-opacity-60 rounded-md text-center'
-                  onClick={() =>
-                    setAddedCategories(
-                      addedCategories.filter((word) => word != category)
-                    )
-                  }
-                >
-                  {category.name}
-                </li>
-              );
-            })}
-          </ul>
-        </div> }
+        )}
+        {
+          <div className="my-3 mt-2">
+            <ul className="grid grid-cols-3 gap-2">
+              {addedCategories.map((category, i) => {
+                return (
+                  <li
+                    key={i}
+                    className="cursor-pointer bg-white bg-opacity-60 rounded-md text-center"
+                    onClick={() =>
+                      setAddedCategories(
+                        addedCategories.filter((word) => word != category)
+                      )
+                    }
+                  >
+                    {category.name}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        }
         <TagList setAllCategories={setAllCategories} />
         <label className="mt-2" htmlFor="where">
           Where?

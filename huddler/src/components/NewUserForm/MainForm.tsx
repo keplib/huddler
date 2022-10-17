@@ -67,10 +67,14 @@ function MainForm({currentUser}: Props) {
     await uploadImgToS3(uploadUrl, userImg); 
 
     const formData = {...userData, image: fileURL};
-    await postUserInfo(formData, aws_idRef.current);
+    // await postUserInfo(formData, aws_idRef.current);
+    // @ts-ignore
+    await postUserInfo(formData, userData.aws_id);
     // // posting the categories to new huddle
     categoriesPicked.forEach((category) => {
-      postUserCategory(aws_idRef.current, category.id as number);
+      // postUserCategory(aws_idRef.current, category.id as number);
+      // @ts-ignore
+      postUserCategory(userData.aws_id, category.id as number);
     });
     Router.replace('./home');
   };

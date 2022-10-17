@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
-import { Huddle } from "../../types";
+import { Huddle, User } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
+import { useAuth } from "../../contexts/AuthContext";
+import { getUserById } from "../../utils/APIServices/userServices";
 const image = require("../../../public/location-pin-svgrepo-com.svg");
 const libraries: (
   | "places"
@@ -17,8 +19,16 @@ type Props = {
   huddles?: Huddle[];
   currentPage: string;
   setLocation: React.Dispatch<React.SetStateAction<any>>;
+  update: boolean;
 };
-export default function Map({ huddles, currentPage, setLocation }: Props) {
+export default function Map({
+  huddles,
+  currentPage,
+  setLocation,
+  update,
+}: Props) {
+  const { currentUser } = useAuth();
+  const [user, setUser] = useState<User>();
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [locationName, setLocationName] = useState("");
   const [selected, setSelected] = useState(false);
@@ -60,7 +70,7 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
     setCreateBox(true);
   };
   useEffect(() => {
-    if (center.lat !== 41.39) setSelected(true);
+    if (center.lat === Number(user?.default_latitude)) setSelected(false);
     if (currentPage)
       setLocation({
         name: locationName,
@@ -69,6 +79,17 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
       });
   }, [center]);
   useEffect(() => {
+    const getter = async () => {
+      const userData = await getUserById(currentUser);
+      setUser(userData[0]);
+      user
+        ? setCenter({
+            lat: Number(userData[0].default_latitude),
+            lng: Number(userData[0].default_longitude),
+          })
+        : setCenter({ lat: 41.39, lng: 2.15 });
+    };
+    getter();
     if (currentPage === "newuser") {
       setMapSize({
         width: "46.5vw",
@@ -134,6 +155,7 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
+            update={update}
           />
         </div>
       </div>
@@ -149,9 +171,8 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
           {selected && (
             <MarkerF
               position={center}
-              animation={google.maps.Animation.DROP}
+              animation={google.maps.Animation.BOUNCE}
               draggable={true}
-              // icon={{ path: "../../../public/location-pin-svgrepo-com.svg" }}
               onDragEnd={(e) =>
                 setCenter({
                   lat: e.latLng?.lat() || center.lat,
@@ -180,6 +201,7 @@ export default function Map({ huddles, currentPage, setLocation }: Props) {
             <></>
           )}
           <MapInfoWindow
+            user={user}
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
           />
