@@ -57,6 +57,7 @@ function NewHuddleCard({
         <div className="ml-auto mr-3">
           {going ? (
             <button
+              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
                 setUpdate(!update);
@@ -67,6 +68,7 @@ function NewHuddleCard({
             </button>
           ) : (
             <button
+              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
                 setUpdate(!update);
@@ -94,15 +96,15 @@ function NewHuddleCard({
 
             <div className="hidden md:grid grid-cols-2 gap-2">
               {data.categories.map((category, i) => {
-                return i > 3 ? (
-                  <></>
-                ) : (
-                  <p
-                    className="text-center py-1 bg-palette-dark rounded-md text-white"
-                    key={category.id}
-                  >
-                    {category.name}
-                  </p>
+                return (
+                  i <= 3 && (
+                    <p
+                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                      key={category.id + (i - i)}
+                    >
+                      {category.name}
+                    </p>
+                  )
                 );
               })}
             </div>
