@@ -6,6 +6,7 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
+  
   return (
     <>
       <div className='w-full h-screen flex flex-col justify-center' id="carousel">

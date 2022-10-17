@@ -30,15 +30,16 @@ function MainForm({currentUser}: Props) {
     description: '',
   });
 
-  useEffect(()=>{
-    handlePromise()
-  },[])
+  // useEffect(()=>{
+  //   handlePromise()
+  // },[])
 
   const handlePromise = async () => {
-    const userT = await getUserById(currentUser)
-    setUserData(...userT)
-    console.log('useeeer', userData)
+    // const user = await getUserById(currentUser)
+    setUserData(...currentUser)
+    // console.log('useeeer', userData)
   }
+
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

@@ -5,14 +5,16 @@ import { useAuth } from '../../src/contexts/AuthContext';
 
 function Index() {
   //@ts-ignore
-  const { currentUser } = useAuth();
-  
+  const { currentUser, logOut, isAuthenticated } = useAuth();
   const router = useRouter();
-  if (!currentUser) {
-    router.replace('/');
-    return;
-  }
-  console.log('this is currentUSer', currentUser);
+  // if (!isAuthenticated()) {
+  //   // router.replace('/');
+  //   return
+  // }
+  console.log('current', currentUser);
+  console.log('current', currentUser)
+  console.log('logOut', logOut);
+
 
   return (
     <div className='flex justify-center '>
